@@ -11,16 +11,11 @@ namespace SmartMarathon.App.Controllers
     {
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult SmartMarathon()
-        {
             return View(new SmartMarathonData());
         }
 
         [HttpPost]
-        public ActionResult SmartMarathon(SmartMarathonData model)
+        public ActionResult Index(SmartMarathonData model)
         {
             model.Calculate();
             return View(model);
@@ -28,15 +23,11 @@ namespace SmartMarathon.App.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }
