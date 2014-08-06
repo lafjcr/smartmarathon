@@ -91,8 +91,8 @@ namespace SmartMarathon.App.Models
 
         private SplitData CalcuteSplit(SplitData split)
         {
-            split = ApplyMarathonNationRaceApproach(split);
             split = ApplyAltimetry(split);
+            split = ApplyMarathonNationRaceApproach(split);
             var splitFactor = InKms ? 1000 : conversionFactor;
             var splitDistance = split.Pace.TotalSeconds / splitFactor * ((split.Split - (split.PreviousSplit != null ? split.PreviousSplit.Split : 0)) * splitFactor);
             var splitTime = new TimeSpan(0, 0, Convert.ToInt32(splitDistance));
