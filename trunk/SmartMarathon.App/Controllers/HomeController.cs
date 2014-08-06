@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartMarathon.App.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,18 @@ namespace SmartMarathon.App.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult SmartMarathon()
+        {
+            return View(new SmartMarathonData());
+        }
+
+        [HttpPost]
+        public ActionResult SmartMarathon(SmartMarathonData model)
+        {
+            model.Calculate();
+            return View(model);
         }
 
         public ActionResult About()
