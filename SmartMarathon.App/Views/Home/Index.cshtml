@@ -4,7 +4,7 @@
     ViewBag.Title = "Smart Marathon";
 }
 
-@using (Html.BeginForm("SmartMarathon", "Home", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Index", "Home", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
