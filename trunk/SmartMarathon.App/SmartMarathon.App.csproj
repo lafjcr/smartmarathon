@@ -191,12 +191,17 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\favicon.png" />
+    <Content Include="Content\images\header-bg.jpg" />
     <Content Include="Content\images\running_man_logo.jpg" />
+    <Content Include="Content\images\running_man_logo_bktransparent.png" />
     <Content Include="Content\images\running_man_logo_inverted.jpg" />
     <Content Include="Content\images\startup.png" />
+    <Content Include="Content\main.css" />
     <Content Include="favicon.ico" />
     <Content Include="favicon_inverted.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\site.css" />
@@ -205,12 +210,18 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Index.html" />
     <Content Include="Scripts\addtohomescreen.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="marathons.json" />
+    <Content Include="fonts\fontawesome-webfont-.eot" />
+    <Content Include="fonts\fontawesome-webfont-v=3.2.1.eot" />
+    <Content Include="fonts\fontawesome-webfont-v=3.2.1.ttf" />
+    <Content Include="fonts\fontawesome-webfont-v=3.2.1.woff" />
     <None Include="Properties\PublishProfiles\smartmarathon.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\classie.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
@@ -219,12 +230,14 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.7.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\smartmarathon.js" />
+    <Content Include="Scripts\smoothscroll.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
