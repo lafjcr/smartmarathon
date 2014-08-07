@@ -21,3 +21,6 @@
 /// <reference path="main.js" />
 /// <reference path="smoothscroll.js" />
 /// <reference path="../obj/release/package/packagetmp/scripts/addtohomescreen.min.js" />
+/// <reference path="../obj/release/package/packagetmp/scripts/classie.js" />
+/// <reference path="../obj/release/package/packagetmp/scripts/main.js" />
+/// <reference path="../obj/release/package/packagetmp/scripts/smoothscroll.js" />

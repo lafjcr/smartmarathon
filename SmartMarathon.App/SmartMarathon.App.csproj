@@ -219,6 +219,7 @@
     <Content Include="fonts\fontawesome-webfont-v=3.2.1.eot" />
     <Content Include="fonts\fontawesome-webfont-v=3.2.1.ttf" />
     <Content Include="fonts\fontawesome-webfont-v=3.2.1.woff" />
+    <Content Include="Content\images\header-bg.webp" />
     <None Include="Properties\PublishProfiles\smartmarathon.pubxml" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\classie.js" />
