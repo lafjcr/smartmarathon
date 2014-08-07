@@ -168,7 +168,7 @@ namespace SmartMarathon.App.Models
     public class SplitData
     {
         [Required]
-        [Display(Name = "Split"), UIHint("Split")]
+        [Display(Name = "Split")]
         public double Split { get; set; }
 
         [Required]
@@ -177,12 +177,12 @@ namespace SmartMarathon.App.Models
 
         [Required]
         [Display(Name = "Pace")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:mm\:ss}")]
+        [DisplayFormat(DataFormatString = @"{0:mm\:ss}")]
         public TimeSpan Pace { get; set; }
 
         [Display(Name = "Time")]
         [DataType(DataType.Time)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm\:ss}")]
+        [DisplayFormat(DataFormatString = @"{0:h\:mm\:ss}")]
         public TimeSpan Time { get; set; }
 
         internal SplitData PreviousSplit { get; set; }
