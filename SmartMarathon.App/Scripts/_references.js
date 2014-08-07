@@ -17,3 +17,7 @@
 /// <reference path="../obj/release/package/packagetmp/scripts/respond.matchmedia.addlistener.js" />
 /// <reference path="../obj/release/package/packagetmp/scripts/smartmarathon.js" />
 /// <reference path="addtohomescreen.min.js" />
+/// <reference path="classie.js" />
+/// <reference path="main.js" />
+/// <reference path="smoothscroll.js" />
+/// <reference path="../obj/release/package/packagetmp/scripts/addtohomescreen.min.js" />

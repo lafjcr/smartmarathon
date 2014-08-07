@@ -16,13 +16,13 @@ namespace SmartMarathon.App.Models
         public SelectList SplitCategories { get; set; }
 
         [Required]
-        [Display(Name = "Goal Time")]
+        [Display(Name = "GOAL TIME")]
         [DataType(DataType.Time)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm\:ss}")]
         public TimeSpan GoalTime { get; set; }
 
         [Required]
-        [Display(Name = "Marathon")]
+        [Display(Name = "MARATHON")]
         public string Marathon { get; set; }
         
 

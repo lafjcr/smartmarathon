@@ -15,45 +15,49 @@
     <link rel="apple-touch-icon" href="~/Content/images/favicon.png" />
     <link rel="apple-touch-startup-image" href="~/Content/images/startup.png">
 
-    <link rel="stylesheet" type="text/css" href="~/Content/addtohomescreen.css">
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
 
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+<body data-spy="scroll" data-offset="0" data-target="#theMenu">
+    <!-- Menu -->
+    <nav class="menu" id="theMenu">
+        <div class="menu-wrap">
+            <h1 class="logo"><a href="#" class="smoothScroll">Smart Marathon</a></h1>
+            <i class="icon-remove menu-close"></i>
+            <a href="#home" class="smoothScroll">Home</a>
+            <a href="#smartmarathon" class="smoothScroll">Calculate</a>
+            <a href="#about" class="smoothScroll">About</a>
+            <a href="#contact" class="smoothScroll">Contact</a>
+            @*<a href="#"><i class="icon-facebook"></i></a>
+            <a href="#"><i class="icon-twitter"></i></a>
+            <a href="#"><i class="icon-dribbble"></i></a>*@
+            <a href="mailto:lafj14@gmail.com"><i class="icon-envelope"></i></a>
+        </div>
+
+        <!-- Menu button -->
+        <div id="menuToggle"><i class="icon-reorder"></i></div>
+    </nav>
+    @RenderBody()
+    <!-- ========== FOOTER SECTION ========== -->
+    <section id="footer" name="footer"></section>
+    <div id="f">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Smart Marathon", "Index", "Home", null, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+            <div class="row">
+                <p>&copy; @DateTime.Now.Year - Smart Marathon</p>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Smart Marathon</p>
-        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/site")
     @RenderSection("scripts", required: false)
-    <script src="~/Scripts/addtohomescreen.min.js"></script>
     <script>
         addToHomescreen({
             message: "To add Smart Marthon to the home screen"
