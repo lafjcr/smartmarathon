@@ -10,7 +10,7 @@
     <thead>
         <tr>            
             <th>@metric</th>
-            <th>CATEGORY</th>
+            <th>CC</th>
             <th>PACE</th>
             <th>TIME</th>
         </tr>
@@ -20,7 +20,7 @@
         {
             <tr>
                 <td class="col-md-1">
-                    @Html.EditorFor(m => m[i].Split)
+                    @Html.DisplayFor(m => m[i].Split)
                 </td>
                 <td class="col-md-2">
                     @Html.DropDownListFor(m => m[i].Category, splitCategories, new { @class = "form-control" })
@@ -37,11 +37,11 @@
     <tfoot>
         <tr>
             <td class="col-md-1"></td>
-            <td class="col-md-2"></td>
+            <td class="col-md-1"></td>
             <td class="col-md-2">
                 @Html.Label("FINISH TIME")
             </td>
-            <td class="col-md-2">
+            <td class="col-md-1">
                 @finishTime
             </td>
         </tr>

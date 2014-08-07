@@ -28,55 +28,50 @@
 <section id="smartmarathon" name="smartmarathon"></section>
 <div id="f">
     <div class="container">
-        <div class="row">
-            @using (Html.BeginForm("Index", "Home", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-
-                <div class="form-horizontal">
-                    <hr />
-                    <h4>Fill your goal time and classify each split according race altimetry</h4>
-                    <hr />
-                    @Html.ValidationSummary(true)
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.GoalTime, new { @class = "control-label col-md-offset-2 col-md-2" })
-                        <div class="col-md-3">
-                            @Html.TextBoxFor(m => m.GoalTime, @"{0:hh\:mm\:ss}", new { @class = "form-control", @placeholder = "HH:mm:ss" })
-                            @Html.ValidationMessageFor(model => model.GoalTime)
-                        </div>
-                        <div class="col-md-2">
-                            <div class="btn-group btn-toggle">
-                                <button id="btn-KM" class="btn btn-primary">KM</button>
-                                <button id="btn-MI" class="btn btn-default">MI</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Marathon, new { @class = "control-label col-md-offset-2 col-md-2" })
-                        <div class="col-md-3">
-                            @Html.DropDownListFor(m => m.Marathon, Model.Marathons, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Marathon)
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-3 col-md-5">
-                            <div id="Kms">
-                                @Html.EditorFor(m => m.SplitsK, new { SplitCategories = Model.SplitCategories })
-                            </div>
-                            <div id="Miles">
-                                @Html.EditorFor(m => m.SplitsM, new { SplitCategories = Model.SplitCategories })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-4">
-                            @Html.CheckBoxFor(model => model.InKms, new { @hidden = "hidden" })
-                            <input type="submit" value="CALCULATE" class="btn btn-default btn-warning" />
-                        </div>
+        @using (Html.BeginForm("Index", "Home", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <hr />
+            <h4>Fill your goal time and classify each split according race altimetry</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                @Html.LabelFor(m => m.GoalTime, new { @class = "control-label col-md-offset-2 col-md-2" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.GoalTime, @"{0:hh\:mm\:ss}", new { @class = "form-control", @placeholder = "HH:mm:ss" })
+                    @Html.ValidationMessageFor(model => model.GoalTime)
+                </div>
+                <div class="col-md-2">
+                    <div class="btn-group btn-toggle">
+                        <button id="btn-KM" class="btn btn-primary">KM</button>
+                        <button id="btn-MI" class="btn btn-default">MI</button>
                     </div>
                 </div>
-            }
-        </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Marathon, new { @class = "control-label col-md-offset-2 col-md-2" })
+                <div class="col-md-3">
+                    @Html.DropDownListFor(m => m.Marathon, Model.Marathons, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Marathon)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-3 col-md-5">
+                    <div id="Kms">
+                        @Html.EditorFor(m => m.SplitsK, new { SplitCategories = Model.SplitCategories })
+                    </div>
+                    <div id="Miles">
+                        @Html.EditorFor(m => m.SplitsM, new { SplitCategories = Model.SplitCategories })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-3">
+                    @Html.CheckBoxFor(model => model.InKms, new { @hidden = "hidden" })
+                    <input type="submit" value="CALCULATE" class="btn btn-default btn-warning" />
+                </div>
+            </div>
+        }
     </div>
 </div>
 <!-- ========== ABOUT SECTION ========== -->

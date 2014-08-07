@@ -340,3 +340,7 @@ a:after {
 .table > tfoot> tr > td {
     font-size: 22px;
 }
+
+.table > tbody > tr > td > select {
+    min-width: 30px;
+}
