@@ -8,7 +8,7 @@
  */
 
 body {
-  background-color: #f2f2f2;
+    background-color: #1a1a1a;
     font-family: 'EB Garamond', serif;
     font-weight: 300;
     font-size: 16px;
@@ -38,7 +38,7 @@ p {
 
 /* Links */
 a {
-    color: #f85c37;
+    color: #FFFF58;
     word-wrap: break-word;
 
     -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
@@ -100,7 +100,7 @@ a:after {
 }
 
 #headerwrap h1 {
-	margin-top: 150px;
+	margin-top: 80px;
 	color: white;
 	font-size: 70px;
 	font-weight: 700;
@@ -117,7 +117,7 @@ a:after {
 #headerwrap .logo {
 	text-align: right;
 	margin-left: 20px;
-	margin-top: 5px;
+	margin-top: 0px;
 }
 
 
@@ -324,7 +324,7 @@ a:after {
 }
 
 #f li {
-    color: #f85c37;
+    color: #FFFF58;
     text-align: left;
     font-size: 20px;
 }

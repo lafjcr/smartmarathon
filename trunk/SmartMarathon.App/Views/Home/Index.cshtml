@@ -15,12 +15,12 @@
         <br>
         <div class="row">
             <h1>SMART MARATHON</h1>
-            <br>
+            @*<br>
             <h3></h3>
             <br>
             <br>
             <div class="col-lg-6 col-lg-offset-3">
-            </div>            
+            </div>*@            
         </div>
     </div><!-- /container -->
 </div><!-- /headerwrap -->
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8">
+                        <div class="col-md-offset-3 col-md-5">
                             <div id="Kms">
                                 @Html.EditorFor(m => m.SplitsK, new { SplitCategories = Model.SplitCategories })
                             </div>
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-md-offset-6">
+                        <div class="col-md-offset-4">
                             @Html.CheckBoxFor(model => model.InKms, new { @hidden = "hidden" })
                             <input type="submit" value="CALCULATE" class="btn btn-default btn-warning" />
                         </div>
@@ -139,7 +139,7 @@
                     <p>Luis Fernandez Jimenez<br />
                     San Jose, Costa Rica<br />
                     <abbr title="Email"></abbr>
-                    <a href="mailto:lafj14@gmail.com">lafj14@gmail.com</a></p>
+                    <a href="mailto:lafj14@gmail.com?subject=[Smart Marathon] ">lafj14@gmail.com</a></p>
                 </address>
                 <br />
                 <div>
