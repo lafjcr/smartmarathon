@@ -75,7 +75,7 @@ namespace SmartMarathon.App.Models
 
         private List<SplitData> CreateSplits(bool inKms)
         {
-            return CreateSplits(InKms, null);
+            return CreateSplits(inKms, null);
         }
 
         private List<SplitData> CreateSplits(bool inKms, List<SplitData> originalSplits)
