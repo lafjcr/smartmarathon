@@ -41,7 +41,9 @@ namespace SmartMarathon.App.Models
         public SmartMarathonData()
         {
             InKms = true;
-            Marathons = new SelectList(Code.SmartMarathon.Marathons(), "Value", "Text");
+            var marathons = Code.SmartMarathon.Marathons() as List<SelectListItem>;
+            Marathon = marathons.Find(item => item.Selected).Value;
+            Marathons = new SelectList(marathons, "Value", "Text");
             SplitCategories = new SelectList(Code.SmartMarathon.SplitCategories(), "Value", "Text");
             SplitsK = CreateSplits(true);
             SplitsM = CreateSplits(false);

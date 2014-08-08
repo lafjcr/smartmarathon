@@ -23,7 +23,8 @@ namespace SmartMarathon.App.Code
             var marathons = HttpContext.Current.Session["Marathons"] as List<MarathonData>;
 
             var result = new List<SelectListItem>();
-            marathons.ForEach(item => result.Add(new SelectListItem() { Value = String.Format("{0};{1};{2}", item.Id, item.Kms, item.Miles), Text = item.Name}));
+            marathons = marathons.OrderBy(item => item.Name).ToList();
+            marathons.ForEach(item => result.Add(new SelectListItem() { Value = String.Format("{0};{1};{2}", item.Id, item.Kms, item.Miles), Text = item.Name, Selected = item.Id == 0}));            
 
             return result;
         }
