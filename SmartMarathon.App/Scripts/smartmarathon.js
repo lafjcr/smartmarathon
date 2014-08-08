@@ -34,12 +34,12 @@ function LoadSplits() {
 
         $.each(splitValuesK, function (index, value) {
             var splitField = '#SplitsK_' + index + '__Category';
-            $(splitField).val(value);
+            $(splitField).val(value.trim());
         });
 
         $.each(splitValuesM, function (index, value) {
             var splitField = '#SplitsM_' + index + '__Category';
-            $(splitField).val(value);
+            $(splitField).val(value.trim());
         });
     }
 }
