@@ -32,17 +32,38 @@
             <a href="#home" class="smoothScroll">Home</a>
             <a href="#smartmarathon" class="smoothScroll">Calculate</a>
             <a href="#about" class="smoothScroll">About</a>
-            <a href="#contact" class="smoothScroll">Contact</a>
+            <a href="#contact" class="smoothScroll">Contact</a>            
             @*<a href="#"><i class="icon-facebook"></i></a>
             <a href="#"><i class="icon-twitter"></i></a>
             <a href="#"><i class="icon-dribbble"></i></a>*@
             <a href="mailto:lafj14@gmail.com?subject=[Smart Marathon] "><i class="icon-envelope"></i></a>
+            @if (Request.Browser.IsMobileDevice)
+            {
+                <a onclick="callAddToHomeScreen();"><i class="glyphicon glyphicon-save"></i></a>
+            }
         </div>
 
         <!-- Menu button -->
         <div id="menuToggle"><i class="icon-reorder"></i></div>
     </nav>
     @RenderBody()
+    <!-- ========== ADD TO HOME SECTION ========== -->
+@if (Request.Browser.IsMobileDevice)
+{
+    <section id="addToHome" name="addToHome"></section>
+    <div id="f">
+        <div class="container">
+            <div class="row">
+                <h3>ADD TO HOME</h3>
+                <p class="centered"><i class="icon icon-circle"></i><i class="icon icon-circle"></i><i class="icon icon-circle"></i></p>
+
+                <div class="col-lg-6 col-lg-offset-3">
+                    <a onclick="callAddToHomeScreen();"><i class="glyphicon glyphicon-save" style="font-size: x-large"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
     <!-- ========== FOOTER SECTION ========== -->
     <section id="footer" name="footer"></section>
     <div id="f">
@@ -59,9 +80,18 @@
     @Scripts.Render("~/bundles/site")
     @RenderSection("scripts", required: false)
     <script>
-        addToHomescreen({
-            message: "To add Smart Marthon to the home screen"
+        var addToHome = addToHomescreen({
+            appID: 'org.cubiq.SmartMarathon',
+            message: "To add Smart Marathon to the home screen",
+            detectHomescreen: 'hash',
+            modal: true
         });
+
+        function callAddToHomeScreen() {
+            addToHome.options.displayPace = 0;
+            addToHome.options.autostart = false;
+            addToHome.show();
+        }
     </script>
 </body>
 </html>
