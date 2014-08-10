@@ -342,5 +342,50 @@ a:after {
 }
 
 .table > tbody > tr > td > select {
-    min-width: 30px;
+    min-width: 48px;
+}
+
+.form-control {
+    font-size: 18px;
+}
+
+.textsize-24 {
+    font-size: 24px;
+}
+
+@media (max-device-width: 640px) {
+    .table > tbody> tr > td {
+        font-size: 24px;
+    }
+
+    .table > tfoot> tr > td {
+        font-size: 26px;
+    }
+
+    .form-control2 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width : 320px) {
+    .table > thead> tr > th {
+        font-size: 18px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .table > tbody> tr > td {
+        font-size: 22px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .table > tfoot> tr > td {
+        font-size: 24px;
+    }
+
+    .form-control2 {
+        font-size: 15px;
+        padding-left: 2px;
+    }
 }

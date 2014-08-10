@@ -38,7 +38,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.GoalTime, new { @class = "control-label col-md-offset-2 col-md-2" })
                 <div class="col-md-3">
-                    @Html.TextBoxFor(m => m.GoalTime, @"{0:hh\:mm\:ss}", new { @class = "form-control", @placeholder = "HH:mm:ss" })
+                    @Html.TextBoxFor(m => m.GoalTime, @"{0:hh\:mm\:ss}", new { @class = "form-control textsize-24", @placeholder = "HH:mm:ss" })
                     @Html.ValidationMessageFor(model => model.GoalTime)
                 </div>
                 <div class="col-md-2">
@@ -68,7 +68,7 @@
             <div class="row">
                 <div class="col-md-offset-3">
                     @Html.CheckBoxFor(model => model.InKms, new { @hidden = "hidden" })
-                    <input type="submit" value="CALCULATE" class="btn btn-default btn-warning" />
+                    <input type="submit" value="CALCULATE" class="btn btn-default btn-warning textsize-24" />
                 </div>
             </div>
             <div class="row">
