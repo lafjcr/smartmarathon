@@ -1,0 +1,50 @@
+﻿@model List<SmartMarathon.App.Models.SplitData>
+
+@{
+    var metric = Model == null || Model.Count > 27 ? "KM" : "M";
+    var splitCategories = ViewData["SplitCategories"] as SelectList;
+    var splits = Model != null ? Model.Count : 0;
+    var finishTime = splits > 0 ? @Model[splits - 1].Time : new TimeSpan();
+}
+<table class="table">
+    <thead>
+        <tr>            
+            <th>@metric</th>
+            <th>CC</th>
+            <th>PACE</th>
+            <th>TIME</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < splits; i++)
+        {
+            <tr>
+                <td class="col-md-1">
+                    @Html.DisplayFor(m => m[i].Split)
+                </td>
+                <td class="col-md-2">
+                    @Html.DropDownListFor(m => m[i].Category, splitCategories, new { @class = "form-control form-control2" })
+                </td>
+                <td class="col-md-1">
+                    @Html.DisplayFor(m => m[i].Pace)
+                </td>
+                <td class="col-md-1">
+                    @Html.DisplayFor(m => m[i].Time)
+                </td>
+            </tr>            
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td class="col-md-1"></td>
+            <td class="col-md-1"></td>
+            <td class="col-md-2">
+                @Html.Label("FINISH TIME")
+            </td>
+            <td class="col-md-1">
+                @finishTime
+            </td>
+        </tr>
+    </tfoot>
+</table>
+

@@ -1,0 +1,182 @@
+﻿@model SmartMarathon.App.Models.SmartMarathonData
+
+@{
+    ViewBag.Title = "Smart Marathon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- ========== HEADER SECTION ========== -->
+<section id="home" name="home"></section>
+<div id="headerwrap">
+    <div class="container">
+        <div class="logo">
+            <img src="Content/images/running_man_logo_bktransparent.png">
+        </div>
+        <br>
+        <div class="row">
+            <h1>SMART MARATHON</h1>
+            @*<br>
+            <h3></h3>
+            <br>
+            <br>
+            <div class="col-lg-6 col-lg-offset-3">
+            </div>*@            
+        </div>
+    </div><!-- /container -->
+</div><!-- /headerwrap -->
+<!-- ========== SMART MARATHON SECTION ========== -->
+<section id="smartmarathon" name="smartmarathon"></section>
+<div id="f">
+    <div class="container">
+        @using (Html.BeginForm("Index", "Home", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <hr />
+            <h4>Fill your goal time and classify each split according race altimetry</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            <div class="form-group">
+                @Html.LabelFor(m => m.GoalTime, new { @class = "control-label col-md-offset-2 col-md-2" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.GoalTime, @"{0:hh\:mm\:ss}", new { @class = "form-control textsize-24", @placeholder = "HH:mm:ss" })
+                    @Html.ValidationMessageFor(model => model.GoalTime)
+                </div>
+                <div class="col-md-2">
+                    <div class="btn-group btn-toggle">
+                        <button id="btn-KM" class="btn btn-primary">KM</button>
+                        <button id="btn-MI" class="btn btn-default">MI</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Marathon, new { @class = "control-label col-md-offset-2 col-md-2" })
+                <div class="col-md-3">
+                    @Html.DropDownListFor(m => m.Marathon, Model.Marathons, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Marathon)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-3 col-md-5">
+                    <div id="Kms">
+                        @Html.EditorFor(m => m.SplitsK, new { SplitCategories = Model.SplitCategories })
+                    </div>
+                    <div id="Miles">
+                        @Html.EditorFor(m => m.SplitsM, new { SplitCategories = Model.SplitCategories })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-3">
+                    @Html.CheckBoxFor(model => model.InKms, new { @hidden = "hidden" })
+                    <input type="submit" value="CALCULATE" class="btn btn-default btn-warning textsize-24" />
+                </div>
+            </div>
+            <div class="row">
+                <br />
+                <br />
+                @*<hr />*@
+                <span class='st_fblike_large' displaytext='Facebook Like'></span>
+                <span class='st_facebook_large' displaytext='Facebook'></span>
+                <span class='st_twitter_large' displaytext='Tweet'></span>
+                <span class='st_googleplus_large' displaytext='Google +'></span>
+                <span class='st_email_large' displaytext='Email'></span>
+                <span class='st_sharethis_large' displaytext='ShareThis'></span>
+                @*<hr />*@
+            </div>
+        }
+    </div>
+</div>
+<!-- ========== ABOUT SECTION ========== -->
+<section id="about" name="about"></section>
+<div id="f">
+    <div class="container">
+        <div class="row">
+            <h3>ABOUT SMART MARATHON</h3>
+            <p class="centered"><i class="icon icon-circle"></i><i class="icon icon-circle"></i><i class="icon icon-circle"></i></p>
+
+            <!-- INTRO INFORMATIO-->
+            <div class="col-lg-6 col-lg-offset-3">
+                <div>
+                    <div>
+                        <p>The purpose of this web site is help people to run a smart marathon following a race strategy based on course altimetry and running negative splits allowing save energy for last miles where most of marathoners slowed significantly.</p>
+                        <p>Having said that let's describe the steps followed to calculate your splits for a smart marathon:</p>
+                    </div>
+                    <div>
+                        <h3>Step One: Course Altimetry</h3>
+                        <p>A marathon course is unique for several reasons including altimetry.</p>
+                        <p>That means we can create an elevation profile of our marathon classifying each mile and adding or removing some seconds to our goal pace as shown below:</p>
+                        <ul>
+                            <li>Downhill = 10 seconds faster per mile</li>
+                            <li>Flat = keep goal pace</li>
+                            <li>Uphill = 10 seconds slower per mile</li>
+                        </ul>
+                    </div>
+                    <br />
+                    <div>
+                        <h3>Step Two: The Marathon Nation Race Approach</h3>
+                        <p><em>Start Smart (Miles 0 to 5)</em> — Given your goal pace of, say 9:00/miles, you purposely start of slower by about 15 seconds per mile. Then you start to bring the pace down such that by mile five, you are running at or just under your goal pace. It sounds crazy, for sure, but it means you aren&#8217;t running too hard, or wasting energy trying to weave around the competition. You are just in your zone, slowly building up your pace to where you&#8217;ll want it to sit all day.</p>
+                        <p><em>Run to the Line</em> (<em>Miles 6 to 20) </em>— The bulk of your race is spent running just under our goal pace. For our 9:00 runner, this means miles in the 8:55 range. The purpose here is to be consistent but to slowly chip away at the timing surplus that our early conservative pacing created. By the time we reach the end of this section of our day, you should be right on target for your goal time but in a much better place.</p>
+                        <p>The Line (Aka the “wall”) is the part of your race day where your body begins to push back. In general this happens between miles 18 and 22 on race day, depending on the course, your pacing, your fitness, etc. Of course, most runners go out fast putting time in to “the bank” for when they slow down — I am here to tell you there is no such bank, and that time you saved will mostly likely be nowhere near sufficient to staunch the bleeding at the end of your day.</p>
+                        <p>Until you hit the “line” you aren’t racing, you are running. You ignore the other runners and do your best to flatten out the course through smart pacing. Nutritionally you are fueling in anticipation of the last six miles.</p>
+                        <p><em>Race to the Finish</em> <em>(Miles 21 to Finish)— </em>The last six miles on race day are were dreams are made (or broken). Inside Marathon Nation we don’t dread the end of the race; it’s where our day begins. If you have paced yourself properly, you’ll just be starting to pass other runners as everyone around you is slowing down. This is not only a judicious application of your fitness, it’s a powerful mental strategy that helps you stay focused just as your body is trying to check out.</p>
+                        <p>In summary, the basic Marathon Nation Pacing approach is:</p>
+                        <ul>
+                            <li>Give away 15 seconds per mile for first six miles.</li>
+                            <li>Gain back 5 seconds per mile from miles 6 through 20.</li>
+                            <li>Last 10k is on pace.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /container -->
+</div><!-- /f -->
+<!-- ========== CONTACT SECTION ========== -->
+<section id="contact" name="contact"></section>
+<div id="f">
+    <div class="container">
+        <div class="row">
+            <h3>CONTACT ME</h3>
+            <p class="centered"><i class="icon icon-circle"></i><i class="icon icon-circle"></i><i class="icon icon-circle"></i></p>
+
+            <div class="col-lg-6 col-lg-offset-3">
+                <p>Contact me for any comment or question you could have or request to add a marathon elevation profile in the list.</p>
+                <p>Also any experience running your marathons guided by Smart Marathon is welcome to be included in a future section.</p>
+                <address>
+                    <p>Luis Fernandez Jimenez<br />
+                    San Jose, Costa Rica<br />
+                    <abbr title="Email"></abbr>
+                    <a href="mailto:lafj14@gmail.com?subject=[Smart Marathon] ">lafj14@gmail.com</a></p>
+                </address>
+                <br />
+                <div>
+                    <p>If you find helpful this site please feel free to make any donation and contribute to pay hosting charges, make improvements and develop future sections:</p>
+                    <br />
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="EVQ3AMAZ9YMKJ">
+                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $( document ).ready(function() {
+            LoadPage();
+        });
+
+        $("#Marathon").change(function () {
+            LoadSplits();
+        });
+
+        $('.btn-toggle').click(function () {
+            ToggleKms(this);
+            return false;
+        });
+    </script>
+}
