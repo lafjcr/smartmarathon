@@ -1,4 +1,5 @@
-﻿using SmartMarathon.App.Models;
+﻿using SmartMarathon.App.Code;
+using SmartMarathon.App.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,23 @@ namespace SmartMarathon.App.Controllers
     {
         public ActionResult Index()
         {
-            return View(new SmartMarathonData());
+            return View(new SmartMarathonData(true));
+        }
+
+        [HttpGet]
+        public JsonResult EventsByDistance(string distance)
+        {
+            var data = Code.SmartMarathon.Marathons((Distance) Convert.ToInt32(distance));
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult Index(SmartMarathonData model)
+        public ActionResult Calculate(SmartMarathonData model)
         {
-            model.Calculate();
-            return View(model);
+            SplitsManager.Calculate(model);
+            ViewData["InKms"] = model.InKms;
+            ViewData["SplitCategories"] = model.SplitCategories;
+            return PartialView("Splits", model);
         }
 
         public ActionResult About()
