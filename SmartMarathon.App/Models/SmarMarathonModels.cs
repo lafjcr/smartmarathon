@@ -121,5 +121,7 @@ namespace SmartMarathon.App.Models
         K30 = 30,
         [Description("Half Marathon")]
         K21 = 21,
+        [Description("10K")]
+        K10 = 10
     }
 }
