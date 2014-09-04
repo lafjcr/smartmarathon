@@ -28,7 +28,7 @@
 <section id="smartmarathon" name="smartmarathon"></section>
 <div id="f">
     <div class="container">
-        @using (Html.BeginForm("Index", "Home", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Ajax.BeginForm("Calculate", "Home", new AjaxOptions { UpdateTargetId = "splits-box", HttpMethod = "POST", OnSuccess = "Refresh()" }, new { @class = "form-horizontal", role = "form", id = "frmMain" }))
         {
             @Html.AntiForgeryToken()
             <hr />
@@ -39,7 +39,7 @@
                 @Html.LabelFor(m => m.GoalTime, new { @class = "control-label col-md-offset-2 col-md-2" })
                 <div class="col-md-3">
                     @Html.TextBoxFor(m => m.GoalTime, @"{0:hh\:mm\:ss}", new { @class = "form-control textsize-24", @placeholder = "HH:mm:ss" })
-                    @Html.ValidationMessageFor(model => model.GoalTime)
+                    @Html.ValidationMessageFor(m => m.GoalTime)
                 </div>
                 <div class="col-md-2">
                     <div class="btn-group btn-toggle">
@@ -49,25 +49,25 @@
                 </div>
             </div>
             <div class="form-group">
+                @Html.LabelFor(m => m.Distance, new { @class = "control-label col-md-offset-2 col-md-2" })
+                <div class="col-md-3">
+                    @Html.DropDownListFor(m => m.Distance, Model.Distances, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Distance)
+                </div>
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(m => m.Marathon, new { @class = "control-label col-md-offset-2 col-md-2" })
                 <div class="col-md-3">
                     @Html.DropDownListFor(m => m.Marathon, Model.Marathons, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Marathon)
-                </div>
+                    @Html.ValidationMessageFor(m => m.Marathon)                    
+                </div>                
             </div>
-            <div class="row">
-                <div class="col-md-offset-3 col-md-5">
-                    <div id="Kms">
-                        @Html.EditorFor(m => m.SplitsK, new { SplitCategories = Model.SplitCategories })
-                    </div>
-                    <div id="Miles">
-                        @Html.EditorFor(m => m.SplitsM, new { SplitCategories = Model.SplitCategories })
-                    </div>
-                </div>
+            <div class="row" id="splits-box">
+                @{ Html.RenderPartial("Splits", Model, new ViewDataDictionary { { "InKms", Model.InKms }, { "SplitCategories", Model.SplitCategories } }); }
             </div>
             <div class="row">
                 <div class="col-md-offset-3">
-                    @Html.CheckBoxFor(model => model.InKms, new { @hidden = "hidden" })
+                    @Html.HiddenFor(m => m.InKms)
                     <input type="submit" value="CALCULATE" class="btn btn-default btn-warning textsize-24" />
                 </div>
             </div>
@@ -166,17 +166,29 @@
 
 @section Scripts {
     <script>
-        $( document ).ready(function() {
+        $(document).ready(function () {
             LoadPage();
-        });
 
-        $("#Marathon").change(function () {
-            LoadSplits();
-        });
+            $('.btn-toggle').click(function () {
+                ToggleKms(this);
+                return false;
+            });
 
-        $('.btn-toggle').click(function () {
-            ToggleKms(this);
-            return false;
+            $("#GoalTime").change(function () {
+                Submit();
+            });
+
+            $("#Distance").change(function () {
+                var url = '@Url.Action("EventsByDistance")';
+                var distance = $(this).val();
+                LoadEvents(url, distance);
+                Submit();
+            });
+
+            $("#Marathon").change(function () {
+                LoadSplits();
+                Submit();
+            });
         });
     </script>
 }

@@ -1,7 +1,8 @@
 ﻿@model List<SmartMarathon.App.Models.SplitData>
 
 @{
-    var metric = Model == null || Model.Count > 27 ? "KM" : "M";
+    var inKms = Convert.ToBoolean(ViewData["InKms"]);
+    var metric = inKms ? "KM" : "M";
     var splitCategories = ViewData["SplitCategories"] as SelectList;
     var splits = Model != null ? Model.Count : 0;
     var finishTime = splits > 0 ? @Model[splits - 1].Time : new TimeSpan();
@@ -23,7 +24,7 @@
                     @Html.DisplayFor(m => m[i].Split)
                 </td>
                 <td class="col-md-2">
-                    @Html.DropDownListFor(m => m[i].Category, splitCategories, new { @class = "form-control form-control2" })
+                    @Html.DropDownListFor(m => m[i].Category, splitCategories, new { @class = "form-control form-control2", onchange = "Submit();" })
                 </td>
                 <td class="col-md-1">
                     @Html.DisplayFor(m => m[i].Pace)
@@ -47,4 +48,3 @@
         </tr>
     </tfoot>
 </table>
-

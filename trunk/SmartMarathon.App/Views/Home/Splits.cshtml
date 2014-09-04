@@ -1,0 +1,10 @@
+﻿@model SmartMarathon.App.Models.SmartMarathonData
+
+<div class="col-md-offset-3 col-md-5">
+    <div id="Kms">
+        @Html.EditorFor(m => m.Splits.Kilometers, new { InKms = ViewData["InKms"], SplitCategories = ViewData["SplitCategories"] })
+    </div>
+    <div id="Miles">
+        @Html.EditorFor(m => m.Splits.Miles, new { InKms = ViewData["InKms"], SplitCategories = ViewData["SplitCategories"] })
+    </div>
+</div>
