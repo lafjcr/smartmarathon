@@ -116,4 +116,13 @@
         "Country": "WW",
         "WebSite": "http://www.smartmarathon.net/"
     },
+    {
+        "Distance": "K5",
+        "ID": 0,
+        "Name": "Standard Flat 5K",
+        "Miles": "0,0,0,0",
+        "Kms": "0,0,0,0,0",
+        "Country": "WW",
+        "WebSite": "http://www.smartmarathon.net/"
+    }
 ]
