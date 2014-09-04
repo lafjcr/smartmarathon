@@ -106,5 +106,14 @@
         "Kms": "1,0,0,1,1, 1,-1,0,1,-1, 0,1,-1,0,1, -1,-1,-1,0,0, -1,-1",
         "Country": "CR",
         "WebSite": "http://www.tamarindobeachmarathon.com/"
-    }
+    },
+    {
+        "Distance": "K10",
+        "ID": 0,
+        "Name": "Standard Flat 10K",
+        "Miles": "0,0,0,0,0, 0,0",
+        "Kms": "0,0,0,0,0, 0,0,0,0,0",
+        "Country": "WW",
+        "WebSite": "http://www.smartmarathon.net/"
+    },
 ]
