@@ -38,8 +38,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.GoalTime, new { @class = "control-label col-md-offset-2 col-md-2" })
                 <div class="col-md-3">
-                    @Html.TextBoxFor(m => m.GoalTime, @"{0:hh\:mm\:ss}", new { @class = "form-control textsize-24", @placeholder = "HH:mm:ss" })
-                    @Html.ValidationMessageFor(m => m.GoalTime)
+                    @Html.EditorFor(m => m.GoalTime)
                 </div>
                 <div class="col-md-2">
                     <div class="btn-group btn-toggle">
@@ -174,7 +173,7 @@
                 return false;
             });
 
-            $("#GoalTime").change(function () {
+            $(".timespan").change(function () {
                 Submit();
             });
 

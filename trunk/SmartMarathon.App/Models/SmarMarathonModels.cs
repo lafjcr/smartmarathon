@@ -9,18 +9,17 @@ namespace SmartMarathon.App.Models
     public class SmartMarathonData
     {
         [Required]
+        [Display(Name = "GOAL TIME")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm\:ss}")]
+        public TimeSpan GoalTime { get; set; }
+
+        [Required]
         [Display(Name = "DISTANCE")]
         public Distance Distance { get; set; }
 
         [Required]
         [Display(Name = "Marathons")]
         public SelectList Marathons { get; set; }
-
-        [Required]
-        [Display(Name = "GOAL TIME")]
-        [DataType(DataType.Time)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm\:ss}")]
-        public TimeSpan GoalTime { get; set; }
 
         [Required]
         [Display(Name = "EVENT")]

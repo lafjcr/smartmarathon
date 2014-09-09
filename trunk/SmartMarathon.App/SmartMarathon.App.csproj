@@ -176,6 +176,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Code\SplitsManager.cs" />
+    <Compile Include="Code\TimeSpanBinder.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -292,6 +293,7 @@
     <Content Include="Views\Shared\EditorTemplates\Split.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Splits.cshtml" />
     <Content Include="Views\Home\Splits.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TimeSpan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
