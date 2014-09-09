@@ -353,6 +353,11 @@ a:after {
     font-size: 24px;
 }
 
+.timespan {
+    display: inline;
+    width: 28.99%;
+}
+
 @media (max-device-width: 640px) {
     .table > tbody> tr > td {
         font-size: 24px;
