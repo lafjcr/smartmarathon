@@ -10,13 +10,27 @@ namespace SmartMarathon.App.Controllers
     {
         public ActionResult Index()
         {
-            return View(new SmartMarathonData(true));
+            try
+            {
+                return View(new SmartMarathonData(true));
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new HandleErrorInfo(ex, "Home", "Index"));
+            }
         }
 
         [HttpPost]
         public ActionResult Index(SmartMarathonData model)
         {
-            return View(model);
+            try
+            {
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new HandleErrorInfo(ex, "Home", "Index"));
+            }
         }
 
         [HttpGet]
