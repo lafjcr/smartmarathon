@@ -26,7 +26,14 @@ namespace SmartMarathon.App
 
         protected void Application_BeginRequest(Object source, EventArgs e)
         {
-            ChangeLanguage();
+            try
+            {
+                ChangeLanguage();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void ChangeLanguage()
