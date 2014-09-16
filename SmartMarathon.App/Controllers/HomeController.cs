@@ -1,9 +1,7 @@
 ﻿using SmartMarathon.App.Code;
 using SmartMarathon.App.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Threading;
 using System.Web.Mvc;
 
 namespace SmartMarathon.App.Controllers
@@ -13,6 +11,12 @@ namespace SmartMarathon.App.Controllers
         public ActionResult Index()
         {
             return View(new SmartMarathonData(true));
+        }
+
+        [HttpPost]
+        public ActionResult Index(SmartMarathonData model)
+        {
+            return View(model);
         }
 
         [HttpGet]

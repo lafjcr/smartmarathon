@@ -358,6 +358,12 @@ a:after {
     width: 28.99%;
 }
 
+.language-container {
+    position: fixed;
+    top: 20px;
+    left: 15px;
+}
+
 @media (max-device-width: 640px) {
     .table > tbody> tr > td {
         font-size: 24px;
