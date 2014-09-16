@@ -9,6 +9,8 @@
         $('#InKms').val("true");
 
     ShowSplits();
+
+    return LoadLanguage();
 }
 
 function Submit() {
@@ -23,10 +25,6 @@ function LoadEvents(url, distance) {
         function (data) {
             var select = $("#Marathon");
             select.empty();
-            //select.append($('<option/>', {
-            //    value: 0,
-            //    text: "Select a Class"
-            //}));
             $.each(data, function (index, itemData) {
                 select.append($('<option/>', {
                     value: itemData.Value,
@@ -57,12 +55,6 @@ function BuildSplits(model, url) {
     model = JSON.stringify(model);
     var jqxhr = $.post(url, model,
         function (data) {
-            //var select = $("#Marathon");
-            //select.empty();
-            //select.append($('<option/>', {
-            //    value: 0,
-            //    text: "Select a Class"
-            //}));
             $.each(data, function (index, itemData) {
                 select.append($('<option/>', {
                     value: itemData.Value,
@@ -129,4 +121,43 @@ function ToggleKms(btn) {
     $('#InKms').val(newValue);
 
     ShowSplits();
+}
+
+function LoadLanguage() {
+    var language = window.localStorage.Language;
+    language = language == undefined ? $.cookie("Language") : language;
+    if (language != undefined) {
+        $('#Language').val(language);
+    }
+    SaveLanguage(language);
+    return language;
+}
+
+function SaveLanguage(language) {
+    $.cookie("Language", language, { expires: 365 });
+    window.localStorage.Language = language;
+}
+
+
+function ChangeLanguage(url, language) {
+    $('#Language').val(language);
+    SaveLanguage(language);
+    window.location.href = url;
+
+    //$('#frmLanguage').submit();
+
+    //var sendData = $('#frmMain').serializeArray();
+    //var jqxhr = $.post(url, sendData,
+    //    function (data) {
+    //        var newDoc = document.open("text/html", "replace");
+    //        newDoc.write(data);
+    //        newDoc.close();
+    //    })
+    //.fail(function (error) {
+    //    alert("[ChangeLanguage] Ajax Error");
+    //});
+}
+
+function SaveData(data) {
+    window.localStorage.SmartMarathonData = data;
 }

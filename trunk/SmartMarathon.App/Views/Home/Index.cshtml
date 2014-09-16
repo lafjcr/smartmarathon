@@ -8,6 +8,19 @@
 <!-- ========== HEADER SECTION ========== -->
 <section id="home" name="home"></section>
 <div id="headerwrap">
+    <!-- ========== LANGUAGE CONTAINTER ============= -->
+    <div class="language-container">
+        <!-- begin language switcher -->
+        <div id="polyglotLanguageSwitcher">
+            <form action="#">
+                <select id="polyglot-language-options">
+                    <option id="en" value="en"></option>
+                    <option id="es" value="es"></option>
+                </select>
+            </form>
+        </div>
+        <!-- end language switcher -->
+    </div>
     <div class="container">
         <div class="logo">
             <img src="Content/images/running_man_logo_bktransparent.png">
@@ -15,12 +28,6 @@
         <br>
         <div class="row">
             <h1>SMART MARATHON</h1>
-            @*<br>
-            <h3></h3>
-            <br>
-            <br>
-            <div class="col-lg-6 col-lg-offset-3">
-            </div>*@            
         </div>
     </div><!-- /container -->
 </div><!-- /headerwrap -->
@@ -31,8 +38,9 @@
         @using (Ajax.BeginForm("Calculate", "Home", new AjaxOptions { UpdateTargetId = "splits-box", HttpMethod = "POST", OnSuccess = "Refresh()" }, new { @class = "form-horizontal", role = "form", id = "frmMain" }))
         {
             @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Language)
             <hr />
-            <h4>Fill your goal time and classify each split according race altimetry</h4>
+            <h4>@Resources.Label_Instructions</h4>
             <hr />
             @Html.ValidationSummary(true)
             <div class="form-group">
@@ -67,7 +75,7 @@
             <div class="row">
                 <div class="col-md-offset-3">
                     @Html.HiddenFor(m => m.InKms)
-                    <input type="submit" value="CALCULATE" class="btn btn-default btn-warning textsize-24" />
+                    <input type="submit" value="@Resources.Label_Calculate" class="btn btn-default btn-warning textsize-24" />
                 </div>
             </div>
             <div class="row">
@@ -90,39 +98,39 @@
 <div id="f">
     <div class="container">
         <div class="row">
-            <h3>ABOUT SMART MARATHON</h3>
+            <h3>@Resources.About_Title</h3>
             <p class="centered"><i class="icon icon-circle"></i><i class="icon icon-circle"></i><i class="icon icon-circle"></i></p>
 
             <!-- INTRO INFORMATIO-->
             <div class="col-lg-6 col-lg-offset-3">
                 <div>
                     <div>
-                        <p>The purpose of this web site is help people to run a smart marathon following a race strategy based on course altimetry and running negative splits allowing save energy for last miles where most of marathoners slowed significantly.</p>
-                        <p>Having said that let's describe the steps followed to calculate your splits for a smart marathon:</p>
+                        <p>@Resources.About_P1</p>
+                        <p>@Resources.About_P2</p>
                     </div>
                     <div>
-                        <h3>Step One: Course Altimetry</h3>
-                        <p>A marathon course is unique for several reasons including altimetry.</p>
-                        <p>That means we can create an elevation profile of our marathon classifying each mile and adding or removing some seconds to our goal pace as shown below:</p>
+                        <h3>@Resources.About_Altimetry_Title</h3>
+                        <p>@Resources.About_Altimetry_P1</p>
+                        <p>@Resources.About_Altimetry_P2</p>
                         <ul>
-                            <li>Downhill = 10 seconds faster per mile</li>
-                            <li>Flat = keep goal pace</li>
-                            <li>Uphill = 10 seconds slower per mile</li>
+                            <li>@Resources.About_Altimetry_P3</li>
+                            <li>@Resources.About_Altimetry_P4</li>
+                            <li>@Resources.About_Altimetry_P5</li>
                         </ul>
                     </div>
                     <br />
                     <div>
-                        <h3>Step Two: The Marathon Nation Race Approach</h3>
-                        <p><em>Start Smart (Miles 0 to 5)</em> — Given your goal pace of, say 9:00/miles, you purposely start of slower by about 15 seconds per mile. Then you start to bring the pace down such that by mile five, you are running at or just under your goal pace. It sounds crazy, for sure, but it means you aren&#8217;t running too hard, or wasting energy trying to weave around the competition. You are just in your zone, slowly building up your pace to where you&#8217;ll want it to sit all day.</p>
-                        <p><em>Run to the Line</em> (<em>Miles 6 to 20) </em>— The bulk of your race is spent running just under our goal pace. For our 9:00 runner, this means miles in the 8:55 range. The purpose here is to be consistent but to slowly chip away at the timing surplus that our early conservative pacing created. By the time we reach the end of this section of our day, you should be right on target for your goal time but in a much better place.</p>
-                        <p>The Line (Aka the “wall”) is the part of your race day where your body begins to push back. In general this happens between miles 18 and 22 on race day, depending on the course, your pacing, your fitness, etc. Of course, most runners go out fast putting time in to “the bank” for when they slow down — I am here to tell you there is no such bank, and that time you saved will mostly likely be nowhere near sufficient to staunch the bleeding at the end of your day.</p>
-                        <p>Until you hit the “line” you aren’t racing, you are running. You ignore the other runners and do your best to flatten out the course through smart pacing. Nutritionally you are fueling in anticipation of the last six miles.</p>
-                        <p><em>Race to the Finish</em> <em>(Miles 21 to Finish)— </em>The last six miles on race day are were dreams are made (or broken). Inside Marathon Nation we don’t dread the end of the race; it’s where our day begins. If you have paced yourself properly, you’ll just be starting to pass other runners as everyone around you is slowing down. This is not only a judicious application of your fitness, it’s a powerful mental strategy that helps you stay focused just as your body is trying to check out.</p>
-                        <p>In summary, the basic Marathon Nation Pacing approach is:</p>
+                        <h3>@Resources.About_Approach_Title</h3>
+                        <p><em>@Resources.About_Approach_P1_Title</em>@Resources.About_Approach_P1</p>
+                        <p><em>@Resources.About_Approach_P2_Title</em>@Resources.About_Approach_P2</p>
+                        <p>@Resources.About_Approach_P3</p>
+                        <p>@Resources.About_Approach_P4</p>
+                        <p><em>@Resources.About_Approach_P5_Title</em>@Resources.About_Approach_P5</p>
+                        <p>@Resources.About_Approach_P6</p>
                         <ul>
-                            <li>Give away 15 seconds per mile for first six miles.</li>
-                            <li>Gain back 5 seconds per mile from miles 6 through 20.</li>
-                            <li>Last 10k is on pace.</li>
+                            <li>@Resources.About_Approach_P7</li>
+                            <li>@Resources.About_Approach_P8</li>
+                            <li>@Resources.About_Approach_P9</li>
                         </ul>
                     </div>
                 </div>
@@ -135,12 +143,12 @@
 <div id="f">
     <div class="container">
         <div class="row">
-            <h3>CONTACT ME</h3>
+            <h3>@Resources.ContactMe_Title</h3>
             <p class="centered"><i class="icon icon-circle"></i><i class="icon icon-circle"></i><i class="icon icon-circle"></i></p>
 
             <div class="col-lg-6 col-lg-offset-3">
-                <p>Contact me for any comment or question you could have or request to add a marathon elevation profile in the list.</p>
-                <p>Also any experience running your marathons guided by Smart Marathon is welcome to be included in a future section.</p>
+                <p>@Resources.ContactMe_P1</p>
+                <p>@Resources.ContactMe_P2</p>
                 <address>
                     <p>Luis Fernandez Jimenez<br />
                     San Jose, Costa Rica<br />
@@ -149,7 +157,7 @@
                 </address>
                 <br />
                 <div>
-                    <p>If you find helpful this site please feel free to make any donation and contribute to pay hosting charges, make improvements and develop future sections:</p>
+                    <p>@Resources.ContactMe_P3</p>
                     <br />
                     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                         <input type="hidden" name="cmd" value="_s-xclick">
@@ -166,7 +174,10 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            LoadPage();
+            var language = LoadPage();
+            //var data = {};
+            //data = '@Html.Raw(Json.Encode(Model))';
+            //SaveData(data);
 
             $('.btn-toggle').click(function () {
                 ToggleKms(this);
@@ -188,6 +199,17 @@
                 LoadSplits();
                 Submit();
             });
+
+            $('#polyglotLanguageSwitcher').polyglotLanguageSwitcher({
+                effect: 'fade',
+                testMode: true,
+                initLanguage: language,
+                onChange: function (evt) {
+                    var url = '@Url.Action("Index")';
+                    ChangeLanguage(url, evt.selectedItem);
+                }
+            });
+            $(this).prev("li").prop("en", "es");
         });
-    </script>
+</script>
 }

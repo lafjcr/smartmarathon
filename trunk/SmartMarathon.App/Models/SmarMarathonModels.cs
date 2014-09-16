@@ -9,29 +9,28 @@ namespace SmartMarathon.App.Models
     public class SmartMarathonData
     {
         [Required]
-        [Display(Name = "GOAL TIME")]
+        [Display(Name = "Label_GoalTime", ResourceType=typeof(Resources))]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm\:ss}")]
         public TimeSpan GoalTime { get; set; }
 
         [Required]
-        [Display(Name = "DISTANCE")]
+        [Display(Name = "Label_Distance", ResourceType = typeof(Resources))]
         public Distance Distance { get; set; }
+        
+        [Required]
+        [Display(Name = "Label_Event", ResourceType = typeof(Resources))]
+        public string Marathon { get; set; }
 
         [Required]
-        [Display(Name = "Marathons")]
-        public SelectList Marathons { get; set; }
-
-        [Required]
-        [Display(Name = "EVENT")]
-        public string Marathon { get; set; }        
-
-        [Required]
-        [Display(Name = "InKms")]
         public bool InKms { get; set; }
 
         [Required]
-        [Display(Name = "Splits")]
+        public string Language { get; set; }
+        
+        [Required]
         public SplitsModel Splits { get; set; }
+
+        public SelectList Marathons { get; set; }
 
         public SelectList Distances { get; set; }
 
