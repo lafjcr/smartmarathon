@@ -102,6 +102,8 @@ namespace SmartMarathon.App.Models
         public string Miles { get; set; }
         public string Kms { get; set; }
         public Distance Distance { get; set; }
+        public string Country { get; set; }
+        public string WebSite { get; set; }
     }
 
     public enum SplitCategory
