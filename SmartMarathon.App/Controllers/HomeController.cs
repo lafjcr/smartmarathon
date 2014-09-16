@@ -44,7 +44,6 @@ namespace SmartMarathon.App.Controllers
         public ActionResult Calculate(SmartMarathonData model)
         {
             SplitsManager.Calculate(model);
-            ViewData["InKms"] = model.InKms;
             ViewData["SplitCategories"] = model.SplitCategories;
             return PartialView("Splits", model);
         }
