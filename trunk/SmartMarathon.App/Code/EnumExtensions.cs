@@ -1,11 +1,15 @@
 ﻿using SmartMarathon.App.Models;
 using System;
 using System.ComponentModel;
+using System.Resources;
+using System.Web.Script.Serialization;
 
 namespace SmartMarathon.App.Code
 {
     public static class EnumExtensions
     {
+        private const double mileInKms = 1.609344;
+
         public static string Description(this Enum value)
         {
             var enumType = value.GetType();
@@ -53,7 +57,45 @@ namespace SmartMarathon.App.Code
 
         public static double ToMiles(this Distance value)
         {
-            return value.ToKilometers() / 1.609344;
+            return value.ToKilometers() / mileInKms;
+        }
+
+        public static double FromKilometersToMiles(this double value)
+        {
+            return value / mileInKms;
+        }
+
+        public static double FromMilesToKilometers(this double value)
+        {
+            return value * mileInKms;
+        }
+
+        public static string ToJson(this Object obj)
+        {
+            return new JavaScriptSerializer().Serialize(obj);
+        }
+    }
+
+    public class LocalizedDescriptionAttribute : DescriptionAttribute
+    {
+        private readonly string _resourceKey;
+        private readonly ResourceManager _resource;
+        public LocalizedDescriptionAttribute(string resourceKey, Type resourceType)
+        {
+            _resource = new ResourceManager(resourceType);
+            _resourceKey = resourceKey;
+        }
+
+        public override string Description
+        {
+            get
+            {
+                string displayName = _resource.GetString(_resourceKey);
+
+                return string.IsNullOrEmpty(displayName)
+                    ? string.Format("[[{0}]]", _resourceKey)
+                    : displayName;
+            }
         }
     }
 }

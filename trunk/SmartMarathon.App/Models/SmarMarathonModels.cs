@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartMarathon.App.Code;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -16,6 +17,10 @@ namespace SmartMarathon.App.Models
         [Required]
         [Display(Name = "Label_Distance", ResourceType = typeof(Resources))]
         public Distance Distance { get; set; }
+
+        [Required]
+        [Display(Name = "Label_OtherDistance", ResourceType = typeof(Resources))]
+        public Double OtherDistance { get; set; }
         
         [Required]
         [Display(Name = "Label_Event", ResourceType = typeof(Resources))]
@@ -115,15 +120,17 @@ namespace SmartMarathon.App.Models
 
     public enum Distance
     {
-        [Description("Marathon")]
+        [LocalizedDescription("Distance_Marathon", typeof(Resources))]
         K42 = 42,
-        [Description("30K")]
+        [LocalizedDescription("Distance_30K", typeof(Resources))]
         K30 = 30,
-        [Description("Half Marathon")]
+        [LocalizedDescription("Distance_HalfMarathon", typeof(Resources))]
         K21 = 21,
-        [Description("10K")]
+        [LocalizedDescription("Distance_10K", typeof(Resources))]
         K10 = 10,
-        [Description("5K")]
-        K5 = 5
+        [LocalizedDescription("Distance_5K", typeof(Resources))]
+        K5 = 5,
+        [LocalizedDescription("Distance_Other", typeof(Resources))]
+        K0 = 0
     }
 }
