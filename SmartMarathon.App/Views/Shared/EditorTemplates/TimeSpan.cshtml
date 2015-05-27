@@ -1,16 +1,21 @@
 ﻿@model TimeSpan
 
-@Html.DropDownList("", Enumerable.Range(0, 24)
+@{
+    var showHour = Convert.ToBoolean(ViewData["ShowHour"]);
+}
+
+@Html.DropDownList("Hours", Enumerable.Range(0, 24)
     .Select(i => new SelectListItem
     {
         Value = i.ToString(),
         Text = i.ToString(),
         Selected = Model.Hours == i
-    }), new { @class = "form-control form-control2 timespan", @placeholder = "HH" })&nbsp;
+    }), new { @class = "form-control form-control2 timespan", @placeholder = "HH", @style = !showHour ? "display:none" : "" })&nbsp;
 
-@Html.Label(":")&nbsp;
+@Html.Label(":", new { @style = !showHour ? "display:none" : "" })&nbsp;
+   
 
-@Html.DropDownList("", Enumerable.Range(0, 60)
+@Html.DropDownList("Minutes", Enumerable.Range(0, 60)
     .Select(i => new SelectListItem
     {
         Value = i.ToString(),
@@ -20,7 +25,7 @@
 
 @Html.Label(":")&nbsp;
 
-@Html.DropDownList("", Enumerable.Range(0, 60)
+@Html.DropDownList("Seconds", Enumerable.Range(0, 60)
     .Select(i => new SelectListItem
     {
         Value = i.ToString(),

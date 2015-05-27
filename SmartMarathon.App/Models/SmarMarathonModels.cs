@@ -15,12 +15,22 @@ namespace SmartMarathon.App.Models
         public TimeSpan GoalTime { get; set; }
 
         [Required]
+        [Display(Name = "Label_Pace", ResourceType = typeof(Resources))]
+        [DisplayFormat(DataFormatString = @"{0:mm\:ss}")]
+        public TimeSpan PaceByKm { get; set; }
+
+        [Required]
+        [Display(Name = "Label_Pace", ResourceType = typeof(Resources))]
+        [DisplayFormat(DataFormatString = @"{0:mm\:ss}")]
+        public TimeSpan PaceByMile { get; set; }
+
+        [Required]
         [Display(Name = "Label_Distance", ResourceType = typeof(Resources))]
         public Distance Distance { get; set; }
 
         [Required]
-        [Display(Name = "Label_OtherDistance", ResourceType = typeof(Resources))]
-        public Double OtherDistance { get; set; }
+        [Display(Name = "Label_RealDistance", ResourceType = typeof(Resources))]
+        public Double RealDistance { get; set; }
         
         [Required]
         [Display(Name = "Label_Event", ResourceType = typeof(Resources))]
@@ -49,13 +59,14 @@ namespace SmartMarathon.App.Models
         public SmartMarathonData(bool create)
         {
             Distance = Distance.K42;
-            Distances = new SelectList(Code.SmartMarathon.Distances(), "Value", "Text");
             SplitCategories = new SelectList(Code.SmartMarathon.SplitCategories(), "Value", "Text");
             var marathons = Code.SmartMarathon.Marathons(Distance) as List<SelectListItem>;
             Marathons = new SelectList(marathons, "Value", "Text");
             if (create)
             {                
-                InKms = true;                
+                InKms = true;
+                Distances = new SelectList(Code.SmartMarathon.Distances(), "Value", "Text");
+                RealDistance = Distance.ToKilometers();
                 Marathon = marathons.Find(item => item.Selected).Value;
                 Splits = Code.SplitsManager.Build(Distance);
             }
@@ -109,6 +120,31 @@ namespace SmartMarathon.App.Models
         public Distance Distance { get; set; }
         public string Country { get; set; }
         public string WebSite { get; set; }
+    }
+
+    public class AvgPacesModel
+    {
+        public bool InKms { get; set; }
+        public Distance Distance { get; set; }
+        public Double RealDistance { get; set; }
+        public int GoalTime_Hours { get; set; }
+        public int GoalTime_Minutes { get; set; }
+        public int GoalTime_Seconds { get; set; }
+        public TimeSpan PaceByKm { get; set; }
+        public TimeSpan PaceByMile { get; set; }
+
+    }
+
+    public class GoalTimeModel
+    {
+        public bool InKms { get; set; }
+        public Distance Distance { get; set; }
+        public Double RealDistance { get; set; }
+        public int PaceByKm_Minutes { get; set; }
+        public int PaceByKm_Seconds { get; set; }
+        public int PaceByMile_Minutes { get; set; }
+        public int PaceByMile_Seconds { get; set; }
+        public TimeSpan GoalTime { get; set; }
     }
 
     public enum SplitCategory

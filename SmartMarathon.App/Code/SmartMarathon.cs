@@ -31,26 +31,16 @@ namespace SmartMarathon.App.Code
 
         public static IEnumerable<SelectListItem> SplitCategories()
         {
-            var splitCategories = Enum.GetValues(typeof(SplitCategory)).Cast<SplitCategory>();
-            var splitCategoriesList = from splitCategory in splitCategories
-                                    select new SelectListItem
-                                    {
-                                        Text = splitCategory.ToString(),
-                                        Value = ((int)splitCategory).ToString()
-                                    };
-            return splitCategoriesList;
+            var items = Enum.GetValues(typeof(SplitCategory)).Cast<SplitCategory>();
+            var list = items.Select(i => new SelectListItem { Text = i.ToString(), Value = ((int)i).ToString() }).ToList();
+            return list;
         }
 
         public static IEnumerable<SelectListItem> Distances()
         {
-            var distances = Enum.GetValues(typeof(Distance)).Cast<Distance>();
-            var distancesList = from distance in distances
-                                      select new SelectListItem
-                                      {
-                                          Text = distance.Description(),
-                                          Value = ((int)distance).ToString()
-                                      };
-            return distancesList;
+            var items = Enum.GetValues(typeof(Distance)).Cast<Distance>().OrderByDescending(i => i.ToKilometers());
+            var list = items.Select(i => new SelectListItem { Text = i.Description(), Value = ((int)i).ToString() }).ToList();
+            return list;
         }
     }    
 }

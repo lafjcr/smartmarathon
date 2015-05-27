@@ -48,6 +48,20 @@ namespace SmartMarathon.App.Controllers
             return PartialView("Splits", model);
         }
 
+        [HttpPost]
+        public JsonResult CalcuteAvgPaces(AvgPacesModel model)
+        {
+            SplitsManager.CalculateAvgPaces(model);
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult CalcuteGoalTime(GoalTimeModel model)
+        {
+            SplitsManager.CalculateGoalTime(model);
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult About()
         {
             return View();

@@ -22,34 +22,63 @@ namespace SmartMarathon.App.Code
 
         public static void Calculate(SmartMarathonData data)
         {
-            data.Splits = BuildsSplits(data.Distance, data.GoalTime, data.Splits, data.OtherDistance, data.InKms);
+            data.RealDistance = data.Distance != Distance.K0 ? (data.InKms ? data.Distance.ToKilometers() : data.Distance.ToMiles()) : data.RealDistance;
+
+            var distanceKms = data.InKms ? data.RealDistance : data.RealDistance.FromMilesToKilometers();
+            var distanceMiles = data.InKms ? data.RealDistance.FromKilometersToMiles() : data.RealDistance;
+
+            // Calculates avg pace
+            data.PaceByKm = CalcuteAvgPace(distanceKms, data.GoalTime);
+            data.PaceByMile = CalcuteAvgPace(distanceMiles, data.GoalTime);
+
+            // Create splits
+            data.Splits = data.Splits == null ? new SplitsModel() : data.Splits;
+
+            // Build base splits
+            data.Splits.Kilometers = BuildsSplits(true, distanceKms, data.GoalTime, data.Splits.Kilometers);
+            data.Splits.Miles = BuildsSplits(false, distanceMiles, data.GoalTime, data.Splits.Miles);
+
+            // Apply calculations to splits
+            if (data.GoalTime.TotalSeconds != 0)
+            {
+                data.Splits.Kilometers.ForEach(item => CalcuteSplit(distanceKms, item, true));
+                data.Splits.Miles.ForEach(item => CalcuteSplit(distanceMiles, item, false));
+            }
         }
 
-        private static TimeSpan CalcutaAvgPace(Double distance, TimeSpan goalTime)
+        public static void CalculateAvgPaces(AvgPacesModel data)
+        {
+            data.RealDistance = data.Distance != Distance.K0 ? (data.InKms ? data.Distance.ToKilometers() : data.Distance.ToMiles()) : data.RealDistance;
+
+            var distanceKms = data.InKms ? data.RealDistance : data.RealDistance.FromMilesToKilometers();
+            var distanceMiles = data.InKms ? data.RealDistance.FromKilometersToMiles() : data.RealDistance;
+
+            var goalTime = new TimeSpan(data.GoalTime_Hours, data.GoalTime_Minutes, data.GoalTime_Seconds);
+
+            // Calculates avg pace
+            data.PaceByKm = CalcuteAvgPace(distanceKms, goalTime);
+            data.PaceByMile = CalcuteAvgPace(distanceMiles, goalTime);
+        }
+
+        public static void CalculateGoalTime(GoalTimeModel data)
+        {
+            data.RealDistance = data.Distance != Distance.K0 ? (data.InKms ? data.Distance.ToKilometers() : data.Distance.ToMiles()) : data.RealDistance;
+            
+            var paceByKm = new TimeSpan(0, data.PaceByKm_Minutes, data.PaceByKm_Seconds);
+            var paceByMile = new TimeSpan(0, data.PaceByMile_Minutes, data.PaceByMile_Seconds);
+            var pace = data.InKms ? paceByKm : paceByMile;
+
+            // Calculates goal time
+            var goalTimeSeconds = pace.TotalSeconds * data.RealDistance;
+            data.GoalTime = new TimeSpan(0, 0, Convert.ToInt32(goalTimeSeconds));
+        }
+
+        private static TimeSpan CalcuteAvgPace(Double distance, TimeSpan goalTime)
         {
             var result = new TimeSpan();
             if (distance > 0)
             {
                 result = new TimeSpan(0, 0, Convert.ToInt32(Math.Truncate(goalTime.TotalSeconds / distance)));
-            }
-            return result;
-        }
-
-        private static SplitsModel BuildsSplits(Distance distance, TimeSpan goalTime, SplitsModel originalSplits, Double otherDistance, bool inKms)
-        {
-            var result = originalSplits == null ? new SplitsModel() : originalSplits;
-            var distanceKms = distance == Distance.K0 ? (inKms ? otherDistance : otherDistance.FromMilesToKilometers()) : distance.ToKilometers();
-            var distanceMiles = distance == Distance.K0 ? (inKms ? otherDistance.FromKilometersToMiles() : otherDistance) : Math.Round(distance.ToMiles(), 1);
-
-            // Create base splits
-            result.Kilometers = BuildsSplits(true, distanceKms, goalTime, result.Kilometers);
-            result.Miles = BuildsSplits(false, distanceMiles, goalTime, result.Miles);
-            
-            // Apply calculations to splits
-            if (goalTime.TotalSeconds != 0)
-            {
-                result.Kilometers.ForEach(item => CalcuteSplit(distanceKms, item, true));
-                result.Miles.ForEach(item => CalcuteSplit(distanceMiles, item, false));
             }
             return result;
         }
@@ -60,41 +89,12 @@ namespace SmartMarathon.App.Code
             return BuildsSplits(inKms, realDistance, new TimeSpan(), null);
         }
 
-        //private static List<SplitData> BuildsSplits(bool inKms, Distance distance, TimeSpan goalTime, string marathonInfo)
-        //{
-        //    var splits = new List<SplitData>();
-        //    var splitsCount = inKms ? distance.ToKilometers() : Math.Round(distance.ToMiles(), 1); ;
-        //    var avgPace = CalcutaAvgPace(inKms, distance, goalTime).TotalSeconds;
-        //    var splitFactor = inKms ? 1000 : conversionFactor;
-        //    var originalSplits = String.IsNullOrEmpty(marathonInfo) ? null : (inKms ? marathonInfo.Split(';')[1].Split(',') : marathonInfo.Split(';')[2].Split(','));
-        //    SplitData previous = null;
-        //    double splitNo = 0;
-        //    for (int i = 1; i < splitsCount; i++)
-        //    {
-        //        splitNo = i;
-        //        var splitDistance = (splitNo - (previous != null ? previous.Split : 0)) * splitFactor;
-        //        var splitCategory = originalSplits != null && i < originalSplits.Length ? (SplitCategory)Convert.ToInt32(originalSplits[i].ToString()) : SplitCategory.Flat;
-        //        var split = new SplitData() { Split = splitNo, Category = splitCategory, Pace = new TimeSpan(0, 0, Convert.ToInt32(avgPace)), PreviousSplit = previous, Distance = splitDistance };
-        //        splits.Add(split);
-        //        previous = split;
-        //    }            
-        //    if (splitsCount - splitNo != 0)
-        //    {
-        //        var lastSplit = splitsCount;
-        //        var lastSplitDistance = (lastSplit - (previous != null ? previous.Split : 0)) * splitFactor;
-        //        var lastSplitCategory = originalSplits != null ? (SplitCategory)Convert.ToInt32(originalSplits[originalSplits.Length - 1].ToString()) : SplitCategory.Flat;
-        //        splits.Add(new SplitData() { Split = lastSplit, Category = lastSplitCategory, Pace = new TimeSpan(0, 0, Convert.ToInt32(avgPace)), PreviousSplit = previous, Distance = lastSplitDistance });
-        //    }
-        //    return splits;
-        //}
-
         private static List<SplitData> BuildsSplits(bool inKms, Double distance, TimeSpan goalTime, List<SplitData> originalSplits)
         {
             var splits = new List<SplitData>();
             var splitsCount = distance;
-            var avgPace = CalcutaAvgPace(distance, goalTime).TotalSeconds;
+            var avgPace = CalcuteAvgPace(distance, goalTime).TotalSeconds;
             var splitFactor = inKms ? 1000 : conversionFactor;
-            //var originalSplits = String.IsNullOrEmpty(marathonInfo) ? null : (inKms ? marathonInfo.Split(';')[1].Split(',') : marathonInfo.Split(';')[2].Split(','));
             SplitData previous = null;
             double splitNo = 0;
             for (int i = 1; i < splitsCount; i++)
@@ -102,7 +102,7 @@ namespace SmartMarathon.App.Code
                 splitNo = i;
                 var splitDistance = (splitNo - (previous != null ? previous.Split : 0)) * splitFactor;
                 var splitCategory = originalSplits != null && i < originalSplits.Count ? originalSplits[i - 1].Category : SplitCategory.Flat;
-                var split = new SplitData() { Split = Math.Round(splitNo, 2), Category = splitCategory, Pace = new TimeSpan(0, 0, Convert.ToInt32(avgPace)), PreviousSplit = previous, Distance = splitDistance };
+                var split = new SplitData() { Split = Math.Round(splitNo, 3), Category = splitCategory, Pace = new TimeSpan(0, 0, Convert.ToInt32(avgPace)), PreviousSplit = previous, Distance = splitDistance };
                 splits.Add(split);
                 previous = split;
             }
@@ -111,7 +111,7 @@ namespace SmartMarathon.App.Code
                 var lastSplit = splitsCount;
                 var lastSplitDistance = (lastSplit - (previous != null ? previous.Split : 0)) * splitFactor;
                 var lastSplitCategory = originalSplits != null ? originalSplits[originalSplits.Count - 1].Category : SplitCategory.Flat;
-                splits.Add(new SplitData() { Split = Math.Round(lastSplit, 2), Category = lastSplitCategory, Pace = new TimeSpan(0, 0, Convert.ToInt32(avgPace)), PreviousSplit = previous, Distance = lastSplitDistance });
+                splits.Add(new SplitData() { Split = Math.Round(lastSplit, 3), Category = lastSplitCategory, Pace = new TimeSpan(0, 0, Convert.ToInt32(avgPace)), PreviousSplit = previous, Distance = lastSplitDistance });
             }
             return splits;
         }

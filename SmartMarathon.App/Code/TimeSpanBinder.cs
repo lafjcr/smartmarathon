@@ -7,27 +7,36 @@ namespace SmartMarathon.App.Code
     {
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            // Ensure there's incomming data
-            var key = bindingContext.ModelName;
-            var valueProviderResult = bindingContext.ValueProvider.GetValue(key);
-
-            if (valueProviderResult == null || string.IsNullOrEmpty(valueProviderResult.AttemptedValue))
-            {
+            if (bindingContext.ModelType != typeof(TimeSpan))
                 return null;
-            }
 
-            // Preserve it in case we need to redisplay the form
-            bindingContext.ModelState.SetModelValue(key, valueProviderResult);
+            int hours = 0, minutes = 0, seconds = 0;
 
-            // Parse
-            var hours = ((string[])valueProviderResult.RawValue)[0];
-            var minutes = ((string[])valueProviderResult.RawValue)[1];
-            var seconds = ((string[])valueProviderResult.RawValue)[2];
+            var name = bindingContext.ModelName;
 
-            // A TimeSpan represents the time elapsed since midnight
-            var time = new TimeSpan(Convert.ToInt32(hours), Convert.ToInt32(minutes), Convert.ToInt32(seconds));
+            hours = ParseTimeComponent(String.Format("{0}.{1}", name, HoursKey), bindingContext);
+            minutes = ParseTimeComponent(String.Format("{0}.{1}", name, MinutesKey), bindingContext);
+            seconds = ParseTimeComponent(String.Format("{0}.{1}", name, SecondsKey), bindingContext);
 
-            return time;
+            return new TimeSpan(hours, minutes, seconds);
         }
+
+        public int ParseTimeComponent(string component, ModelBindingContext bindingContext)
+        {
+            int result = 0;
+            var val = bindingContext.ValueProvider.GetValue(component);
+
+            if (!int.TryParse(val.AttemptedValue, out result))
+                bindingContext.ModelState.AddModelError(component, String.Format("The field '{0}' is required.", component));
+
+            // This is important
+            bindingContext.ModelState.SetModelValue(component, val);
+
+            return result;
+        }
+
+        private readonly string HoursKey = "Hours";
+        private readonly string MinutesKey = "Minutes";
+        private readonly string SecondsKey = "Seconds";
     }
 }
