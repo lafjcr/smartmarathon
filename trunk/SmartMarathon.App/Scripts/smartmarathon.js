@@ -13,7 +13,7 @@
     return LoadLanguage();
 }
 
-function Submit() {
+function Submit(control) {
     $('#frmMain').submit();
 }
 
@@ -38,16 +38,24 @@ function LoadEvents(url, distance) {
     });
 }
 
+function InKms() {
+    var inKms = $('#InKms').val() == "true";
+    return inKms;
+}
 
 function ShowSplits() {
-    var inKms = $('#InKms').val() == "true";
+    var inKms = InKms();
     if (inKms) {
-        $('#Kms').show();
         $('#Miles').hide();
+        $('#pacebymile-box').hide();
+        $('#Kms').show();
+        $('#pacebykm-box').show();
     }
     else {
         $('#Kms').hide();
+        $('#pacebykm-box').hide();
         $('#Miles').show();
+        $('#pacebymile-box').show();
     }
 }
 
@@ -160,4 +168,58 @@ function ChangeLanguage(url, language) {
 
 function SaveData(data) {
     window.localStorage.SmartMarathonData = data;
+}
+
+function CalculateAvgPaces(url) {
+    model = CreateAvgPacesModel();
+    var jqxhr = $.post(url, model,
+        function (data) {
+            $('#PaceByKm_Minutes').val(data.PaceByKm.Minutes);
+            $('#PaceByKm_Seconds').val(data.PaceByKm.Seconds);
+            $('#PaceByMile_Minutes').val(data.PaceByMile.Minutes);
+            $('#PaceByMile_Seconds').val(data.PaceByMile.Seconds);
+            Submit();
+        })
+    .fail(function (error) {
+        alert("[CalculateAvgPaces] Ajax Error");
+    });
+}
+
+function CreateAvgPacesModel() {
+    var model = {
+        InKms: InKms(),
+        Distance: $("#Distance").val(),
+        RealDistance: $("#RealDistance").val(),
+        GoalTime_Hours: $('#GoalTime_Hours').val(),
+        GoalTime_Minutes: $('#GoalTime_Minutes').val(),
+        GoalTime_Seconds: $('#GoalTime_Seconds').val()
+    };
+    return model;
+}
+
+function CalculateGoalTime(url) {
+    model = CreateGoalTimeModel();
+    var jqxhr = $.post(url, model,
+        function (data) {
+            $('#GoalTime_Hours').val(data.GoalTime.Hours);
+            $('#GoalTime_Minutes').val(data.GoalTime.Minutes);
+            $('#GoalTime_Seconds').val(data.GoalTime.Seconds);
+            Submit();
+        })
+    .fail(function (error) {
+        alert("[CalculateGoalTime] Ajax Error");
+    });
+}
+
+function CreateGoalTimeModel() {
+    var model = {
+        InKms: InKms(),
+        Distance: $("#Distance").val(),
+        RealDistance: $("#RealDistance").val(),
+        PaceByKm_Minutes: $('#PaceByKm_Minutes').val(),
+        PaceByKm_Seconds: $('#PaceByKm_Seconds').val(),
+        PaceByMile_Minutes: $('#PaceByMile_Minutes').val(),
+        PaceByMile_Seconds: $('#PaceByMile_Seconds').val()
+    };
+    return model;
 }

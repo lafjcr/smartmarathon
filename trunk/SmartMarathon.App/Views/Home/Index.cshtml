@@ -46,7 +46,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.GoalTime, new { @class = "control-label col-md-offset-2 col-md-2" })
                 <div class="col-md-3">
-                    @Html.EditorFor(m => m.GoalTime)
+                    @Html.EditorFor(m => m.GoalTime, new { ShowHour = true })
                 </div>
                 <div class="col-md-2">
                     <div class="btn-group btn-toggle">
@@ -55,6 +55,20 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group" id="pacebykm-box">
+                @Html.LabelFor(m => m.PaceByKm, new { @class = "control-label col-md-offset-2 col-md-2" })
+                <div class="col-md-3" id="paceByKm-box">
+                    @Html.EditorFor(m => m.PaceByKm, new { ShowHour = false })
+                    @Html.Label("Min/Km")
+                </div>                
+            </div>
+            <div class="form-group" id="pacebymile-box">
+                @Html.LabelFor(m => m.PaceByMile, new { @class = "control-label col-md-offset-2 col-md-2" })
+                <div class="col-md-3" id="paceByKm-box">
+                    @Html.EditorFor(m => m.PaceByMile, new { ShowHour = false })
+                    @Html.Label("Min/Mile")
+                </div>                
+            </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Distance, new { @class = "control-label col-md-offset-2 col-md-2" })
                 <div class="col-md-3">
@@ -62,10 +76,10 @@
                     @Html.ValidationMessageFor(m => m.Distance)
                 </div>
             </div>
-            <div class="form-group hidden" id="otherDistance-box">
-                @Html.LabelFor(m => m.OtherDistance, new { @class = "control-label col-md-offset-2 col-md-2" })
+            <div class="form-group hidden" id="realDistance-box">
+                @Html.LabelFor(m => m.RealDistance, new { @class = "control-label col-md-offset-2 col-md-2" })
                 <div class="col-md-3">
-                    @Html.TextBoxFor(m => m.OtherDistance, new { @class = "form-control numericOnly", @type = "number" })
+                    @Html.TextBoxFor(m => m.RealDistance, new { @class = "form-control numericOnly", @type = "number" })
                 </div>
             </div>
             <div class="form-group" id="events-box">
@@ -179,58 +193,73 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            var language = LoadPage();
-            //var data = {};
-            //data = '@Html.Raw(Json.Encode(Model))';
-            //SaveData(data);
+    $(document).ready(function () {
+        var language = LoadPage();
+        //var data = {};
+        //data = '@Html.Raw(Json.Encode(Model))';
+        //SaveData(data);
 
-            $('.btn-toggle').click(function () {
-                ToggleKms(this);
-                return false;
-            });
-
-            $(".timespan").change(function () {
-                Submit();
-            });
-
-            $("#Distance").change(function () {
-                var url = '@Url.Action("EventsByDistance")';
-                var distance = $(this).val();
-                if (distance == 0) {                    
-                    $('#events-box').addClass('hidden');
-                    $('#otherDistance-box').removeClass('hidden');
-                }
-                else {
-                    $('#otherDistance-box').addClass('hidden');
-                    $('#events-box').removeClass('hidden');
-                    LoadEvents(url, distance);
-                }
-                Submit();
-            });
-
-            $("#OtherDistance").change(function () {
-                Submit();
-            });
-
-            $("#Marathon").change(function () {
-                LoadSplits();
-                Submit();
-            });
-
-            $('#polyglotLanguageSwitcher').polyglotLanguageSwitcher({
-                effect: 'fade',
-                testMode: true,
-                initLanguage: language,
-                onChange: function (evt) {
-                    var url = '@Url.Action("Index")';
-                    ChangeLanguage(url, evt.selectedItem);
-                }
-            });
-
-            setTimeout(function () {
-                $('html, body').animate({ scrollTop: $("#f").offset().top }, 2000);
-            }, 1500);
+        $('.btn-toggle').click(function () {
+            ToggleKms(this);
+            return false;
         });
+
+        $(".timespan").change(function () {
+            if (this.name.substring(0, 8) == "GoalTime") {
+                RefreshAvgPaces();
+            }
+            else {
+                RefreshGoalTime();
+            }            
+        });
+
+        $("#Distance").change(function () {
+            var url = '@Url.Action("EventsByDistance")';
+            var distance = $(this).val();
+            if (distance == 0) {
+                $('#events-box').addClass('hidden');
+                $('#realDistance-box').removeClass('hidden');
+            }
+            else {
+                $('#realDistance-box').addClass('hidden');
+                $('#events-box').removeClass('hidden');
+                LoadEvents(url, distance);
+            }
+            RefreshAvgPaces();
+        });
+
+        $("#RealDistance").change(function () {
+            RefreshAvgPaces();
+        });
+
+        $("#Marathon").change(function () {
+            LoadSplits();
+            RefreshAvgPaces();
+        });
+
+        $('#polyglotLanguageSwitcher').polyglotLanguageSwitcher({
+            effect: 'fade',
+            testMode: true,
+            initLanguage: language,
+            onChange: function (evt) {
+                var url = '@Url.Action("Index")';
+                ChangeLanguage(url, evt.selectedItem);
+            }
+        });
+
+        setTimeout(function () {
+            $('html, body').animate({ scrollTop: $("#f").offset().top }, 2000);
+        }, 1500);
+
+        function RefreshAvgPaces() {
+            var url = '@Url.Action("CalcuteAvgPaces")';
+            CalculateAvgPaces(url);
+        }
+
+        function RefreshGoalTime() {
+            var url = '@Url.Action("CalcuteGoalTime")';
+            CalculateGoalTime(url);
+        }
+    });
 </script>
 }
