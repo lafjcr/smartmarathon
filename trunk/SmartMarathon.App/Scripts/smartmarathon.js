@@ -170,18 +170,26 @@ function SaveData(data) {
     window.localStorage.SmartMarathonData = data;
 }
 
-function CalculateAvgPaces(url) {
-    model = CreateAvgPacesModel();
+function CalculateGoalTimeAndAvgPaces(url, byGoalTime) {
+    if (byGoalTime) {
+        model = CreateAvgPacesModel();
+    }
+    else {
+        model = CreateGoalTimeModel();
+    }
     var jqxhr = $.post(url, model,
         function (data) {
             $('#PaceByKm_Minutes').val(data.PaceByKm.Minutes);
             $('#PaceByKm_Seconds').val(data.PaceByKm.Seconds);
             $('#PaceByMile_Minutes').val(data.PaceByMile.Minutes);
             $('#PaceByMile_Seconds').val(data.PaceByMile.Seconds);
+            $('#GoalTime_Hours').val(data.GoalTime.Hours);
+            $('#GoalTime_Minutes').val(data.GoalTime.Minutes);
+            $('#GoalTime_Seconds').val(data.GoalTime.Seconds);
             Submit();
         })
     .fail(function (error) {
-        alert("[CalculateAvgPaces] Ajax Error");
+        alert("[CalculateGoalTimeAndAvgPaces] Ajax Error");
     });
 }
 
@@ -190,25 +198,13 @@ function CreateAvgPacesModel() {
         InKms: InKms(),
         Distance: $("#Distance").val(),
         RealDistance: $("#RealDistance").val(),
-        GoalTime_Hours: $('#GoalTime_Hours').val(),
-        GoalTime_Minutes: $('#GoalTime_Minutes').val(),
-        GoalTime_Seconds: $('#GoalTime_Seconds').val()
+        GoalTime: {
+            "Hours": $('#GoalTime_Hours').val(),
+            "Minutes": $('#GoalTime_Minutes').val(),
+            "Seconds": $('#GoalTime_Seconds').val()
+        }
     };
     return model;
-}
-
-function CalculateGoalTime(url) {
-    model = CreateGoalTimeModel();
-    var jqxhr = $.post(url, model,
-        function (data) {
-            $('#GoalTime_Hours').val(data.GoalTime.Hours);
-            $('#GoalTime_Minutes').val(data.GoalTime.Minutes);
-            $('#GoalTime_Seconds').val(data.GoalTime.Seconds);
-            Submit();
-        })
-    .fail(function (error) {
-        alert("[CalculateGoalTime] Ajax Error");
-    });
 }
 
 function CreateGoalTimeModel() {
@@ -216,10 +212,14 @@ function CreateGoalTimeModel() {
         InKms: InKms(),
         Distance: $("#Distance").val(),
         RealDistance: $("#RealDistance").val(),
-        PaceByKm_Minutes: $('#PaceByKm_Minutes').val(),
-        PaceByKm_Seconds: $('#PaceByKm_Seconds').val(),
-        PaceByMile_Minutes: $('#PaceByMile_Minutes').val(),
-        PaceByMile_Seconds: $('#PaceByMile_Seconds').val()
+        PaceByKm: {
+            "Minutes": $('#PaceByKm_Minutes').val(),
+            "Seconds": $('#PaceByKm_Seconds').val()
+        },
+        PaceByMile: {
+            "Minutes": $('#PaceByMile_Minutes').val(),
+            "Seconds": $('#PaceByMile_Seconds').val()
+        }
     };
     return model;
 }

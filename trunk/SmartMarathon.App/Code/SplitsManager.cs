@@ -46,31 +46,37 @@ namespace SmartMarathon.App.Code
             }
         }
 
-        public static void CalculateAvgPaces(AvgPacesModel data)
+        public static void CalculateGoalTimeAndAvgPaces(GoalTimeAndAvgPacesModel data)
         {
             data.RealDistance = data.Distance != Distance.K0 ? (data.InKms ? data.Distance.ToKilometers() : data.Distance.ToMiles()) : data.RealDistance;
 
             var distanceKms = data.InKms ? data.RealDistance : data.RealDistance.FromMilesToKilometers();
             var distanceMiles = data.InKms ? data.RealDistance.FromKilometersToMiles() : data.RealDistance;
-
-            var goalTime = new TimeSpan(data.GoalTime_Hours, data.GoalTime_Minutes, data.GoalTime_Seconds);
-
-            // Calculates avg pace
-            data.PaceByKm = CalcuteAvgPace(distanceKms, goalTime);
-            data.PaceByMile = CalcuteAvgPace(distanceMiles, goalTime);
-        }
-
-        public static void CalculateGoalTime(GoalTimeModel data)
-        {
-            data.RealDistance = data.Distance != Distance.K0 ? (data.InKms ? data.Distance.ToKilometers() : data.Distance.ToMiles()) : data.RealDistance;
             
-            var paceByKm = new TimeSpan(0, data.PaceByKm_Minutes, data.PaceByKm_Seconds);
-            var paceByMile = new TimeSpan(0, data.PaceByMile_Minutes, data.PaceByMile_Seconds);
-            var pace = data.InKms ? paceByKm : paceByMile;
+            if (data.GoalTime.TotalSeconds > 0)
+            {
+                // Calculates avg paces
+                data.PaceByKm = CalcuteAvgPace(distanceKms, data.GoalTime);
+                data.PaceByMile = CalcuteAvgPace(distanceMiles, data.GoalTime);
+            }            
+            else
+            {
+                // Calculates goal time
+                var pace = data.InKms ? data.PaceByKm : data.PaceByMile;
+                
+                var goalTimeSeconds = pace.TotalSeconds * data.RealDistance;
+                data.GoalTime = new TimeSpan(0, 0, Convert.ToInt32(goalTimeSeconds));
 
-            // Calculates goal time
-            var goalTimeSeconds = pace.TotalSeconds * data.RealDistance;
-            data.GoalTime = new TimeSpan(0, 0, Convert.ToInt32(goalTimeSeconds));
+                // Calculates other pace
+                if (data.InKms)
+                {                    
+                    data.PaceByMile = CalcuteAvgPace(distanceMiles, data.GoalTime);
+                }
+                else
+                {
+                    data.PaceByKm = CalcuteAvgPace(distanceKms, data.GoalTime);
+                }
+            }
         }
 
         private static TimeSpan CalcuteAvgPace(Double distance, TimeSpan goalTime)

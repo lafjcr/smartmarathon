@@ -206,11 +206,11 @@
 
         $(".timespan").change(function () {
             if (this.name.substring(0, 8) == "GoalTime") {
-                RefreshAvgPaces();
+                RefreshGoalTimeAndAvgPaces(true);
             }
             else {
-                RefreshGoalTime();
-            }            
+                RefreshGoalTimeAndAvgPaces(false);
+            }
         });
 
         $("#Distance").change(function () {
@@ -225,16 +225,16 @@
                 $('#events-box').removeClass('hidden');
                 LoadEvents(url, distance);
             }
-            RefreshAvgPaces();
+            RefreshGoalTimeAndAvgPaces(true);
         });
 
         $("#RealDistance").change(function () {
-            RefreshAvgPaces();
+            RefreshGoalTimeAndAvgPaces(true);
         });
 
         $("#Marathon").change(function () {
             LoadSplits();
-            RefreshAvgPaces();
+            RefreshGoalTimeAndAvgPaces(true);
         });
 
         $('#polyglotLanguageSwitcher').polyglotLanguageSwitcher({
@@ -251,14 +251,9 @@
             $('html, body').animate({ scrollTop: $("#f").offset().top }, 2000);
         }, 1500);
 
-        function RefreshAvgPaces() {
-            var url = '@Url.Action("CalcuteAvgPaces")';
-            CalculateAvgPaces(url);
-        }
-
-        function RefreshGoalTime() {
-            var url = '@Url.Action("CalcuteGoalTime")';
-            CalculateGoalTime(url);
+        function RefreshGoalTimeAndAvgPaces(byGoalTime) {
+            var url = '@Url.Action("CalculateGoalTimeAndAvgPaces")';
+            CalculateGoalTimeAndAvgPaces(url, byGoalTime);
         }
     });
 </script>

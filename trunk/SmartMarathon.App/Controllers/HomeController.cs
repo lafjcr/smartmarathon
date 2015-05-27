@@ -49,16 +49,9 @@ namespace SmartMarathon.App.Controllers
         }
 
         [HttpPost]
-        public JsonResult CalcuteAvgPaces(AvgPacesModel model)
+        public JsonResult CalculateGoalTimeAndAvgPaces(GoalTimeAndAvgPacesModel model)
         {
-            SplitsManager.CalculateAvgPaces(model);
-            return Json(model, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public JsonResult CalcuteGoalTime(GoalTimeModel model)
-        {
-            SplitsManager.CalculateGoalTime(model);
+            SplitsManager.CalculateGoalTimeAndAvgPaces(model);
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
