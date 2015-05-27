@@ -122,29 +122,14 @@ namespace SmartMarathon.App.Models
         public string WebSite { get; set; }
     }
 
-    public class AvgPacesModel
+    public class GoalTimeAndAvgPacesModel
     {
         public bool InKms { get; set; }
         public Distance Distance { get; set; }
         public Double RealDistance { get; set; }
-        public int GoalTime_Hours { get; set; }
-        public int GoalTime_Minutes { get; set; }
-        public int GoalTime_Seconds { get; set; }
+        public TimeSpan GoalTime { get; set; }
         public TimeSpan PaceByKm { get; set; }
         public TimeSpan PaceByMile { get; set; }
-
-    }
-
-    public class GoalTimeModel
-    {
-        public bool InKms { get; set; }
-        public Distance Distance { get; set; }
-        public Double RealDistance { get; set; }
-        public int PaceByKm_Minutes { get; set; }
-        public int PaceByKm_Seconds { get; set; }
-        public int PaceByMile_Minutes { get; set; }
-        public int PaceByMile_Seconds { get; set; }
-        public TimeSpan GoalTime { get; set; }
     }
 
     public enum SplitCategory
