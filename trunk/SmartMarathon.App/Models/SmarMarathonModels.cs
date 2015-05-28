@@ -15,12 +15,12 @@ namespace SmartMarathon.App.Models
         public TimeSpan GoalTime { get; set; }
 
         [Required]
-        [Display(Name = "Label_Pace", ResourceType = typeof(Resources))]
+        [Display(Name = "Label_GoalPace", ResourceType = typeof(Resources))]
         [DisplayFormat(DataFormatString = @"{0:mm\:ss}")]
         public TimeSpan PaceByKm { get; set; }
 
         [Required]
-        [Display(Name = "Label_Pace", ResourceType = typeof(Resources))]
+        [Display(Name = "Label_GoalPace", ResourceType = typeof(Resources))]
         [DisplayFormat(DataFormatString = @"{0:mm\:ss}")]
         public TimeSpan PaceByMile { get; set; }
 
