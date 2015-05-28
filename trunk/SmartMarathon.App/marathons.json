@@ -108,6 +108,24 @@
         "WebSite": "http://www.tamarindobeachmarathon.com/"
     },
     {
+        "Distance": "K21",
+        "ID": 2,
+        "Name": "Media Maratón Internacional La Paz",
+        "Miles": "0,-1,-1,-1,-1, 1,-1,-1,-1,1, 1,-1,-1,0",
+        "Kms": "1,0,-1,-1,0, -1,-1,0,1,-1, -1,-1,0,-1,1, 1,0,0,-1,-1, 1,0",
+        "Country": "CR",
+        "WebSite": "http://www.grupopublicitariocr.net/"
+    },
+    {
+        "Distance": "K21",
+        "ID": 3,
+        "Name": "Media Maratón Correcaminos",
+        "Miles": "-1,-1,-1,-1,0, -1,-1,0,1,-1, 0,-1,1,0",
+        "Kms": "-1,0,-1,-1,-1, -1,1,-1,-1,0, -1,-1,1,1,-1, -1,1,0,-1,1, 1,0",
+        "Country": "CR",
+        "WebSite": "http://www.mediacorrecaminos.com/"
+    },
+    {
         "Distance": "K10",
         "ID": 0,
         "Name": "Standard Flat 10K",
@@ -115,6 +133,15 @@
         "Kms": "0,0,0,0,0, 0,0,0,0,0",
         "Country": "WW",
         "WebSite": "http://www.smartmarathon.net/"
+    },
+    {
+        "Distance": "K10",
+        "ID": 1,
+        "Name": "Internacional La Candelaria",
+        "Miles": "0,0,0,0,0, 0,0",
+        "Kms": "0,1,1,0,0, -1,-1,1,-1,-1",
+        "Country": "CR",
+        "WebSite": "http://www.deportivascandelaria.com/"
     },
     {
         "Distance": "K5",
