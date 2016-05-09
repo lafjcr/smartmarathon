@@ -142,7 +142,7 @@ function LoadLanguage() {
 }
 
 function SaveLanguage(language) {
-    $.cookie("Language", language, { expires: 365 });
+    $.cookie("Language", language, { expires: 365, path: '/' });
     window.localStorage.Language = language;
 }
 
