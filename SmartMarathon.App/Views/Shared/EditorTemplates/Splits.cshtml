@@ -5,6 +5,7 @@
     var splitCategories = ViewData["SplitCategories"] as SelectList;
     var splits = Model != null ? Model.Count : 0;
     var finishTime = splits > 0 ? @Model[splits - 1].Time : new TimeSpan();
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <table class="table">
     <thead>

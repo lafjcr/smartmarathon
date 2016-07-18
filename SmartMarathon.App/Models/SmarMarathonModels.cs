@@ -51,25 +51,82 @@ namespace SmartMarathon.App.Models
 
         public SelectList SplitCategories { get; set; }
 
-        public SmartMarathonData() : this(false)
+        public bool ShowDistances{ get; internal set; }
+
+        public bool ShowEvents { get; internal set; }
+
+        public bool IsExternal { get; internal set; }
+
+        public SmartMarathonData() : this(false, null, false)
         {
 
         }
 
-        public SmartMarathonData(bool create)
+        public SmartMarathonData(bool create, List<EventModel> events = null, List<Distance> distances = null, bool isExternal = false)
         {
-            Distance = Distance.K42;
+            Distance =
+                distances != null && distances.Count > 0 ?
+                    distances[0] :
+                    (events != null && events.Count > 0 ?
+                        events[0].Distance : Distance.K42);
             SplitCategories = new SelectList(Code.SmartMarathon.SplitCategories(), "Value", "Text");
-            var marathons = Code.SmartMarathon.Marathons(Distance) as List<SelectListItem>;
+            List<SelectListItem> marathons = null;
+            if (events != null && events.Count > 0)
+            {
+                marathons = Code.SmartMarathon.Marathons(events) as List<SelectListItem>;
+            }
+            else
+            {
+                marathons = Code.SmartMarathon.Marathons(Distance) as List<SelectListItem>;
+            }
             Marathons = new SelectList(marathons, "Value", "Text");
+            List<SelectListItem> distanceItems = null;
             if (create)
             {                
                 InKms = true;
-                Distances = new SelectList(Code.SmartMarathon.Distances(), "Value", "Text");
+                distanceItems = Code.SmartMarathon.Distances(distances);
+                Distances = new SelectList(distanceItems, "Value", "Text");
                 RealDistance = Distance.ToKilometers();
                 Marathon = marathons.Find(item => item.Selected).Value;
                 Splits = Code.SplitsManager.Build(Distance);
             }
+            ShowEvents = marathons != null && marathons.Count > 1;
+            ShowDistances = (events == null || events.Count == 0) &&
+                (distanceItems != null && distanceItems.Count > 1);
+            IsExternal = isExternal;
+        }
+
+        public SmartMarathonData(bool create, EventModel raceEvent = null, bool isExternal = false)
+        {
+            Distance = raceEvent != null ? raceEvent.Distance : Distance.K42;
+            SplitCategories = new SelectList(Code.SmartMarathon.SplitCategories(), "Value", "Text");
+            List<SelectListItem> marathons = null;
+            List<SelectListItem> distanceItems = null;
+            if (raceEvent != null)
+            {
+                marathons = Code.SmartMarathon.Marathons(raceEvent) as List<SelectListItem>;
+                //var distances = new List<Distance>() { Distance };
+                //distanceItems = Code.SmartMarathon.Distances(distances);
+            }
+            else
+            {
+                marathons = Code.SmartMarathon.Marathons(Distance) as List<SelectListItem>;
+                //distanceItems = Code.SmartMarathon.Distances();
+            }
+            distanceItems = Code.SmartMarathon.Distances();
+            Marathons = new SelectList(marathons, "Value", "Text");
+            if (create)
+            {
+                InKms = true;
+                Distances = new SelectList(distanceItems, "Value", "Text");
+                RealDistance = Distance.ToKilometers();
+                Marathon = marathons.Find(item => item.Selected).Value;
+                Splits = Code.SplitsManager.Build(Distance);
+            }
+            IsExternal = isExternal;
+            ShowEvents = !IsExternal || (marathons != null && marathons.Count > 1);
+            ShowDistances = !IsExternal || ((raceEvent == null) &&
+                (distanceItems != null && distanceItems.Count > 1));
         }
     }
 
@@ -130,6 +187,12 @@ namespace SmartMarathon.App.Models
         public TimeSpan GoalTime { get; set; }
         public TimeSpan PaceByKm { get; set; }
         public TimeSpan PaceByMile { get; set; }
+    }
+
+    public class EventModel
+    {
+        public Distance Distance { get; set; }
+        public int Id { get; set; }
     }
 
     public enum SplitCategory

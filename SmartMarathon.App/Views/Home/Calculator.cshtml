@@ -1,0 +1,168 @@
+﻿@model SmartMarathon.App.Models.SmartMarathonData
+
+@{
+    ViewBag.Title = "Smart Marathon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="calculator">
+    <div class="container">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "frmMain", target = "_blank" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Language)
+            <div id="instructions-box" class="row hidden">
+                <hr />
+                <h4>@Resources.Label_Instructions</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.GoalTime, new { @class = "control-label col-md-offset-3 col-md-2" })
+                    <div class="col-md-3">
+                        @Html.EditorFor(m => m.GoalTime, new { ShowHour = true })
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: -15px;">
+                <label class="control-label">-- @Resources.Label_Or --</label>
+            </div>
+            <div class="row">
+                <div class="form-group" id="pacebykm-box">
+                    @Html.LabelFor(m => m.PaceByKm, new { @class = "control-label col-md-offset-3 col-md-2" })
+                    <div class="col-md-3" id="paceByKm-box">
+                        @Html.EditorFor(m => m.PaceByKm, new { ShowHour = false })
+                        @Html.Label("Min/Km")
+                    </div>
+                </div>                
+                <div class="form-group hidden" id="pacebymile-box">
+                    @Html.LabelFor(m => m.PaceByMile, new { @class = "control-label col-md-offset-3 col-md-2" })
+                    <div class="col-md-3" id="paceByMile-box">
+                        @Html.EditorFor(m => m.PaceByMile, new { ShowHour = false })
+                        @Html.Label("Min/Mile")
+                    </div>
+                </div>
+                <div class="col-md-offset-5 col-md-2">
+                    <div class="btn-group btn-toggle">
+                        <button id="btn-KM" class="btn btn-primary">KM</button>
+                        <button id="btn-MI" class="btn btn-default">MI</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group hidden" id="distances-box">
+                @Html.LabelFor(m => m.Distance, new { @class = "control-label col-md-offset-2 col-md-2" })
+                <div class="col-md-3">
+                    @Html.DropDownListFor(m => m.Distance, Model.Distances, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Distance)
+                </div>
+            </div>
+            <div class="row form-group hidden" id="realDistance-box">
+                @Html.LabelFor(m => m.RealDistance, new { @class = "control-label col-md-offset-2 col-md-2" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(m => m.RealDistance, new { @class = "form-control numericOnly" })
+                </div>
+            </div>
+            <div class="row form-group hidden" id="events-box">
+                @Html.LabelFor(m => m.Marathon, new { @class = "control-label col-md-offset-2 col-md-2" })
+                <div class="col-md-3">
+                    @Html.DropDownListFor(m => m.Marathon, Model.Marathons, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Marathon)
+                </div>
+            </div>
+            <div class="row hidden" id="splits-box">
+                @{ Html.RenderPartial("Splits", Model, new ViewDataDictionary { { "SplitCategories", Model.SplitCategories } }); }
+            </div>
+            <div class="row" style="margin-top: 10px">
+                <div class="col-md-offset-4 col-md-4">
+                    @Html.HiddenFor(m => m.InKms)
+                    <input type="submit" value="@Resources.Label_Calculate" class="btn btn-default btn-warning textsize-24" />
+                </div>
+            </div>
+            @*<div class="row">
+                <div class="col-md-offset-4 col-md-4" style="margin-top: 10px">
+                    <span class='st_fblike_large' displaytext='Facebook Like'></span>
+                    <span class='st_facebook_large' displaytext='Facebook'></span>
+                    <span class='st_twitter_large' displaytext='Tweet'></span>
+                    <span class='st_googleplus_large' displaytext='Google +'></span>
+                    <span class='st_email_large' displaytext='Email'></span>
+                    <span class='st_sharethis_large' displaytext='ShareThis'></span>
+                </div>
+            </div>*@
+            <div class="row">
+                <div class="col-md-offset-4 col-md-4" id="poweredBy" style="margin-top: 10px;">
+                    <span class="poweredBy">powered by</span><span class="poweredBySM">SMART MARATHON</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var showEvents =  @Json.Encode(Model.ShowEvents);
+            var showDistances =  @Json.Encode(Model.ShowDistances);
+            var isExternal =  @Json.Encode(Model.IsExternal);
+            var setByGoalTime = true;
+
+            var language = LoadPage(showEvents, showDistances, isExternal);
+            //var data = {};
+            //data = '@Html.Raw(Json.Encode(Model))';
+            //SaveData(data);
+
+            if (isExternal) {
+                addToHome = null;
+            }
+
+            $('.btn-toggle').click(function () {
+                ToggleKms(this);
+                return false;
+            });
+
+            $(".timespan").change(function () {
+                if (this.name.substring(0, 8) == "GoalTime") {
+                    setByGoalTime = true;
+                }
+                else {
+                    setByGoalTime = false;                    
+                }
+                RefreshGoalTimeAndAvgPaces(setByGoalTime);
+            });
+
+            $("#Distance").change(function () {
+                var url = '@Url.Action("EventsByDistance")';
+                var distance = $(this).val();
+                if (distance == 0) {
+                    ShowEvents(false);
+                    $('#realDistance-box').removeClass('hidden');
+                }
+                else {
+                    $('#realDistance-box').addClass('hidden');
+                    ShowEvents(true);
+                    LoadEvents(url, distance);
+                }
+                RefreshGoalTimeAndAvgPaces(setByGoalTime);
+            });
+
+            $("#RealDistance").change(function () {
+                var realDistanceValue = $("#RealDistance").val();
+                realDistanceValue = realDistanceValue.toString().replace(/\./g, ',');
+                if ($.isNumeric(realDistanceValue)) {
+                    RefreshGoalTimeAndAvgPaces(setByGoalTime);
+                }
+            });
+
+            $("#Marathon").change(function () {
+                LoadSplits();
+                RefreshGoalTimeAndAvgPaces(setByGoalTime);
+            });
+
+            function RefreshGoalTimeAndAvgPaces(byGoalTime) {
+                var url = '@Url.Action("CalculateGoalTimeAndAvgPaces")';
+                CalculateGoalTimeAndAvgPaces(url, byGoalTime, !isExternal);
+            }
+        });
+    </script>
+}

@@ -243,4 +243,7 @@
   <data name="Label_Time" xml:space="preserve">
     <value>TIME</value>
   </data>
+  <data name="Label_Or" xml:space="preserve">
+    <value>or</value>
+  </data>
 </root>

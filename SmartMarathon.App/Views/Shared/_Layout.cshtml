@@ -31,7 +31,7 @@
     <nav class="menu" id="theMenu">
         <div class="menu-wrap">
             <h1 class="logo"><a href="#" class="smoothScroll">Smart Marathon</a></h1>
-            <i class="icon-remove menu-close"></i>
+            <i class="icon-remove menu-close"></i>            
             <a href="#home" class="smoothScroll">Home</a>
             <a href="#smartmarathon" class="smoothScroll">Calculate</a>
             <a href="#about" class="smoothScroll">About</a>
@@ -81,6 +81,8 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/site")
+    @Scripts.Render("~/Scripts/smartmarathon.js");
+
     @RenderSection("scripts", required: false)
     <script>
         var addToHome = addToHomescreen({
@@ -91,9 +93,11 @@
         });
 
         function callAddToHomeScreen() {
-            addToHome.options.displayPace = 0;
-            addToHome.options.autostart = false;
-            addToHome.show();
+            if (!isExternal) {
+                addToHome.options.displayPace = 0;
+                addToHome.options.autostart = false;
+                addToHome.show();
+            }
         }
     </script>
     @*<script type="text/javascript">
@@ -101,7 +105,7 @@
 
         appInsights.start("5dfe4ec9-868d-4721-bb9b-abd7c5067a42");
         appInsights.logPageView();
-    </script>
+    </script>*@
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
@@ -112,6 +116,6 @@
 
         ga('create', 'UA-53689877-1', 'auto');
         ga('send', 'pageview');
-    </script>*@
+    </script>
 </body>
 </html>

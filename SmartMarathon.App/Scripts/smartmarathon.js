@@ -1,4 +1,4 @@
-﻿function LoadPage() {
+﻿function LoadPage(showEvents, showDistances, isExternal) {
     if (!$('#InKms').val()) {
         $('#btn-KM').toggleClass('btn-primary');
         $('#btn-MI').toggleClass('btn-primary');
@@ -7,6 +7,12 @@
     }
     else
         $('#InKms').val("true");
+
+    ShowEvents(showEvents);
+
+    ShowDistances(showDistances);
+
+    SetExternal(isExternal);
 
     ShowSplits();
 
@@ -47,15 +53,19 @@ function ShowSplits() {
     var inKms = InKms();
     if (inKms) {
         $('#Miles').hide();
-        $('#pacebymile-box').hide();
+        //$('#pacebymile-box').hide();
+        $('#pacebymile-box').addClass('hidden');
         $('#Kms').show();
-        $('#pacebykm-box').show();
+        //$('#pacebykm-box').show();
+        $('#pacebykm-box').removeClass('hidden');
     }
     else {
         $('#Kms').hide();
-        $('#pacebykm-box').hide();
+        //$('#pacebykm-box').hide();
+        $('#pacebykm-box').addClass('hidden');
         $('#Miles').show();
-        $('#pacebymile-box').show();
+        //$('#pacebymile-box').show();
+        $('#pacebymile-box').removeClass('hidden');
     }
 }
 
@@ -146,7 +156,6 @@ function SaveLanguage(language) {
     window.localStorage.Language = language;
 }
 
-
 function ChangeLanguage(url, language) {
     $('#Language').val(language);
     SaveLanguage(language);
@@ -170,7 +179,7 @@ function SaveData(data) {
     window.localStorage.SmartMarathonData = data;
 }
 
-function CalculateGoalTimeAndAvgPaces(url, byGoalTime) {
+function CalculateGoalTimeAndAvgPaces(url, byGoalTime, applySubmit) {
     if (byGoalTime) {
         model = CreateAvgPacesModel();
     }
@@ -186,7 +195,9 @@ function CalculateGoalTimeAndAvgPaces(url, byGoalTime) {
             $('#GoalTime_Hours').val(data.GoalTime.Hours);
             $('#GoalTime_Minutes').val(data.GoalTime.Minutes);
             $('#GoalTime_Seconds').val(data.GoalTime.Seconds);
-            Submit();
+            if (applySubmit) {
+                Submit();
+            }
         })
     .fail(function (error) {
         alert("[CalculateGoalTimeAndAvgPaces] Ajax Error");
@@ -222,4 +233,35 @@ function CreateGoalTimeModel() {
         }
     };
     return model;
+}
+
+function ShowEvents(show) {
+    if (show) {
+        $('#events-box').removeClass('hidden');
+    }
+    else {
+        $('#events-box').addClass('hidden');
+    }
+}
+
+function ShowDistances(show) {
+    if (show) {
+        $('#distances-box').removeClass('hidden');
+    }
+    else {
+        $('#distances-box').addClass('hidden');
+    }
+}
+
+function SetExternal(isExternal) {
+    if (!isExternal) {
+        $('#instructions-box').removeClass('hidden');
+        $('#splits-box').removeClass('hidden');        
+        $('#theMenu').removeClass('hidden');
+    }
+    else {
+        $('#instructions-box').addClass('hidden');
+        $('#splits-box').addClass('hidden');
+        $('#theMenu').addClass('hidden');
+    }
 }

@@ -30,8 +30,7 @@ namespace SmartMarathon.App
                       "~/Scripts/main.js",
                       "~/Scripts/addtohomescreen.min.js",
                       "~/Scripts/jquery.polyglot.language.switcher.js",
-                      "~/Scripts/jquery.cookie.js",
-                      "~/Scripts/smartmarathon.js"));
+                      "~/Scripts/jquery.cookie.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",                      

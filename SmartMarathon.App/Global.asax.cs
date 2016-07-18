@@ -2,6 +2,7 @@
 using System;
 using System.Threading;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -17,6 +18,8 @@ namespace SmartMarathon.App
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             ModelBinders.Binders.Add(typeof(TimeSpan), new TimeSpanBinder());
+
+            AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
         }
 
         protected void Session_Start()
@@ -39,7 +42,7 @@ namespace SmartMarathon.App
         private void ChangeLanguage()
         {
             var language = Request.Cookies["Language"] != null && !String.IsNullOrEmpty(Request.Cookies["Language"].Value) ? Request.Cookies["Language"].Value : String.Empty;
-            if (String.IsNullOrEmpty(language) && Request.UserLanguages != null && Request.UserLanguages.Length > 0)
+            if ((String.IsNullOrEmpty(language) || language == "undefined") && Request.UserLanguages != null && Request.UserLanguages.Length > 0)
             {
                 language = Request.UserLanguages[0];
                 language = language.Length > 2 ? language.Substring(0, 2) : language;

@@ -23,7 +23,7 @@
     </div>
     <div class="container">
         <div class="logo">
-            <img src="Content/images/running_man_logo_bktransparent.png">
+            <img src="~/Content/images/running_man_logo_bktransparent.png">
         </div>
         <br>
         <div class="row">
@@ -60,16 +60,16 @@
                 <div class="col-md-3" id="paceByKm-box">
                     @Html.EditorFor(m => m.PaceByKm, new { ShowHour = false })
                     @Html.Label("Min/Km")
-                </div>                
+                </div>
             </div>
             <div class="form-group" id="pacebymile-box">
                 @Html.LabelFor(m => m.PaceByMile, new { @class = "control-label col-md-offset-2 col-md-2" })
                 <div class="col-md-3" id="paceByKm-box">
                     @Html.EditorFor(m => m.PaceByMile, new { ShowHour = false })
                     @Html.Label("Min/Mile")
-                </div>                
+                </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="distances-box">
                 @Html.LabelFor(m => m.Distance, new { @class = "control-label col-md-offset-2 col-md-2" })
                 <div class="col-md-3">
                     @Html.DropDownListFor(m => m.Distance, Model.Distances, new { @class = "form-control" })
@@ -86,8 +86,8 @@
                 @Html.LabelFor(m => m.Marathon, new { @class = "control-label col-md-offset-2 col-md-2" })
                 <div class="col-md-3">
                     @Html.DropDownListFor(m => m.Marathon, Model.Marathons, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Marathon)                    
-                </div>                
+                    @Html.ValidationMessageFor(m => m.Marathon)
+                </div>
             </div>
             <div class="row" id="splits-box">
                 @{ Html.RenderPartial("Splits", Model, new ViewDataDictionary { { "SplitCategories", Model.SplitCategories } }); }
@@ -110,7 +110,7 @@
                 <span class='st_sharethis_large' displaytext='ShareThis'></span>
                 @*<hr />*@
             </div>
-        }
+                    }
     </div>
 </div>
 <!-- ========== ABOUT SECTION ========== -->
@@ -170,16 +170,18 @@
                 <p>@Resources.ContactMe_P1</p>
                 <p>@Resources.ContactMe_P2</p>
                 <address>
-                    <p>Luis Fernandez Jimenez<br />
-                    San Jose, Costa Rica<br />
-                    <abbr title="Email"></abbr>
-                    <a href="mailto:lafj14@gmail.com?subject=[Smart Marathon] ">lafj14@gmail.com</a></p>
+                    <p>
+                        Luis Fernandez Jimenez<br />
+                        San Jose, Costa Rica<br />
+                        <abbr title="Email"></abbr>
+                        <a href="mailto:lafj14@gmail.com?subject=[Smart Marathon] ">lafj14@gmail.com</a>
+                    </p>
                 </address>
                 <br />
                 <div>
                     <p>@Resources.ContactMe_P3</p>
                     <br />
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
                         <input type="hidden" name="cmd" value="_s-xclick">
                         <input type="hidden" name="hosted_button_id" value="N4B2CY9AQDZGE">
                         <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
@@ -193,68 +195,77 @@
 
 @section Scripts {
     <script>
-    $(document).ready(function () {
-        var language = LoadPage();
-        //var data = {};
-        //data = '@Html.Raw(Json.Encode(Model))';
-        //SaveData(data);
+        $(document).ready(function () {
+            var showEvents =  @Json.Encode(Model.ShowEvents);
+            var showDistances =  @Json.Encode(Model.ShowDistances);
+            var isExternal =  @Json.Encode(Model.IsExternal);
+            var setByGoalTime = true;
 
-        $('.btn-toggle').click(function () {
-            ToggleKms(this);
-            return false;
-        });
+            var language = LoadPage(showEvents, showDistances, isExternal);
+            //var data = {};
+            //data = '@Html.Raw(Json.Encode(Model))';
+            //SaveData(data);
 
-        $(".timespan").change(function () {
-            if (this.name.substring(0, 8) == "GoalTime") {
-                RefreshGoalTimeAndAvgPaces(true);
+            if (isExternal) {
+                addToHome = null;
             }
-            else {
-                RefreshGoalTimeAndAvgPaces(false);
+            $('.btn-toggle').click(function () {
+                ToggleKms(this);
+                return false;
+            });
+
+            $(".timespan").change(function () {
+                if (this.name.substring(0, 8) == "GoalTime") {
+                    setByGoalTime = true;
+                }
+                else {
+                    setByGoalTime = false;                    
+                }
+                RefreshGoalTimeAndAvgPaces(setByGoalTime);
+            });
+
+            $("#Distance").change(function () {
+                var url = '@Url.Action("EventsByDistance")';
+                var distance = $(this).val();
+                if (distance == 0) {
+                    ShowEvents(false);
+                    $('#realDistance-box').removeClass('hidden');
+                }
+                else {
+                    $('#realDistance-box').addClass('hidden');
+                    ShowEvents(true);
+                    LoadEvents(url, distance);
+                }
+                RefreshGoalTimeAndAvgPaces(setByGoalTime);
+            });
+
+            $("#RealDistance").change(function () {
+                RefreshGoalTimeAndAvgPaces(setByGoalTime);
+            });
+
+            $("#Marathon").change(function () {
+                LoadSplits();
+                RefreshGoalTimeAndAvgPaces(setByGoalTime);
+            });
+
+            $('#polyglotLanguageSwitcher').polyglotLanguageSwitcher({
+                effect: 'fade',
+                testMode: true,
+                initLanguage: language,
+                onChange: function (evt) {
+                    var url = '@Url.Action("Index")';
+                    ChangeLanguage(url, evt.selectedItem);
+                }
+            });
+
+            setTimeout(function () {
+                $('html, body').animate({ scrollTop: $("#f").offset().top }, 2000);
+            }, 1500);
+
+            function RefreshGoalTimeAndAvgPaces(byGoalTime) {
+                var url = '@Url.Action("CalculateGoalTimeAndAvgPaces")';
+                CalculateGoalTimeAndAvgPaces(url, byGoalTime, !isExternal);
             }
         });
-
-        $("#Distance").change(function () {
-            var url = '@Url.Action("EventsByDistance")';
-            var distance = $(this).val();
-            if (distance == 0) {
-                $('#events-box').addClass('hidden');
-                $('#realDistance-box').removeClass('hidden');
-            }
-            else {
-                $('#realDistance-box').addClass('hidden');
-                $('#events-box').removeClass('hidden');
-                LoadEvents(url, distance);
-            }
-            RefreshGoalTimeAndAvgPaces(true);
-        });
-
-        $("#RealDistance").change(function () {
-            RefreshGoalTimeAndAvgPaces(true);
-        });
-
-        $("#Marathon").change(function () {
-            LoadSplits();
-            RefreshGoalTimeAndAvgPaces(true);
-        });
-
-        $('#polyglotLanguageSwitcher').polyglotLanguageSwitcher({
-            effect: 'fade',
-            testMode: true,
-            initLanguage: language,
-            onChange: function (evt) {
-                var url = '@Url.Action("Index")';
-                ChangeLanguage(url, evt.selectedItem);
-            }
-        });
-
-        setTimeout(function () {
-            $('html, body').animate({ scrollTop: $("#f").offset().top }, 2000);
-        }, 1500);
-
-        function RefreshGoalTimeAndAvgPaces(byGoalTime) {
-            var url = '@Url.Action("CalculateGoalTimeAndAvgPaces")';
-            CalculateGoalTimeAndAvgPaces(url, byGoalTime);
-        }
-    });
-</script>
+    </script>
 }
