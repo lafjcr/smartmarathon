@@ -1,1 +1,80 @@
 /* Empty. Add your own CSS if you like */
+
+.color-green {
+    color: #00582A;
+}
+
+.color-orange {
+    color: #FF5113;
+}
+
+.color-white/*, div.item-toggle*/ {
+    color: #FFFFFF;
+}
+
+.bgcolor-green  {
+    background-color: #00582A;
+}
+
+.bgcolor-orange, /*.item-complex .item-content, div.item-toggle*/ {
+    background-color: #FF5113;
+}
+
+
+
+
+
+.platform-ios .manual-ios-statusbar-padding {
+    padding-top: 20px;
+}
+
+.manual-remove-top-padding {
+    padding-top: 0px;
+}
+
+    .manual-remove-top-padding .scroll {
+        padding-top: 0px !important;
+    }
+
+ion-list.manual-list-fullwidth div.list, .list.card.manual-card-fullwidth {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+    ion-list.manual-list-fullwidth div.list > .item, .list.card.manual-card-fullwidth > .item {
+        border-radius: 0px;
+        border-left: 0px;
+        border-right: 0px;
+    }
+
+
+a.item-content {
+    font-weight: bold;
+}
+
+span.item-note {
+    font-weight: normal;
+    /*color: #FFFFFF;*/
+}
+
+ion-list > div.list > div.item {
+    font-weight: bold;
+}
+
+/*.item-complex .item-content  {
+    background-color: #FF5113;
+}
+
+div.item-toggle {
+    background-color: #FF5113;
+    color: #FFFFFF;
+}
+
+/*
+<ion-item class="item-icon-right   item item-complex" id="menu-list-item1" ui-sref="app.smartMarathon" menu-close="" href="#/app/smartMarathon">
+    <a class="item-content" style="background-color:#FF5113; color: #FFFFFF; font-weight: bold">Smart Marathon
+    <span class="item-note" style="color: #FFFFFF; font-weight: normal">Race strategy calculator</span>
+    <i class="icon ion-calculator"></i>
+    </a>
+</ion-item>
+*/

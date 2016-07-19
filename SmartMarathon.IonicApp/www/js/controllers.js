@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('app.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -53,4 +53,21 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
-});
+})
+
+.controller('smartMarathonCtrl', function($scope) {
+
+})
+   
+.controller('gSSICtrl', function($scope) {
+
+})
+   
+.controller('aboutCtrl', function($scope) {
+
+})
+      
+.controller('contactCtrl', function($scope) {
+
+})
+;
