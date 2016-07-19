@@ -1,5 +1,6 @@
 {
-    "name": "SmartMarathon.hApp",
-    "dependencies": {
-    }
+  "name": "SmartMarathon.hApp",
+  "dependencies": {
+    "angular": "~1.5.7"
+  }
 }
