@@ -16,10 +16,13 @@
     background-color: #00582A;
 }
 
-.bgcolor-orange, /*.item-complex .item-content, div.item-toggle*/ {
+.bgcolor-orange/*,.item-complex .item-content, div.item-toggle*/ {
     background-color: #FF5113;
 }
 
+.bgcolor-white, .row-control/*,div.item-toggle*/ {
+    color: #FFFFFF;
+}
 
 
 
@@ -61,20 +64,20 @@ ion-list > div.list > div.item {
     font-weight: bold;
 }
 
-/*.item-complex .item-content  {
-    background-color: #FF5113;
+.row-control {
+    border-color: #ddd;
+    /*background-color: #fff;*/
+    color: #444;
+    position: relative;
+    z-index: 2;
+    display: block;
+    margin: -1px;
+    padding: 16px;
+    border-width: 1px;
+    border-style: solid;
+    font-size: 16px;
 }
 
-div.item-toggle {
-    background-color: #FF5113;
-    color: #FFFFFF;
+.input-number {
+    width: 40px;
 }
-
-/*
-<ion-item class="item-icon-right   item item-complex" id="menu-list-item1" ui-sref="app.smartMarathon" menu-close="" href="#/app/smartMarathon">
-    <a class="item-content" style="background-color:#FF5113; color: #FFFFFF; font-weight: bold">Smart Marathon
-    <span class="item-note" style="color: #FFFFFF; font-weight: normal">Race strategy calculator</span>
-    <i class="icon ion-calculator"></i>
-    </a>
-</ion-item>
-*/
