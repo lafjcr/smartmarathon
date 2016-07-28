@@ -1,231 +1,78 @@
-<script src="lib/ion-datetime-picker/release/ion-datetime-picker.min.js"></script>
-<link href="lib/ion-datetime-picker/release/ion-datetime-picker.min.css" rel="stylesheet">
-
 <ion-view title="Smart Marathon" id="smartMarathon" class="bgcolor-green">
-    <ion-content padding="true" style="background: url(img/bg-box.png) no-repeat center;background-size:cover;" class="has-header">        
-        <div class="list ">
-            <!--<div class="row item">
-                <div class="col col-35">
-                    <span class="input-label">GOAL TIME</span>
-                </div>
-                <div class="col col-20">
-                    <select ng-model="model.GoalTime.Hours" ng-change="calculateGoalTimeAndAvgPaces(true)">
-                        <option selected="selected">00</option>
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                        <option>04</option>
-                        <option>05</option>
-                    </select>
-                </div>
-                <div class="col col-5">
-                    :
-                </div>
-                <div class="col col-15">
-                    <select ng-model="model.GoalTime.Minutes" ng-change="calculateGoalTimeAndAvgPaces(true)">
-                        <option selected="selected">00</option>
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                        <option>04</option>
-                        <option>05</option>
-                    </select>
-                </div>
-                <div class="col col-5">
-                    :
-                </div>
-                <div class="col col-15">
-                    <select ng-model="model.GoalTime.Seconds" ng-change="calculateGoalTimeAndAvgPaces(true)">
-                        <option selected="selected">00</option>
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                        <option>04</option>
-                        <option>05</option>
-                    </select>
-                </div>
-            </div>-->
+    <ion-content padding="true"class="has-header"> <!--style="background: url(img/bg-box.png) no-repeat center;"-->
+        <div class="list" style="color: #00582A; font-weight: bold">
             <div class="row item">
                 <div class="col col-33">
                     <span class="input-label">GOAL TIME</span>
                 </div>
-                <div class="col">
-                    <input type="number" min="0" max="23" ng-model="model.GoalTime.Hours" ng-change="calculateGoalTimeAndAvgPaces(true)" class="input-number"/>
-                </div>
-                <div class="col">
-                    <span class="input-label">:</span>
-                </div>
-                <div class="col">
-                    <input type="number" min="0" max="59" ng-model="model.GoalTime.Minutes" ng-change="calculateGoalTimeAndAvgPaces(true)" class="input-number"/>
-                </div>
-                <div class="col">
-                    <span class="input-label">:</span>
-                </div>
-                <div class="col">
-                    <input type="number" min="0" max="59" ng-model="model.GoalTime.Seconds" ng-change="calculateGoalTimeAndAvgPaces(true)" class="input-number"/>
-                </div>
+                <div class="col col-67">
+                    <input type="number" min="0" max="23" ng-model="model.GoalTime.Hours" ng-change="refresh(true)" class="input-number" />
+                </div>                
             </div>
-            <!--<div class="row item">
-                <div class="col col-45">
-                    <span class="input-label">GOAL PACE</span>
-                </div>
-                <div class="col col-15">
-                    <select ng-model="model.PaceByKm.Minutes" ng-change="calculateGoalTimeAndAvgPaces(false)">
-                        <option selected="selected">00</option>
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                        <option>04</option>
-                        <option>05</option>
-                    </select>
-                </div>
-                <div class="col col-5">
-                    :
-                </div>
-                <div class="col col-15">
-                    <select ng-model="model.PaceByKm.Seconds" ng-change="calculateGoalTimeAndAvgPaces(false)">
-                        <option selected="selected">00</option>
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                        <option>04</option>
-                        <option>05</option>
-                    </select>
-                </div>
-                <div class="col col-20">
-                    min/km
-                </div>
-            </div>-->
             <div class="row item">
                 <div class="col col-33">
                     <span class="input-label">GOAL PACE</span>
                 </div>
                 <div class="col">
-                    <input type="number" min="0" max="59" ng-model="model.PaceByKm.Minutes" ng-change="calculateGoalTimeAndAvgPaces(false)" class="input-number"/>
+                    <input type="number" min="0" max="59" ng-model="model.PaceByKm.Minutes" ng-change="refresh(false)" class="input-number" />
                 </div>
                 <div class="col">
                     <span class="input-label">:</span>
                 </div>
                 <div class="col">
-                    <input type="number" min="0" max="59" ng-model="model.PaceByKm.Seconds" ng-change="calculateGoalTimeAndAvgPaces(false)" class="input-number"/>
+                    <input type="number" min="0" max="59" ng-model="model.PaceByKm.Seconds" ng-change="refresh(false)" class="input-number" />
                 </div>
                 <div class="col">
                     <span class="input-label">min/km</span>
                 </div>
             </div>
-            
+
             <label class="item item-input item-select">
                 <span class="input-label">DISTANCE</span>
-                <select ng-model="model.Distance" ng-options="y.Title for (x, y) in data.Distances" ng-change="loadEvents()"></select>
+                <select ng-model="model.SelectedDistance" ng-options="y.Text for (x, y) in data.Distances" ng-change="loadEvents()"></select>
             </label>
             <label class="item item-input" ng-show="isCustomDistance()">
                 <span class="input-label">YOUR DISTANCE</span>
-                <input type="number" placeholder="">
+                <input type="number" placeholder="" ng-model="model.RealDistance" ng-change="refresh()">
             </label>
             <label class="item item-input item-select" ng-hide="isCustomDistance()">
                 <span class="input-label">EVENT</span>
-                <select ng-model="model.Event" ng-options="y.Text for (x, y) in data.Events"></select>
+                <select ng-model="model.Event" ng-options="y.Text for (x, y) in data.Events" ng-change="loadSplits()"></select>
             </label>
         </div>
-        <div>
+        <div style="color: #ffffff; font-weight: bold">
             <div class="row">
-                <div class="col col-20">
+                <div class="col col-20 color-orange">
                     KM
                 </div>
-                <div class="col col-40">
+                <div class="col col-40 color-orange">
                     ALTIMETRY
                 </div>
-                <div class="col col-20">
+                <div class="col col-20 color-orange">
                     PACE
                 </div>
-                <div class="col col-20">
+                <div class="col col-20 color-orange">
                     TIME
                 </div>
             </div>
-            <div class="row">
+            <!--<input type="range" value="2" min="1" max="3">-->
+            <div class="row" ng-repeat="split in model.Splits.Kilometers">
                 <div class="col col-20">
-                    1
+                    {{split.Split}}
                 </div>
                 <div class="col col-40">
-                    FLAT
+                    <input type="range" ng-model="split.Category" value="{{split.Category}}" min="-1" max="1" ng-change="refresh()">
                 </div>
                 <div class="col col-20">
-                    04:00
+                    <label ng-bind="displayTime(split.Pace)"></label>
                 </div>
                 <div class="col col-20">
-                    04:00
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-20">
-                    2
-                </div>
-                <div class="col col-40">
-                    UPHILL
-                </div>
-                <div class="col col-20">
-                    04:06
-                </div>
-                <div class="col col-20">
-                    08:06
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-20">
-                    3
-                </div>
-                <div class="col col-40">
-                    DOWNHILL
-                </div>
-                <div class="col col-20">
-                    03:54
-                </div>
-                <div class="col col-20">
-                    12:00
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-20">
-                    4
-                </div>
-                <div class="col col-40">
-                    FLAT
-                </div>
-                <div class="col col-20">
-                    04:00
-                </div>
-                <div class="col col-20">
-                    16:00
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-20">
-                    5
-                </div>
-                <div class="col col-40">
-                    FLAT
-                </div>
-                <div class="col col-20">
-                    04:00
-                </div>
-                <div class="col col-20">
-                    20:00
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-20">
-
-                </div>
-                <div class="col col-40">
-
-                </div>
-                <div class="col col-20">
-                    TOTAL TIME
-                </div>
-                <div class="col col-20">
-                    20:00
+                    <label ng-bind="displayTime(split.Time)"></label>
                 </div>
             </div>
         </div>
+        <!--<div class="bar bar-footer">
+            <button class="button center" style="width: 100%; background-color: orange; color: green; font-weight: bold; border-color: green; border-width: 2px;">CALCULATE</button>
+        </div>-->
     </ion-content>
 </ion-view>

@@ -1,7 +1,7 @@
 /* Empty. Add your own CSS if you like */
 
 .color-green {
-    color: #00582A;
+    color: #00411E;
 }
 
 .color-orange {
@@ -13,7 +13,15 @@
 }
 
 .bgcolor-green  {
-    background-color: #00582A;
+    /*background-color: #00411E;*/
+    background: #00411e;
+    background: -moz-linear-gradient(top, #00411e 0%, #00582a 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, #00411e), color-stop(100%, #00582a));
+    background: -webkit-linear-gradient(top, #00411e 0%, #00582a 100%);
+    background: -o-linear-gradient(top, #00411e 0%, #00582a 100%);
+    background: -ms-linear-gradient(top, #00411e 0%, #00582a 100%);
+    background: linear-gradient(to bottom, #00411e 0%, #00582a 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00411e', endColorstr='#00582a', GradientType=0 );
 }
 
 .bgcolor-orange/*,.item-complex .item-content, div.item-toggle*/ {

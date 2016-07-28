@@ -56,53 +56,169 @@ angular.module('app.controllers', [])
 })
 
 .controller('smartMarathonCtrl', function ($scope, $http, $smartMarathonService) {
-    $scope.model =
-        {
-            InKms: false,
-            GoalTime:
-                {
-                    Hours: "",
-                    Minutes: "",
-                    Seconds: ""
-                },
-            PaceByKm:
-                {
-                    Minutes: "",
-                    Seconds: ""
-                },
-            PaceByMile:
-                {
-                    Minutes: "",
-                    Seconds: ""
-                },
-            Distance: "",
-            RealDistance: "",
-            Event: "",
-            Splits: {}
-        }
-    $scope.data =
-        {
-            Distances: [],
-            Events: [],
-            Hours: [],
-            Minutes: [],
-            Seconds: [],            
-        }
-    $scope.isCustomDistance = function () {
-        return $scope.model.Distance.Id === "0";
+    $scope.model = {
+        InKms: true,
+        GoalTime: {
+            Hours: 0,
+            Minutes: 0,
+            Seconds: 0
+        },
+        ByGoalTime: true,
+        PaceByKm: {
+            Hours: 0,
+            Minutes: 0,
+            Seconds: 0
+        },
+        PaceByMile: {
+            Hours: 0,
+            Minutes: 0,
+            Seconds: 0
+        },
+        Distance: "",
+        SelectedDistance: "",
+        RealDistance: 0,
+        Event: {},
+        Marathon: "",
+        Splits: []
     }
+
+    $scope.data = {
+        Distances: [],
+        Events: [],
+        Hours: [],
+        Minutes: [],
+        Seconds: [],            
+    }
+
+    $scope.$watch('model.Event', function (newValue, oldValue) {
+        if (newValue && newValue.Value) {
+            $scope.model.Marathon = newValue.Value;
+        }
+    });
+
+    $scope.$watch('model.Event', function (newValue, oldValue) {
+        if (newValue && newValue.Value) {
+            $scope.model.Marathon = newValue.Value;
+        }
+    });
+
+    $scope.$watch('model.SelectedDistance', function (newValue, oldValue) {
+        if (newValue && newValue.Value) {
+            $scope.model.Distance = parseInt(newValue.Value);
+        }
+    });
+
+    $scope.isCustomDistance = function () {
+        return $scope.model.SelectedDistance.Value === "0";
+    }
+
     $scope.loadEvents = function () {
-        $smartMarathonService.loadEvents($scope.model.Distance.Id).then(function (response) {
+        $smartMarathonService.loadEvents($scope.model.SelectedDistance.Value).then(function (response) {
             $scope.data.Events = response.data;
-            angular.forEach($scope.data.Events, function (item, key) {
-                if (item.Selected) {
-                    $scope.model.Event = item;
-                }
-            });
+            setEvent();
+            calculateSplits();
+            $scope.loadSplits();
         });
     }
-    $scope.calculateGoalTimeAndAvgPaces = function (byGoalTime) {
-        if (byGoalTime) {
+
+    $scope.loadSplits = function () {
+        var selectedMarathon = $scope.model.Event;
+        if (selectedMarathon && selectedMarathon.Value) {
+            var marathonInfo = selectedMarathon.Value.split(';');
+
+            if (marathonInfo != null && marathonInfo.length > 0) {
+                var splitValuesK = marathonInfo[1].split(',');
+                var splitValuesM = marathonInfo[2].split(',');
+
+                angular.forEach(splitValuesK, function (item, key) {
+                    $scope.model.Splits.Kilometers[key].Category = parseInt(item.trim());
+                });
+
+                angular.forEach(splitValuesM, function (item, key) {
+                    $scope.model.Splits.Miles[key].Category = parseInt(item.trim());
+                });
+
+                $scope.refresh();
+            }
+        }
+    }
+
+    $scope.refresh = function (byGoalTime) {
+        $scope.model.ByGoalTime = byGoalTime;
+        $scope.refresh();
+    }
+
+    $scope.refresh = function () {
+        calculateGoalTimeAndAvgPaces();
+    }
+
+    $scope.displayTime = function (time) {
+        var result = "";
+
+        var hours = time.Hours;
+        var minutes = time.Minutes;
+        var seconds = time.Seconds;
+
+        if (minutes < 10) {
+            minutes = "0" + minutes
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds
+        }
+        result += minutes + ":" + seconds;
+        if (hours > 0) {
+            result = hours + ":" + result;
+        }
+
+//        if (hours > 11) {
+//            result += " PM"
+//        } else {
+//            result += " AM"
+//        }
+        return result;
+    }
+
+    var init = function () {
+        $smartMarathonService.init().then(function (response) {
+            var data = response.data;
+            $scope.data.Distances = data.Distances;
+            $scope.model.Splits = data.Splits;
+            //$scope.data.Events = data.Marathons;
+
+            setSelectedDistance();
+            //setEvent();
+            $scope.loadEvents();
+        });       
+    }
+
+    init();
+
+    function setSelectedDistance() {
+        if ($scope.model.SelectedDistance === "" || $scope.model.SelectedDistance === undefined) {
+            $scope.model.SelectedDistance = $scope.data.Distances[0];
+        }
+        else
+        {
+            angular.forEach($scope.data.Distances, function (item, key) {
+                if (item.Value === $scope.model.Distance) {
+                    $scope.model.SelectedDistance = item;
+                }
+            });
+        }
+        //$scope.model.RealDistance = $scope.model.SelectedDistance.RealDistance;
+        //$scope.loadEvents();
+    }
+
+    function setEvent() {
+        angular.forEach($scope.data.Events, function (item, key) {
+            if (item.Selected) {
+                $scope.model.Event = item;
+            }
+        });
+    }    
+
+    function calculateGoalTimeAndAvgPaces() {
+        if ($scope.model.ByGoalTime) {
             model = createAvgPacesModel();
         }
         else {
@@ -117,30 +233,22 @@ angular.module('app.controllers', [])
             $scope.model.GoalTime.Hours = data.GoalTime.Hours;
             $scope.model.GoalTime.Minutes = data.GoalTime.Minutes;
             $scope.model.GoalTime.Seconds = data.GoalTime.Seconds;
+            calculateSplits();
         });
     }
 
-    var init = function () {
-        $scope.data.Distances = [
-            { Id: "42", Title: "Marathon", RealDistance: "42.195" },
-            { Id: "30", Title: "30K", RealDistance: "30" },
-            { Id: "21", Title: "Half Marathon", RealDistance: "21.097" },
-            { Id: "10", Title: "10K", RealDistance: "10" },
-            { Id: "5", Title: "5K", RealDistance: "5" },
-            { Id: "0", Title: "Other", RealDistance: "0" },
-        ];
-        if ($scope.model.Distance === "") {
-            $scope.model.Distance = $scope.data.Distances[0];
-            $scope.model.RealDistance = $scope.model.Distance.RealDistance;
-            $scope.loadEvents();
-        }
+    function calculateSplits() {
+        $smartMarathonService.calculateSplits($scope.model).then(function (response) {
+            var data = response.data;
+            $scope.model.Splits = data.Splits;
+        }, function (err) {          //second function "error"
+            console.log(err);
+        });
     }
-
-    init();
 
     function createAvgPacesModel() {
         var model = {
-            InKms: true,
+            InKms: $scope.model.InKms,
             Distance: $scope.model.Distance,
             RealDistance: $scope.model.RealDistance,
             GoalTime: {
@@ -154,14 +262,16 @@ angular.module('app.controllers', [])
 
     function createGoalTimeModel() {
         var model = {
-            InKms: true,
+            InKms: $scope.model.InKms,
             Distance: $scope.model.Distance,
             RealDistance: $scope.model.RealDistance,
             PaceByKm: {
+                "Hours": $scope.model.PaceByKm.Hours,
                 "Minutes": $scope.model.PaceByKm.Minutes,
                 "Seconds": $scope.model.PaceByKm.Seconds
             },
             PaceByMile: {
+                "Hours": $scope.model.PaceByMile.Hours,
                 "Minutes": $scope.model.PaceByMile.Minutes,
                 "Seconds": $scope.model.PaceByMile.Seconds
             }
