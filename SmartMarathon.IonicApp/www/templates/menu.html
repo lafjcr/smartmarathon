@@ -34,7 +34,7 @@
                     Contact
                     <i class="icon ion-email"></i>
                 </ion-item>
-                <ion-toggle toggle-class="toggle-balanced" ng-checked="true" id="menu-toggle1" class="color-orange">Metric</ion-toggle>
+                <ion-toggle toggle-class="toggle-balanced" id="menu-toggle1" class="color-orange" ng-model="isMetric" ng-change="isMetricChanged(isMetric)">Metric</ion-toggle>
             </ion-list>
         </ion-content>
     </ion-side-menu>

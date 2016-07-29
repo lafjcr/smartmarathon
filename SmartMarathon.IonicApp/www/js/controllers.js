@@ -39,6 +39,12 @@ angular.module('app.controllers', [])
             $scope.closeLogin();
         }, 1000);
     };
+
+    $scope.isMetric = true;
+
+    $scope.isMetricChanged = function (value) {
+        $scope.$broadcast("isMetricChanged", { newValue: value });
+    };
 })
 
 .controller('PlaylistsCtrl', function ($scope) {
@@ -83,12 +89,17 @@ angular.module('app.controllers', [])
     }
 
     $scope.data = {
+        IsMetric: $scope.$parent.isMetric,
         Distances: [],
         Events: [],
         Hours: [],
         Minutes: [],
         Seconds: [],            
     }
+
+    $scope.$on("isMetricChanged", function (event, options) {
+        $scope.data.IsMetric = options.newValue;
+    });
 
     $scope.$watch('model.Event', function (newValue, oldValue) {
         if (newValue && newValue.Value) {

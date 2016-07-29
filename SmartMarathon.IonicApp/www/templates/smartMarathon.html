@@ -5,25 +5,40 @@
                 <div class="col col-33">
                     <span class="input-label">GOAL TIME</span>
                 </div>
-                <div class="col col-67">
+                <div class="col">
                     <input type="number" min="0" max="23" ng-model="model.GoalTime.Hours" ng-change="refresh(true)" class="input-number" />
-                </div>                
+                </div>
+                <div class="col">
+                    <span class="input-label">:</span>
+                </div>
+                <div class="col">
+                    <input type="number" min="0" max="59" ng-model="model.GoalTime.Minutes" ng-change="refresh(true)" class="input-number" />
+                </div>
+                <div class="col">
+                    <span class="input-label">:</span>
+                </div>
+                <div class="col">
+                    <input type="number" min="0" max="59" ng-model="model.GoalTime.Seconds" ng-change="refresh(true)" class="input-number" />
+                </div>
             </div>
             <div class="row item">
                 <div class="col col-33">
                     <span class="input-label">GOAL PACE</span>
                 </div>
                 <div class="col">
-                    <input type="number" min="0" max="59" ng-model="model.PaceByKm.Minutes" ng-change="refresh(false)" class="input-number" />
+                    <input type="number" min="0" max="59" ng-model="model.PaceByKm.Minutes" ng-change="refresh(false)" class="input-number" ng-show="data.IsMetric"/>
+                    <input type="number" min="0" max="59" ng-model="model.PaceByMile.Minutes" ng-change="refresh(false)" class="input-number" ng-hide="data.IsMetric" />
                 </div>
                 <div class="col">
                     <span class="input-label">:</span>
                 </div>
                 <div class="col">
-                    <input type="number" min="0" max="59" ng-model="model.PaceByKm.Seconds" ng-change="refresh(false)" class="input-number" />
+                    <input type="number" min="0" max="59" ng-model="model.PaceByKm.Seconds" ng-change="refresh(false)" class="input-number" ng-show="data.IsMetric"/>
+                    <input type="number" min="0" max="59" ng-model="model.PaceByMile.Seconds" ng-change="refresh(false)" class="input-number" ng-hide="data.IsMetric" />
                 </div>
                 <div class="col">
-                    <span class="input-label">min/km</span>
+                    <span class="input-label" ng-show="data.IsMetric">min/km</span>
+                    <span class="input-label" ng-hide="data.IsMetric">min/mile</span>
                 </div>
             </div>
 
@@ -42,8 +57,11 @@
         </div>
         <div style="color: #ffffff; font-weight: bold">
             <div class="row">
-                <div class="col col-20 color-orange">
+                <div class="col col-20 color-orange" ng-show="data.IsMetric">
                     KM
+                </div>
+                <div class="col col-20 color-orange" ng-hide="data.IsMetric">
+                    MILE
                 </div>
                 <div class="col col-40 color-orange">
                     ALTIMETRY
@@ -55,8 +73,21 @@
                     TIME
                 </div>
             </div>
-            <!--<input type="range" value="2" min="1" max="3">-->
-            <div class="row" ng-repeat="split in model.Splits.Kilometers">
+            <div class="row" ng-repeat="split in model.Splits.Kilometers" ng-show="data.IsMetric">
+                <div class="col col-20">
+                    {{split.Split}}
+                </div>
+                <div class="col col-40">
+                    <input type="range" ng-model="split.Category" value="{{split.Category}}" min="-1" max="1" ng-change="refresh()">
+                </div>
+                <div class="col col-20">
+                    <label ng-bind="displayTime(split.Pace)"></label>
+                </div>
+                <div class="col col-20">
+                    <label ng-bind="displayTime(split.Time)"></label>
+                </div>
+            </div>
+            <div class="row" ng-repeat="split in model.Splits.Miles" ng-hide="data.IsMetric">
                 <div class="col col-20">
                     {{split.Split}}
                 </div>
