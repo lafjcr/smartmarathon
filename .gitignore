@@ -2,3 +2,4 @@ bin
 /SmartMarathon.App/obj
 *.user
 bower_components
+*.suo
