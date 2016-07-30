@@ -63,7 +63,7 @@ angular.module('app.controllers', [])
 
 .controller('smartMarathonCalculatorCtrl', function ($scope, $smartMarathonCalculatorService) {
     $scope.model = {
-        InKms: $scope.$parent.isMetric;
+        InKms: $scope.$parent.isMetric,
         GoalTime: {
             Hours: 0,
             Minutes: 0,
