@@ -11,12 +11,7 @@ String.prototype.format = function () {
 
 angular.module('app.services', [])
 
-.factory('BlankFactory', [function () {
-
-}])
-
-.factory('$smartMarathonService', ['$http', '$q', function ($http, $q) {
-
+.factory('$smartMarathonCalculatorService', ['$http', function ($http) {
     var urls = {
         ServiceBase: 'http://smartmarathon.azurewebsites.net/{0}',
         Init: 'Home/Init',
@@ -46,16 +41,16 @@ angular.module('app.services', [])
         });
     }
 
-    var _calculateGoalTimeAndAvgPaces = function (model) {
+    var _calculateGoalTimeAndAvgPaces = function (data) {
         var url = getFullUrl(urls.CalculateGoalTimeAndAvgPaces);
-        return $http.post(url, model).then(function (response) {
+        return $http.post(url, data).then(function (response) {
             return response;
         });
     }
 
-    var _calculateSplits = function (model) {
+    var _calculateSplits = function (data) {
         var url = getFullUrl(urls.CalculateSplits);
-        return $http.post(url, model).then(function (response) {
+        return $http.post(url, data).then(function (response) {
             return response;
         });
     }
@@ -64,6 +59,31 @@ angular.module('app.services', [])
     serviceFactory.loadEvents = _loadEvents;
     serviceFactory.calculateGoalTimeAndAvgPaces = _calculateGoalTimeAndAvgPaces;
     serviceFactory.calculateSplits = _calculateSplits;
+    return serviceFactory;
+}])
+
+.factory('$nutritionCalculatorService', ['$http', function ($http) {
+    var urls = {
+        //ServiceBase: 'http://smartmarathon-api.azurewebsites.net/api/{0}',
+        ServiceBase: 'http://localhost:53238/api/{0}',
+        Nutrition: 'Nutrition'
+    };
+
+    function getFullUrl(url, paramms) {
+        var result = urls.ServiceBase.format(url.format(paramms));
+        return result;
+    }
+
+    var serviceFactory = {};
+
+    var _calculate = function (data) {
+        var url = getFullUrl(urls.Nutrition);
+        return $http.post(url, data).then(function (response) {
+            return response;
+        });
+    }
+
+    serviceFactory.calculate = _calculate;
     return serviceFactory;
 }])
 

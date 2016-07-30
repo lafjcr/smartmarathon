@@ -89,3 +89,26 @@ ion-list > div.list > div.item {
 .input-number {
     width: 40px;
 }
+
+.input-label-number {
+    margin-right: 0px;
+    width: 50px;
+}
+
+.input-label-desc {
+    font-size: smaller;
+    margin-left: 0px;
+    margin-right: 20px;
+    width: auto;
+}
+
+.results-title {
+    text-align: center;
+    font-size: large;
+    color: orangered;
+}
+
+.result-item {
+    width: auto;
+    margin-left: 20px;
+}

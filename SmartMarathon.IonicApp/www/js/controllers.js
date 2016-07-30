@@ -61,9 +61,9 @@ angular.module('app.controllers', [])
 .controller('PlaylistCtrl', function ($scope, $stateParams) {
 })
 
-.controller('smartMarathonCtrl', function ($scope, $http, $smartMarathonService) {
+.controller('smartMarathonCalculatorCtrl', function ($scope, $smartMarathonCalculatorService) {
     $scope.model = {
-        InKms: true,
+        InKms: $scope.$parent.isMetric;
         GoalTime: {
             Hours: 0,
             Minutes: 0,
@@ -107,12 +107,6 @@ angular.module('app.controllers', [])
         }
     });
 
-    $scope.$watch('model.Event', function (newValue, oldValue) {
-        if (newValue && newValue.Value) {
-            $scope.model.Marathon = newValue.Value;
-        }
-    });
-
     $scope.$watch('model.SelectedDistance', function (newValue, oldValue) {
         if (newValue && newValue.Value) {
             $scope.model.Distance = parseInt(newValue.Value);
@@ -124,7 +118,7 @@ angular.module('app.controllers', [])
     }
 
     $scope.loadEvents = function () {
-        $smartMarathonService.loadEvents($scope.model.SelectedDistance.Value).then(function (response) {
+        $smartMarathonCalculatorService.loadEvents($scope.model.SelectedDistance.Value).then(function (response) {
             $scope.data.Events = response.data;
             setEvent();
             calculateSplits();
@@ -190,7 +184,7 @@ angular.module('app.controllers', [])
     }
 
     var init = function () {
-        $smartMarathonService.init().then(function (response) {
+        $smartMarathonCalculatorService.init().then(function (response) {
             var data = response.data;
             $scope.data.Distances = data.Distances;
             $scope.model.Splits = data.Splits;
@@ -235,7 +229,7 @@ angular.module('app.controllers', [])
         else {
             model = createGoalTimeModel();
         }
-        $smartMarathonService.calculateGoalTimeAndAvgPaces(model).then(function (response) {
+        $smartMarathonCalculatorService.calculateGoalTimeAndAvgPaces(model).then(function (response) {
             var data = response.data;
             $scope.model.PaceByKm.Minutes = data.PaceByKm.Minutes;
             $scope.model.PaceByKm.Seconds = data.PaceByKm.Seconds;
@@ -249,7 +243,8 @@ angular.module('app.controllers', [])
     }
 
     function calculateSplits() {
-        $smartMarathonService.calculateSplits($scope.model).then(function (response) {
+	$scope.model.InKms = $scope.data.IsMetric;
+        $smartMarathonCalculatorService.calculateSplits($scope.model).then(function (response) {
             var data = response.data;
             $scope.model.Splits = data.Splits;
         }, function (err) {          //second function "error"
@@ -259,7 +254,7 @@ angular.module('app.controllers', [])
 
     function createAvgPacesModel() {
         var model = {
-            InKms: $scope.model.InKms,
+            InKms: $scope.data.IsMetric,
             Distance: $scope.model.Distance,
             RealDistance: $scope.model.RealDistance,
             GoalTime: {
@@ -273,7 +268,7 @@ angular.module('app.controllers', [])
 
     function createGoalTimeModel() {
         var model = {
-            InKms: $scope.model.InKms,
+            InKms: $scope.data.IsMetric,
             Distance: $scope.model.Distance,
             RealDistance: $scope.model.RealDistance,
             PaceByKm: {
@@ -291,8 +286,74 @@ angular.module('app.controllers', [])
     }
 })
 
-.controller('gSSICtrl', function ($scope) {
+.controller('nutritionCalculatorCtrl', function ($scope, $nutritionCalculatorService) {
+    $scope.model = {
+        Gender: null,
+        GenderSelected: null,
+        Age: 0,
+        Height: 0,
+        Weight: 0,
+        ActiveLevel: null,
+        ActiveLevelSelected: null,
+        TimeSpent: 0,
+        AvgPace: 0        
+    }
 
+    $scope.isValid = function() {
+        if (($scope.model.GenderSelected !== null && $scope.model.GenderSelected !== undefined)
+            && ($scope.model.ActiveLevelSelected !== null && $scope.model.ActiveLevelSelected !== undefined))
+            return true;
+        return false;
+    }
+
+    $scope.data = {
+        IsMetric: $scope.$parent.isMetric,
+        Genders: [
+            { Value: "0", Text: "Female" },
+            { Value: "1", Text: "Male" },
+        ],
+        ActiveLevels: [
+            { Value: "0", Text: "Not Very Active" },
+            { Value: "1", Text: "Moderate" },
+            { Value: "2", Text: "Very Active" },
+        ]
+    }
+    
+    $scope.results = {
+        CaloriesBurned: {
+            WithoutRunning: 0,
+            FromRunning: 0,
+            Total: 0
+        },
+        RunnersDiet: {
+            Carbohydrates: 0,
+            Fat: 0,
+            Protein: 0
+        }
+    }
+
+    $scope.$on("isMetricChanged", function (event, options) {
+        $scope.data.IsMetric = options.newValue;
+    });
+
+    $scope.calculate = function () {
+        if ($scope.isValid()) {
+            $scope.model.IsMetric = $scope.data.IsMetric;
+            $scope.model.Gender = $scope.model.GenderSelected.Value;
+            $scope.model.ActiveLevel = $scope.model.ActiveLevelSelected.Value;
+            $nutritionCalculatorService.calculate($scope.model).then(function (response) {
+                $scope.results = response.data;
+            }, function (err) {          //second function "error"
+                console.log(err);
+            });
+        }
+    }
+
+
+    var init = function () {
+    }
+
+    init();
 })
 
 .controller('aboutCtrl', function ($scope) {

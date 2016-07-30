@@ -56,7 +56,7 @@ angular.module('app.routes', [])
 	    views: {
 	        'menuContent': {
 	            templateUrl: 'templates/smartMarathon.html',
-	            controller: 'smartMarathonCtrl'
+	            controller: 'smartMarathonCalculatorCtrl'
 	        }
 	    }
 	})
@@ -66,7 +66,7 @@ angular.module('app.routes', [])
 	    views: {
 	        'menuContent': {
 	            templateUrl: 'templates/gSSI.html',
-	            controller: 'gSSICtrl'
+	            controller: 'nutritionCalculatorCtrl'
 	        }
 	    }
 	})
