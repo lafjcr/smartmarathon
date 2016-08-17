@@ -1,41 +1,55 @@
 <ion-view title="GSSI Nutrition Calculator" class="bgcolor-green">
     <ion-content padding="true" style="background: url(img/bg-box.png) no-repeat center;background-size:cover;" class="has-header">
-        <form class="list">
+        <form class="list nutrition-calculator">
             <ion-item class="item-divider">Parameters</ion-item>
+
             <label class="item item-select">
                 <span class="input-label">Gender</span>
                 <select ng-model="model.GenderSelected" ng-options="y.Text for (x, y) in data.Genders" ng-change="calculate()"></select>
             </label>
-            <label class="item item-input">
-                <span class="input-label">Age</span>
-                <input type="number" min="1" max="99" class="input-label-number" ng-model="model.Age" ng-change="calculate()">
-                <span class="input-label-desc">years</span>
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Height</span>
-                <input type="number" min="50" max="220" class="input-label-number" ng-model="model.Height" ng-change="calculate()">
-                <span class="input-label-desc">cms</span>
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Weight</span>
-                <input type="number" min="50" max="500" class="input-label-number" ng-model="model.Weight" ng-change="calculate()">
-                <span class="input-label-desc">kgs</span>
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Time spent running</span>                
-                <input type="number" min="1" max="600" class="input-label-number"ng-model="model.TimeSpent" ng-change="calculate()">
-                <span class="input-label-desc">minutes</span>
-            </label>
-            <label class="item item-input">
-                <span class="input-label">Avg Pace of your run</span>
-                <input type="number" min="2.5" max="20" step="0.1" class="input-label-number" ng-model="model.AvgPace" ng-change="calculate()">
-                <span class="input-label-desc">min/km</span>
-            </label>
+
+            <div class="row">
+                <label class="col-75 item item-input item-floating-label">
+                    <span class="input-label">Age</span>
+                    <input type="number" placeholder="Your age" min="1" max="99" ng-model="model.Age" ng-change="calculate()">
+                </label>
+                <label class="col-25 input-label-desc">years</label>
+            </div>
+            <div class="row">
+                <label class="col-75 item item-input item-floating-label">
+                    <span class="input-label">Height</span>
+                    <input type="number" min="50" max="220" placeholder="Your height" class="input-label-number" ng-model="model.Height" ng-change="calculate()">
+                </label>
+                <label class="col-25 input-label-desc">cms</label>
+            </div>
+            <div class="row">
+                <label class="col-75 item item-input item-floating-label">
+                    <span class="input-label">Weight</span>
+                    <input type="number" min="50" max="500" placeholder="Your weight" class="input-label-number" ng-model="model.Weight" ng-change="calculate()">
+                </label>
+                <label class="col-25 input-label-desc">kgs</label>
+            </div>
+            <div class="row">
+                <label class="col-75 item item-input item-floating-label">
+                    <span class="input-label">Time spent running</span>
+                    <input type="number" min="1" max="600" placeholder="Time spent" class="input-label-number" ng-model="model.TimeSpent" ng-change="calculate()">
+                </label>
+                <label class="col-25 input-label-desc">minutes</label>
+            </div>
+            <div class="row">
+                <label class="col-75 item item-input item-floating-label">
+                    <span class="input-label">Avg Pace of your run</span>
+                    <input type="number" min="2.5" max="20" step="0.1" placeholder="Avg pace" class="input-label-number" ng-model="model.AvgPace" ng-change="calculate()">
+                </label>
+                <label class="col-25 input-label-desc">min/km</label>
+            </div>
+
             <label class="item item-select">
                 <span class="input-label">Active Level outside running</span>
                 <select ng-model="model.ActiveLevelSelected" ng-options="y.Text for (x, y) in data.ActiveLevels" ng-change="calculate()"></select>
             </label>
         </form>
+
         <ion-list>
             <ion-item class="item-divider results-title">RESULTS</ion-item>
             <ion-item class="item-divider">Burning Calories</ion-item>

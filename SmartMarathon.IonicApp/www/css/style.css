@@ -1,114 +1,177 @@
-/* Empty. Add your own CSS if you like */
-
-.color-green {
-    color: #00411E;
+* {
+    font-size: 16px;
+    color: #00421f;
 }
 
 .color-orange {
     color: #FF5113;
 }
 
-.color-white/*, div.item-toggle*/ {
-    color: #FFFFFF;
+.hidden {
+    display: none !important;
 }
 
-.bgcolor-green  {
-    /*background-color: #00411E;*/
-    background: #00411e;
-    background: -moz-linear-gradient(top, #00411e 0%, #00582a 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, #00411e), color-stop(100%, #00582a));
-    background: -webkit-linear-gradient(top, #00411e 0%, #00582a 100%);
-    background: -o-linear-gradient(top, #00411e 0%, #00582a 100%);
-    background: -ms-linear-gradient(top, #00411e 0%, #00582a 100%);
-    background: linear-gradient(to bottom, #00411e 0%, #00582a 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00411e', endColorstr='#00582a', GradientType=0 );
+.bgcolor-green {
+    background: #00421f;
+    background: -moz-linear-gradient(top, #00421f 20%, #00582a 60%, #b2b2b2 90%, #ffffff 100%);
+    background: -webkit-linear-gradient(top, #00421f 20%,#00582a 60%,#b2b2b2 90%,#ffffff 100%);
+    background: linear-gradient(to bottom, #00421f 20%,#00582a 60%,#b2b2b2 90%,#ffffff 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00421f', endColorstr='#ffffff',GradientType=0 );
 }
 
-.bgcolor-orange/*,.item-complex .item-content, div.item-toggle*/ {
-    background-color: #FF5113;
+.list {
+    background-color: #FFF;
 }
 
-.bgcolor-white, .row-control/*,div.item-toggle*/ {
-    color: #FFFFFF;
+.item {
+    border-color: #828282;
+    background: none;
+    border-style: none;
 }
 
-
-
-
-.platform-ios .manual-ios-statusbar-padding {
-    padding-top: 20px;
-}
-
-.manual-remove-top-padding {
-    padding-top: 0px;
-}
-
-    .manual-remove-top-padding .scroll {
-        padding-top: 0px !important;
+    .item.range {
+        font-size: 28px;
     }
 
-ion-list.manual-list-fullwidth div.list, .list.card.manual-card-fullwidth {
-    margin-left: -10px;
-    margin-right: -10px;
+.range {
+    padding: 0 3px;
 }
 
-    ion-list.manual-list-fullwidth div.list > .item, .list.card.manual-card-fullwidth > .item {
-        border-radius: 0px;
-        border-left: 0px;
-        border-right: 0px;
+    .range input {
+        margin: 0;
+        padding: 0;
+        height: 38px;
     }
 
-
-a.item-content {
-    font-weight: bold;
+p.description-text {
+    color: #b2b2b2;
+    font-size: 14px;
 }
 
-span.item-note {
-    font-weight: normal;
-    /*color: #FFFFFF;*/
-}
-
-ion-list > div.list > div.item {
-    font-weight: bold;
-}
-
-.row-control {
-    border-color: #ddd;
-    /*background-color: #fff;*/
-    color: #444;
-    position: relative;
-    z-index: 2;
-    display: block;
-    margin: -1px;
-    padding: 16px;
-    border-width: 1px;
-    border-style: solid;
+.input-label {
     font-size: 16px;
 }
 
-.input-number {
-    width: 40px;
+.item-select {
+    padding-top: 11px;
+    padding-bottom: 20px;
 }
 
-.input-label-number {
-    margin-right: 0px;
-    width: 50px;
+    .item-select select {
+        font-size: 14px;
+        color: #00421f;
+        z-index: -1;
+        margin-top: 16px;
+        max-width: 90%;
+        padding-right: 35px;
+    }
+
+    .item-select:after {
+        margin-top: 5px;
+        color: #FF5113;
+    }
+
+    .item-select .input-label {
+        padding-top: 0px;
+    }
+
+input[type="TEXT"],
+input[type="number"] {
+    color: #00421f;
+    text-align: right;
+}
+
+input[type="number"] {
+    height: 36px;
+    font-size: 28px;
+}
+
+.padding > .list .item.item-input input[type="number"] {
+    padding: 0 24px 0 0;
+}
+
+.input-fake {
+    background-color: #FFF;
+    font-size: 26px;
+    color: #00421f;
+    text-align: right;
+    padding: 0 35px 0 0;
+    margin-bottom: 3px;
+    width: 100%;
+    display: block;
+    line-height: 1;
 }
 
 .input-label-desc {
-    font-size: smaller;
-    margin-left: 0px;
-    margin-right: 20px;
-    width: auto;
+    font-size: 14px;
 }
 
-.results-title {
-    text-align: center;
-    font-size: large;
-    color: orangered;
+    .input-fake .input-label-desc {
+
+    }
+
+.popup-buttons .button {
+    border-radius: 0;
 }
 
-.result-item {
-    width: auto;
-    margin-left: 20px;
+.button.button-positive:active {
+    background-color: #00582a;
+}
+
+.button.button-positive:hover {
+    background-color: #00582a;
+}
+
+.ion-datetime-picker .time-buttons .button:hover:before {
+    color: #f8f8f8;
+}
+
+.ion-datetime-picker .time .item-input input {
+    font-size: 28px;
+}
+
+.popup-container .popup {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.button.button-positive.button-clear {
+    color: #00421f;
+}
+
+.button.button-positive {
+    background-color: #00421f;
+}
+
+.kilometer-list {
+    background-color: #ffffff;
+}
+
+    .kilometer-list .col {
+        text-align: center;
+        padding-top: 2px;
+        padding-bottom: 0;
+    }
+
+    .kilometer-list .kilometer-body {
+    }
+
+        .kilometer-list .kilometer-body .col label {
+            font-size: 16px;
+            line-height: 34px;
+        }
+
+    .kilometer-list .kilometer-header label {
+        color: #FF5113;
+    }
+
+.nutrition-calculator .row {
+    padding: 0;
+}
+
+.nutrition-calculator .input-label-desc {
+    margin-top: 45px;
+}
+
+.padding > .list.nutrition-calculator .item.item-input input[type="number"] {
+    padding-right: 6px;
 }

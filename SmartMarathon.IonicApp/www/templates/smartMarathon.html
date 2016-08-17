@@ -1,98 +1,66 @@
 <ion-view title="Smart Marathon" id="smartMarathon" class="bgcolor-green">
-    <ion-content padding="true"class="has-header"> <!--style="background: url(img/bg-box.png) no-repeat center;"-->
-        <div class="list" style="color: #00582A; font-weight: bold">
-            <div class="row item">
-                <div class="col col-33">
-                    <span class="input-label">GOAL TIME</span>
-                </div>
-                <div class="col">
-                    <input type="number" min="0" max="23" ng-model="model.GoalTime.Hours" ng-change="refresh(true)" class="input-number" />
-                </div>
-                <div class="col">
-                    <span class="input-label">:</span>
-                </div>
-                <div class="col">
-                    <input type="number" min="0" max="59" ng-model="model.GoalTime.Minutes" ng-change="refresh(true)" class="input-number" />
-                </div>
-                <div class="col">
-                    <span class="input-label">:</span>
-                </div>
-                <div class="col">
-                    <input type="number" min="0" max="59" ng-model="model.GoalTime.Seconds" ng-change="refresh(true)" class="input-number" />
-                </div>
-            </div>
-            <div class="row item">
-                <div class="col col-33">
-                    <span class="input-label">GOAL PACE</span>
-                </div>
-                <div class="col">
-                    <input type="number" min="0" max="59" ng-model="model.PaceByKm.Minutes" ng-change="refresh(false)" class="input-number" ng-show="data.IsMetric"/>
-                    <input type="number" min="0" max="59" ng-model="model.PaceByMile.Minutes" ng-change="refresh(false)" class="input-number" ng-hide="data.IsMetric" />
-                </div>
-                <div class="col">
-                    <span class="input-label">:</span>
-                </div>
-                <div class="col">
-                    <input type="number" min="0" max="59" ng-model="model.PaceByKm.Seconds" ng-change="refresh(false)" class="input-number" ng-show="data.IsMetric"/>
-                    <input type="number" min="0" max="59" ng-model="model.PaceByMile.Seconds" ng-change="refresh(false)" class="input-number" ng-hide="data.IsMetric" />
-                </div>
-                <div class="col">
-                    <span class="input-label" ng-show="data.IsMetric">min/km</span>
-                    <span class="input-label" ng-hide="data.IsMetric">min/mile</span>
-                </div>
-            </div>
+    <ion-content padding="true" class="has-header">
+        <p class="description-text">Fill your goal time and classify each split according race altimetry</p>
+        <div class="list" style="color: #00582A;">
 
-            <label class="item item-input item-select">
+            <label class="item item-input item-floating-label">
+                <span class="input-label">GOAL TIME</span>
+                <input type="text" class="hidden" placeholder="0:00:00" ng-model="model.GoalTimeTestValue">
+                <label class="input-fake" ion-datetime-picker time seconds ng-model="model.GoalTimeTestValue" ng-change="goalTimeChanged()">
+                    {{model.GoalTimeTestValue| date: "H:mm:ss"}}
+                </label>
+            </label>
+
+            <label class="item item-input item-floating-label">
+                <span class="input-label">GOAL TIME</span>
+                <input type="text" class="hidden" placeholder="0:00:00" ng-model="model.GoalTimeTestValue">
+                <label class="input-fake" ion-datetime-picker time seconds ng-model="model.GoalTimeTestValue" ng-change="goalTimeChanged()">
+                    {{model.GoalTimeTestValue| date: "H:mm:ss"}}
+                    <span class="input-label-desc" ng-show="data.IsMetric">min/km</span>
+                    <span class="input-label-desc" ng-hide="data.IsMetric">min/mile</span>
+                </label>
+            </label>
+
+            <label class="item item-select">
                 <span class="input-label">DISTANCE</span>
                 <select ng-model="model.SelectedDistance" ng-options="y.Text for (x, y) in data.Distances" ng-change="loadEvents()"></select>
             </label>
-            <label class="item item-input" ng-show="isCustomDistance()">
+
+            <label class="item item-input item-floating-label" ng-show="isCustomDistance()">
                 <span class="input-label">YOUR DISTANCE</span>
-                <input type="number" placeholder="" ng-model="model.RealDistance" ng-change="refresh()">
+                <input type="number" placeholder="YOUR DISTANCE" min="1" max="999" ng-model="model.RealDistance" ng-change="refresh()">
             </label>
-            <label class="item item-input item-select" ng-hide="isCustomDistance()">
+
+            <label class="item item-select" ng-hide="isCustomDistance()">
                 <span class="input-label">EVENT</span>
                 <select ng-model="model.Event" ng-options="y.Text for (x, y) in data.Events" ng-change="loadSplits()"></select>
             </label>
         </div>
-        <div style="color: #ffffff; font-weight: bold">
-            <div class="row">
-                <div class="col col-20 color-orange" ng-show="data.IsMetric">
-                    KM
+        <div class="kilometer-list">
+            <div class="row kilometer-header">
+                <div class="col col-10" style="text-align: left;">
+                    <label>KM</label>
                 </div>
-                <div class="col col-20 color-orange" ng-hide="data.IsMetric">
-                    MILE
+                <div class="col col-50">
+                    <label>ALTIMETRY</label>
                 </div>
-                <div class="col col-40 color-orange">
-                    ALTIMETRY
+                <div class="col col-20">
+                    <label>PACE</label>
                 </div>
-                <div class="col col-20 color-orange">
-                    PACE
-                </div>
-                <div class="col col-20 color-orange">
-                    TIME
+                <div class="col col-20">
+                    <label>TIME</label>
                 </div>
             </div>
-            <div class="row" ng-repeat="split in model.Splits.Kilometers" ng-show="data.IsMetric">
-                <div class="col col-20">
-                    {{split.Split}}
+            <div class="row kilometer-body" ng-repeat="split in model.Splits.Kilometers">
+                <div class="col col-10" style="text-align: left;">
+                    <label>{{split.Split}}</label>
                 </div>
-                <div class="col col-40">
-                    <input type="range" ng-model="split.Category" value="{{split.Category}}" min="-1" max="1" ng-change="refresh()">
-                </div>
-                <div class="col col-20">
-                    <label ng-bind="displayTime(split.Pace)"></label>
-                </div>
-                <div class="col col-20">
-                    <label ng-bind="displayTime(split.Time)"></label>
-                </div>
-            </div>
-            <div class="row" ng-repeat="split in model.Splits.Miles" ng-hide="data.IsMetric">
-                <div class="col col-20">
-                    {{split.Split}}
-                </div>
-                <div class="col col-40">
-                    <input type="range" ng-model="split.Category" value="{{split.Category}}" min="-1" max="1" ng-change="refresh()">
+                <div class="col col-50">
+                    <div class="item range">
+                        <i class="ion-arrow-graph-down-right"></i>
+                        <input type="range" ng-model="split.Category" value="{{split.Category}}" min="-1" max="1" ng-change="refresh()">
+                        <i class="ion-arrow-graph-up-right"></i>
+                    </div>
                 </div>
                 <div class="col col-20">
                     <label ng-bind="displayTime(split.Pace)"></label>
@@ -102,8 +70,5 @@
                 </div>
             </div>
         </div>
-        <!--<div class="bar bar-footer">
-            <button class="button center" style="width: 100%; background-color: orange; color: green; font-weight: bold; border-color: green; border-width: 2px;">CALCULATE</button>
-        </div>-->
     </ion-content>
 </ion-view>
