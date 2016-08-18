@@ -14,27 +14,33 @@
             <!--<div class="title">Menu</div>-->
         </ion-header-bar>
         <ion-content padding="false" class="side-menu-left has-header">
-            <ion-list id="menu-null" class=" " style="background-color:#FF5113;">
-                <ion-item class="item-icon-right color-orange" id="menu-list-item1" ui-sref="app.smartMarathon" menu-close="">
-                    Smart Marathon
-                    <span class="item-note color-green">Race strategy calculator</span>
+            <ion-list id="menu-null" style="background-color:#FF5113;">
+                <ion-item class="item-icon-right color-orange" ui-sref="app.smartMarathon" menu-close="">
+                    {{strings.Menu_SM_Title}}
+                    <span class="item-note color-green">{{strings.Menu_SM_Subtitle}}</span>
                     <i class="icon ion-calculator"></i>
                 </ion-item>
-                <ion-item class="item-icon-right color-orange" id="menu-list-item2" ui-sref="app.gSSI" menu-close="">
-                    GSSI
-                    <span class="item-note color-green">Nutrition calculator</span>
+                <ion-item class="item-icon-right color-orange" ui-sref="app.gSSI" menu-close="">
+                    {{strings.Menu_GSSI_Title}}
+                    <span class="item-note color-green">{{strings.Menu_GSSI_Subtitle}}</span>
                     <i class="icon ion-flash"></i>
                 </ion-item>
-                <ion-item class="item-icon-right color-orange" id="menu-list-item3" ui-sref="app.about" menu-close="">
-                    About Smart Marathon
-                    <span class="item-note color-green">Theory explanation</span>
+                <!--<ion-item class="item-icon-right color-orange" ui-sref="app.about" menu-close="">
+                    {{strings.Menu_AboutSM_Title}}
+                    <span class="item-note color-green">{{strings.Menu_AboutSM_Subtitle}}</span>
                     <i class="icon ion-document-text"></i>
-                </ion-item>
-                <ion-item class="item-icon-right color-orange" id="menu-list-item4" ui-sref="app.contact" menu-close="">
-                    Contact
+                </ion-item>-->
+                <ion-item class="item-icon-right color-orange" ui-sref="app.contact" menu-close="">
+                    {{strings.Menu_Contact_Title}}
                     <i class="icon ion-email"></i>
                 </ion-item>
-                <ion-toggle toggle-class="toggle-balanced" id="menu-toggle1" class="color-orange" ng-model="isMetric" ng-change="isMetricChanged(isMetric)">Metric</ion-toggle>
+                <label class="item item-select">
+                    <span class="input-label color-orange">{{strings.Menu_Language_Title}}</span>
+                    <img src="../img/flags/us.png" ng-show="isEnglish()" />
+                    <img src="../img/flags/cr.png" ng-hide="isEnglish()" />
+                    <select ng-model="language" ng-options="y.Text for (x, y) in languages" ng-change="setLanguage(language)"></select>
+                </label>
+                <ion-toggle toggle-class="toggle-balanced" class="color-orange" ng-model="isMetric" ng-change="isMetricChanged(isMetric)">{{strings.Menu_Metric_Title}}</ion-toggle>                
             </ion-list>
         </ion-content>
     </ion-side-menu>

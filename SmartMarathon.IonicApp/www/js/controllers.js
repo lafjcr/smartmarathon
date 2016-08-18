@@ -1,6 +1,6 @@
 angular.module('app.controllers', [])
 
-.controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function ($scope, $ionicModal, $timeout, $window, $localizationService) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -44,7 +44,33 @@ angular.module('app.controllers', [])
 
     $scope.isMetricChanged = function (value) {
         $scope.$broadcast("isMetricChanged", { newValue: value });
+    };    
+
+    $scope.languages = $localizationService.languages;
+    $scope.language = $scope.languages[1];
+    $scope.strings = {};
+
+    $scope.isEnglish = function () {
+        return $scope.language === "en" || $scope.language.Value === "en";
     };
+
+    $scope.setLanguage = function (language) {
+        $scope.language = language.Value;
+        $scope.strings = $localizationService.getStrings($scope.language);
+    };
+
+    function getBrowserLanguage() {
+        var browserLanguage = $window.navigator.language || $window.navigator.userLanguage;
+        browserLanguage = browserLanguage.split('-')[0];
+        return browserLanguage;
+    }
+
+    var init = function () {
+        //$scope.language = getBrowserLanguage();
+        $scope.strings = $localizationService.getStrings($scope.language.Value);
+    }
+
+    init();
 })
 
 .controller('PlaylistsCtrl', function ($scope) {
@@ -310,13 +336,13 @@ angular.module('app.controllers', [])
     $scope.data = {
         IsMetric: $scope.$parent.isMetric,
         Genders: [
-            { Value: "0", Text: "Female" },
-            { Value: "1", Text: "Male" },
+            { Value: "0", Text: $scope.$parent.strings.GSSI_Female },
+            { Value: "1", Text: $scope.$parent.strings.GSSI_Male },
         ],
         ActiveLevels: [
-            { Value: "0", Text: "Not Very Active" },
-            { Value: "1", Text: "Moderate" },
-            { Value: "2", Text: "Very Active" },
+            { Value: "0", Text: $scope.$parent.strings.GSSI_NotVeryActive },
+            { Value: "1", Text: $scope.$parent.strings.GSSI_Moderate },
+            { Value: "2", Text: $scope.$parent.strings.GSSI_VeryActive },
         ]
     }
     
