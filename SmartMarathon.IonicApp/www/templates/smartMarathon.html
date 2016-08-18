@@ -14,7 +14,7 @@
             <label class="item item-input item-floating-label">
                 <span class="input-label">{{$parent.strings.SM_GoalPace}}</span>
                 <input type="text" class="hidden" placeholder="0:00" ng-model="model.PaceByKmValue">
-                <label class="input-fake" ion-datetime-picker time ng-model="model.PaceByKmValue" ng-change="goalPaceChanged()">
+                <label class="input-fake" ion-datetime-picker time ng-model="model.PaceByKmValue" ng-change="goalPaceChanged(model.PaceByKmValue)">
                     {{model.PaceByKmValue| date: "H:mm"}}
                     <span class="input-label-desc">{{$parent.strings.SM_MinKm}}</span>
                 </label>
@@ -23,7 +23,7 @@
             <label class="item item-input item-floating-label" ng-hide="data.IsMetric">
                 <span class="input-label">{{$parent.strings.SM_GoalPace}}</span>
                 <input type="text" class="hidden" placeholder="0:00" ng-model="model.PaceByMileValue">
-                <label class="input-fake" ion-datetime-picker time ng-model="model.PaceByMileValue" ng-change="goalPaceChanged()">
+                <label class="input-fake" ion-datetime-picker time ng-model="model.PaceByMileValue" ng-change="goalPaceChanged(model.PaceByMileValue)">
                     {{model.PaceByMileValue| date: "H:mm"}}
                     <span class="input-label-desc">{{$parent.strings.SM_MinMile}}</span>
                 </label>

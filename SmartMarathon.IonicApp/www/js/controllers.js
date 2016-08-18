@@ -179,14 +179,14 @@ angular.module('app.controllers', [])
 
     $scope.goalTimeChanged = function (value) {
         $scope.model.ByGoalTime = true;
-        $scope.model.GoalTime = dateToTimeSpan(value);
+        $scope.model.GoalTime = goalTimeToTimeSpan(value);
         $scope.refresh();
     }
 
-    $scope.goalPaceChanged = function () {
+    $scope.goalPaceChanged = function (value) {
         $scope.model.ByGoalTime = false;
-        $scope.model.PaceByKm = dateToTimeSpan($scope.model.PaceByKmValue);
-        $scope.model.PaceByMile = dateToTimeSpan($scope.model.PaceByMileValue);
+        $scope.model.PaceByKm = goalPaceToTimeSpan(value);
+        $scope.model.PaceByMile = goalPaceToTimeSpan(value);
         $scope.refresh();
     }
 
@@ -270,18 +270,21 @@ angular.module('app.controllers', [])
             var data = response.data;
             $scope.model.PaceByKm.Minutes = data.PaceByKm.Minutes;
             $scope.model.PaceByKm.Seconds = data.PaceByKm.Seconds;
-            $scope.model.PaceByKmValue.setHours(data.PaceByKm.Minutes);
-            $scope.model.PaceByKmValue.setMinutes(data.PaceByKm.Seconds);
+            //$scope.model.PaceByKmValue.setHours(data.PaceByKm.Minutes);
+            //$scope.model.PaceByKmValue.setMinutes(data.PaceByKm.Seconds);
+            $scope.model.PaceByKmValue = new Date(0, 0, 0, data.PaceByKm.Minutes, data.PaceByKm.Seconds, 0, 0);
             $scope.model.PaceByMile.Minutes = data.PaceByMile.Minutes;
             $scope.model.PaceByMile.Seconds = data.PaceByMile.Seconds;
-            $scope.model.PaceByMileValue.setHours(data.PaceByMile.Minutes);
-            $scope.model.PaceByMileValue.setMinutes(data.PaceByMile.Seconds);
+            //$scope.model.PaceByMileValue.setHours(data.PaceByMile.Minutes);
+            //$scope.model.PaceByMileValue.setMinutes(data.PaceByMile.Seconds);
+            $scope.model.PaceByMileValue = new Date(0, 0, 0, data.PaceByMile.Minutes, data.PaceByMile.Seconds, 0, 0);
             $scope.model.GoalTime.Hours = data.GoalTime.Hours;
             $scope.model.GoalTime.Minutes = data.GoalTime.Minutes;
             $scope.model.GoalTime.Seconds = data.GoalTime.Seconds;
-            $scope.model.GoalTimeValue.setHours(data.GoalTime.Hours);
-            $scope.model.GoalTimeValue.setMinutes(data.GoalTime.Minutes);
-            $scope.model.GoalTimeValue.setSeconds(data.GoalTime.Seconds);
+            //$scope.model.GoalTimeValue.setHours(data.GoalTime.Hours);
+            //$scope.model.GoalTimeValue.setMinutes(data.GoalTime.Minutes);
+            //$scope.model.GoalTimeValue.setSeconds(data.GoalTime.Seconds);
+            $scope.model.GoalTimeValue = new Date(0, 0, 0, data.GoalTime.Hours, data.GoalTime.Minutes, data.GoalTime.Seconds, 0);
             calculateSplits();
         });
     }
@@ -316,10 +319,12 @@ angular.module('app.controllers', [])
             Distance: $scope.model.Distance,
             RealDistance: $scope.model.RealDistance,
             PaceByKm: {
+                "Hours": 0,
                 "Minutes": $scope.model.PaceByKmValue.getHours(),
                 "Seconds": $scope.model.PaceByKmValue.getMinutes()
             },
             PaceByMile: {
+                "Hours": 0,
                 "Minutes": $scope.model.PaceByMileValue.getHours(),
                 "Seconds": $scope.model.PaceByMileValue.getMinutes()
             }
@@ -327,11 +332,20 @@ angular.module('app.controllers', [])
         return model;
     }
 
-    function dateToTimeSpan(dateValue) {
+    function goalTimeToTimeSpan(dateValue) {
         var result = {
             "Hours": dateValue.getHours(),
             "Minutes": dateValue.getMinutes(),
             "Seconds": dateValue.getSeconds()
+        }
+        return result;
+    }
+
+    function goalPaceToTimeSpan(dateValue) {
+        var result = {
+            "Hours": 0,
+            "Minutes": dateValue.getHours(),
+            "Seconds": dateValue.getMinutes()
         }
         return result;
     }
