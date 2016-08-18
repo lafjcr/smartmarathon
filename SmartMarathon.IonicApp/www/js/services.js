@@ -158,12 +158,12 @@ angular.module('app.services', [])
                 Menu_GSSI_Title: "GSSI",
                 Menu_GSSI_Subtitle: "Calculadora nutricional",
                 Menu_AboutSM_Title: "Sobre Smart Marathon",
-                Menu_AboutSM_Subtitle: "Explicación teórica",
-                Menu_Contact_Title: "Contáctame",
+                Menu_AboutSM_Subtitle: "Explicaci\u00F3n te\u00F3rica",
+                Menu_Contact_Title: "Cont\u00E1ctame",
                 Menu_Language_Title: "Idioma",
-                Menu_Metric_Title: "Unidades métricas",
+                Menu_Metric_Title: "Unidades m\u00E9tricas",
                 SM_Title: "Smart Marathon",
-                SM_Instructions: "Ingrese su tiempo meta y clasifique cada split de acuerdo a la altimetría de la carrera",
+                SM_Instructions: "Ingrese su tiempo meta y clasifique cada split de acuerdo a la altimetr\u00EDa de la carrera",
                 SM_GoalTime: "TIEMPO META",
                 SM_GoalPace: "PASO META",
                 SM_MinKm: "min/km",
@@ -183,7 +183,7 @@ angular.module('app.services', [])
                 GSSI_Female: "Mujer",
                 GSSI_Male: "Hombre",
                 GSSI_Age: "EDAD",
-                GSSI_Years: "años",
+                GSSI_Years: "a\u00F1os",
                 GSSI_Height: "ALTURA",
                 GSSI_Cms: "cms",
                 GSSI_Weight: "PESO",
@@ -199,21 +199,21 @@ angular.module('app.services', [])
                 GSSI_Moderate: "Moderado",
                 GSSI_VeryActive: "Muy Activo",
                 GSSI_Results: "RESULTADOS",
-                GSSI_BurningCalories: "Gasto de Calorías",
+                GSSI_BurningCalories: "Gasto de Calor\u00EDas",
                 GSSI_WithoutRunning: " sin correr",
                 GSSI_FromRunning: " corriendo",
-                GSSI_TotalDay: " total del día",
-                GSSI_RecommendedDiet: "Dieta \"Típica\" Recomendada para el Corredor",
+                GSSI_TotalDay: " total del d\u00EDa",
+                GSSI_RecommendedDiet: "Dieta \"T\u00EDpica\" Recomendada para el Corredor",
                 GSSI_GramsCarbo: " gramos de carbohidratos",
                 GSSI_GramsFat: " gramos de grasa",
-                GSSI_GramsProtein: " gramos de proteina"
+                GSSI_GramsProtein: " gramos de prote\u00EDna"
             }
         }
     ]
 
     var _languages = [
         { Value: "en", Text: "English" },
-        { Value: "es", Text: "Español" }
+        { Value: "es", Text: "Espa\u00F1ol" }
     ]
 
     var _getStrings = function (language) {
