@@ -90,18 +90,20 @@ angular.module('app.controllers', [])
 .controller('smartMarathonCalculatorCtrl', function ($scope, $smartMarathonCalculatorService) {
     $scope.model = {
         InKms: $scope.$parent.isMetric,
-        GoalTimeTestValue: new Date(0, 0),
+        GoalTimeValue: new Date(0, 0),
         GoalTime: {
             Hours: 0,
             Minutes: 0,
             Seconds: 0
         },
         ByGoalTime: true,
+        PaceByKmValue: new Date(0, 0),
         PaceByKm: {
             Hours: 0,
             Minutes: 0,
             Seconds: 0
         },
+        PaceByMileValue: new Date(0, 0),
         PaceByMile: {
             Hours: 0,
             Minutes: 0,
@@ -175,8 +177,16 @@ angular.module('app.controllers', [])
         }
     }
 
-    $scope.refresh = function (byGoalTime) {
-        $scope.model.ByGoalTime = byGoalTime;
+    $scope.goalTimeChanged = function (value) {
+        $scope.model.ByGoalTime = true;
+        $scope.model.GoalTime = dateToTimeSpan(value);
+        $scope.refresh();
+    }
+
+    $scope.goalPaceChanged = function () {
+        $scope.model.ByGoalTime = false;
+        $scope.model.PaceByKm = dateToTimeSpan($scope.model.PaceByKmValue);
+        $scope.model.PaceByMile = dateToTimeSpan($scope.model.PaceByMileValue);
         $scope.refresh();
     }
 
@@ -260,17 +270,24 @@ angular.module('app.controllers', [])
             var data = response.data;
             $scope.model.PaceByKm.Minutes = data.PaceByKm.Minutes;
             $scope.model.PaceByKm.Seconds = data.PaceByKm.Seconds;
+            $scope.model.PaceByKmValue.setHours(data.PaceByKm.Minutes);
+            $scope.model.PaceByKmValue.setMinutes(data.PaceByKm.Seconds);
             $scope.model.PaceByMile.Minutes = data.PaceByMile.Minutes;
             $scope.model.PaceByMile.Seconds = data.PaceByMile.Seconds;
+            $scope.model.PaceByMileValue.setHours(data.PaceByMile.Minutes);
+            $scope.model.PaceByMileValue.setMinutes(data.PaceByMile.Seconds);
             $scope.model.GoalTime.Hours = data.GoalTime.Hours;
             $scope.model.GoalTime.Minutes = data.GoalTime.Minutes;
             $scope.model.GoalTime.Seconds = data.GoalTime.Seconds;
+            $scope.model.GoalTimeValue.setHours(data.GoalTime.Hours);
+            $scope.model.GoalTimeValue.setMinutes(data.GoalTime.Minutes);
+            $scope.model.GoalTimeValue.setSeconds(data.GoalTime.Seconds);
             calculateSplits();
         });
     }
 
     function calculateSplits() {
-	$scope.model.InKms = $scope.data.IsMetric;
+	    $scope.model.InKms = $scope.data.IsMetric;
         $smartMarathonCalculatorService.calculateSplits($scope.model).then(function (response) {
             var data = response.data;
             $scope.model.Splits = data.Splits;
@@ -285,9 +302,9 @@ angular.module('app.controllers', [])
             Distance: $scope.model.Distance,
             RealDistance: $scope.model.RealDistance,
             GoalTime: {
-                "Hours": $scope.model.GoalTime.Hours,
-                "Minutes": $scope.model.GoalTime.Minutes,
-                "Seconds": $scope.model.GoalTime.Seconds
+                "Hours": $scope.model.GoalTimeValue.getHours(),
+                "Minutes": $scope.model.GoalTimeValue.getMinutes(),
+                "Seconds": $scope.model.GoalTimeValue.getSeconds(),
             }
         };
         return model;
@@ -299,17 +316,24 @@ angular.module('app.controllers', [])
             Distance: $scope.model.Distance,
             RealDistance: $scope.model.RealDistance,
             PaceByKm: {
-                "Hours": $scope.model.PaceByKm.Hours,
-                "Minutes": $scope.model.PaceByKm.Minutes,
-                "Seconds": $scope.model.PaceByKm.Seconds
+                "Minutes": $scope.model.PaceByKmValue.getHours(),
+                "Seconds": $scope.model.PaceByKmValue.getMinutes()
             },
             PaceByMile: {
-                "Hours": $scope.model.PaceByMile.Hours,
-                "Minutes": $scope.model.PaceByMile.Minutes,
-                "Seconds": $scope.model.PaceByMile.Seconds
+                "Minutes": $scope.model.PaceByMileValue.getHours(),
+                "Seconds": $scope.model.PaceByMileValue.getMinutes()
             }
         };
         return model;
+    }
+
+    function dateToTimeSpan(dateValue) {
+        var result = {
+            "Hours": dateValue.getHours(),
+            "Minutes": dateValue.getMinutes(),
+            "Seconds": dateValue.getSeconds()
+        }
+        return result;
     }
 })
 

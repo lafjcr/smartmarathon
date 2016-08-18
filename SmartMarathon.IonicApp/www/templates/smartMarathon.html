@@ -5,19 +5,27 @@
 
             <label class="item item-input item-floating-label">
                 <span class="input-label">{{$parent.strings.SM_GoalTime}}</span>
-                <input type="text" class="hidden" placeholder="0:00:00" ng-model="model.GoalTimeTestValue">
-                <label class="input-fake" ion-datetime-picker time seconds ng-model="model.GoalTimeTestValue" ng-change="goalTimeChanged()">
-                    {{model.GoalTimeTestValue| date: "H:mm:ss"}}
+                <input type="text" class="hidden" placeholder="0:00:00" ng-model="model.GoalTimeValue">
+                <label class="input-fake" ion-datetime-picker time seconds ng-model="model.GoalTimeValue" ng-change="goalTimeChanged(model.GoalTimeValue)">
+                    {{model.GoalTimeValue| date: "H:mm:ss"}}
                 </label>
             </label>
 
             <label class="item item-input item-floating-label">
                 <span class="input-label">{{$parent.strings.SM_GoalPace}}</span>
-                <input type="text" class="hidden" placeholder="0:00:00" ng-model="model.GoalTimeTestValue">
-                <label class="input-fake" ion-datetime-picker time seconds ng-model="model.GoalTimeTestValue" ng-change="goalTimeChanged()">
-                    {{model.GoalTimeTestValue| date: "H:mm:ss"}}
-                    <span class="input-label-desc" ng-show="data.IsMetric">{{$parent.strings.SM_MinKm}}</span>
-                    <span class="input-label-desc" ng-hide="data.IsMetric">{{$parent.strings.SM_MinMile}}</span>
+                <input type="text" class="hidden" placeholder="0:00" ng-model="model.PaceByKmValue">
+                <label class="input-fake" ion-datetime-picker time ng-model="model.PaceByKmValue" ng-change="goalPaceChanged()">
+                    {{model.PaceByKmValue| date: "H:mm"}}
+                    <span class="input-label-desc">{{$parent.strings.SM_MinKm}}</span>
+                </label>
+            </label>
+
+            <label class="item item-input item-floating-label" ng-hide="data.IsMetric">
+                <span class="input-label">{{$parent.strings.SM_GoalPace}}</span>
+                <input type="text" class="hidden" placeholder="0:00" ng-model="model.PaceByMileValue">
+                <label class="input-fake" ion-datetime-picker time ng-model="model.PaceByMileValue" ng-change="goalPaceChanged()">
+                    {{model.PaceByMileValue| date: "H:mm"}}
+                    <span class="input-label-desc">{{$parent.strings.SM_MinMile}}</span>
                 </label>
             </label>
 
