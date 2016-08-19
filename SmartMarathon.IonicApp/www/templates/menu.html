@@ -36,8 +36,8 @@
                 </ion-item>
                 <label class="item item-select">
                     <span class="input-label color-orange">{{strings.Menu_Language_Title}}</span>
-                    <img src="../img/flags/us.png" ng-show="isEnglish()" />
-                    <img src="../img/flags/cr.png" ng-hide="isEnglish()" />
+                    <img src="img/flags/us.png" ng-show="isEnglish()" />
+                    <img src="img/flags/cr.png" ng-hide="isEnglish()" />
                     <select ng-model="language" ng-options="y.Text for (x, y) in languages" ng-change="setLanguage(language)"></select>
                 </label>
                 <ion-toggle toggle-class="toggle-balanced" class="color-orange" ng-model="isMetric" ng-change="isMetricChanged(isMetric)">{{strings.Menu_Metric_Title}}</ion-toggle>                
