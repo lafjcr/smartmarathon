@@ -46,11 +46,11 @@
         </div>
         <div class="kilometer-list">
             <div class="row kilometer-header">
-                <div class="col col-10" style="text-align: left;">
+                <div class="col col-20">
                     <label ng-show="data.IsMetric">{{$parent.strings.SM_Km}}</label>
                     <label ng-hide="data.IsMetric">{{$parent.strings.SM_Mile}}</label>
                 </div>
-                <div class="col col-50">
+                <div class="col col-40">
                     <label>{{$parent.strings.SM_Altimetry}}</label>
                 </div>
                 <div class="col col-20">
@@ -61,10 +61,10 @@
                 </div>
             </div>
             <div class="row kilometer-body" ng-repeat="split in model.Splits.Kilometers" ng-show="data.IsMetric">
-                <div class="col col-10" style="text-align: left;">
+                <div class="col col-20">
                     <label>{{split.Split}}</label>
                 </div>
-                <div class="col col-50">
+                <div class="col col-40">
                     <div class="item range">
                         <i class="ion-arrow-graph-down-right"></i>
                         <input type="range" ng-model="split.Category" value="{{split.Category}}" min="-1" max="1" ng-change="refresh()">
@@ -79,10 +79,10 @@
                 </div>
             </div>
             <div class="row kilometer-body" ng-repeat="split in model.Splits.Miles" ng-hide="data.IsMetric">
-                <div class="col col-10" style="text-align: left;">
+                <div class="col col-20">
                     <label>{{split.Split}}</label>
                 </div>
-                <div class="col col-50">
+                <div class="col col-40">
                     <div class="item range">
                         <i class="ion-arrow-graph-down-right"></i>
                         <input type="range" ng-model="split.Category" value="{{split.Category}}" min="-1" max="1" ng-change="refresh()">
