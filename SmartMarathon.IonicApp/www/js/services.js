@@ -64,8 +64,8 @@ angular.module('app.services', [])
 
 .factory('$nutritionCalculatorService', ['$http', function ($http) {
     var urls = {
-        //ServiceBase: 'http://smartmarathon-api.azurewebsites.net/api/{0}',
-        ServiceBase: 'http://localhost:53238/api/{0}',
+        ServiceBase: 'http://smartmarathon-api.azurewebsites.net/api/{0}',
+        //ServiceBase: 'http://localhost:53238/api/{0}',
         Nutrition: 'Nutrition'
     };
 
@@ -146,7 +146,10 @@ angular.module('app.services', [])
                 GSSI_RecommendedDiet: "\"Typical\" Recommended Runner's diet",
                 GSSI_GramsCarbo: " grams of carbohydrate",
                 GSSI_GramsFat: " grams of fat",
-                GSSI_GramsProtein: " grams of protein"
+                GSSI_GramsProtein: " grams of protein",
+                Contact_Title: "Contact Me",
+                Contact_P1: "Contact me for any comment or question you could have or request to add a marathon elevation profile in the list.",
+                Contact_P2: "Also any experience running your marathons guided by Smart Marathon is welcome to be included in a future section.",
             }
         },
         {
@@ -206,7 +209,10 @@ angular.module('app.services', [])
                 GSSI_RecommendedDiet: "Dieta \"T\u00EDpica\" Recomendada para el Corredor",
                 GSSI_GramsCarbo: " gramos de carbohidratos",
                 GSSI_GramsFat: " gramos de grasa",
-                GSSI_GramsProtein: " gramos de prote\u00EDna"
+                GSSI_GramsProtein: " gramos de prote\u00EDna",
+                Contact_Title: "Cont\u00E1ctame",
+                Contact_P1: "Cont\u00E1ctame para cualquier comentario o pregunta que puedas tener o para solicitar incluir a la lista la altimetr\u00EDa de alguna marat\u00F3n.",
+                Contact_P2: "Tambi\u00E9n cualquier experiencia corriendo sus maratones guiadas por Smart Marathon es bienvenida para ser incluida en una secci\u00F3n futura.",
             }
         }
     ]
