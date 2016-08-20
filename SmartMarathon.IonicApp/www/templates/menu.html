@@ -14,6 +14,9 @@
             <!--<div class="title">Menu</div>-->
         </ion-header-bar>
         <ion-content padding="false" class="side-menu-left has-header">
+            <div style="margin: 0px; line-height: 100px; text-align: center; background-color: #ffffff;">
+                <img src="img/icon.png" width="45%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+            </div>
             <ion-list id="menu-null" style="background-color:#FF5113;">
                 <ion-item class="item-icon-right color-orange" ui-sref="app.smartMarathon" menu-close="">
                     {{strings.Menu_SM_Title}}
@@ -42,6 +45,9 @@
                 </label>
                 <ion-toggle toggle-class="toggle-balanced" class="color-orange" ng-model="isMetric" ng-change="isMetricChanged(isMetric)">{{strings.Menu_Metric_Title}}</ion-toggle>                
             </ion-list>
+            <div style="margin: 0px; text-align: center;">
+                <img src="img/gssi.png" width="100%" height="auto" style="display: block;margin-left: auto;margin-right: auto;margin-top: 8%;">
+            </div>
         </ion-content>
     </ion-side-menu>
 </ion-side-menus>
