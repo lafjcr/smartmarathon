@@ -1,7 +1,7 @@
 <ion-view title="{{$parent.strings.GSSI_Title}}" class="bgcolor-green">
     <ion-content padding="true" class="has-header">
         <form class="list nutrition-calculator">
-            <ion-item class="item-divider">{{$parent.strings.GSSI_Parameters}}</ion-item>
+            <ion-item class="item-divider color-orange">{{$parent.strings.GSSI_Parameters}}</ion-item>
 
             <label class="item item-select">
                 <span class="input-label">{{$parent.strings.GSSI_Gender}}</span>
@@ -55,9 +55,9 @@
             </label>
         </form>
 
-        <ion-list>
-            <ion-item class="item-divider results-title">{{$parent.strings.GSSI_Results}}</ion-item>
-            <ion-item class="item-divider">{{$parent.strings.GSSI_BurningCalories}}</ion-item>
+        <ion-list class="nutrition-calculator">
+            <ion-item class="item-divider color-orange">{{$parent.strings.GSSI_Results}}</ion-item>
+            <ion-item class="item-divider small">{{$parent.strings.GSSI_BurningCalories}}</ion-item>
             <div class="item item-body">
                 <p class="result-item color-green">
                     <strong>{{results.CaloriesBurned.WithoutRunning}}</strong>{{$parent.strings.GSSI_WithoutRunning}}
@@ -69,7 +69,7 @@
                     <strong>{{results.CaloriesBurned.Total}}</strong>{{$parent.strings.GSSI_TotalDay}}
                 </p>
             </div>
-            <ion-item class="item-divider">{{$parent.strings.GSSI_RecommendedDiet}}</ion-item>
+            <ion-item class="item-divider small">{{$parent.strings.GSSI_RecommendedDiet}}</ion-item>
             <div class="item item-body">
                 <p class="result-item color-green">
                     <strong>{{results.RunnersDiet.Carbohydrates}}</strong>{{$parent.strings.GSSI_GramsCarbo}}

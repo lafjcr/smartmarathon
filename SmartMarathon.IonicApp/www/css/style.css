@@ -7,6 +7,10 @@
     color: #FF5113;
 }
 
+.color-orange:active {
+    color: #00421f;
+}
+
 .hidden {
     display: none !important;
 }
@@ -106,9 +110,8 @@ input[type="number"] {
     font-size: 14px;
 }
 
-    .input-fake .input-label-desc {
-
-    }
+.input-fake .input-label-desc {
+}
 
 .popup-buttons .button {
     border-radius: 0;
@@ -174,4 +177,26 @@ input[type="number"] {
 
 .padding > .list.nutrition-calculator .item.item-input input[type="number"] {
     padding-right: 6px;
+}
+
+.nutrition-calculator .item p:first-child {
+    margin-top: 0;
+}
+
+.nutrition-calculator .item p {
+    margin-left: 15px;
+}
+
+    .nutrition-calculator .item p strong {
+        color: #00421f;
+    }
+
+.item-divider.small {
+    padding-top: 14px;
+    padding-bottom: 2px;
+}
+
+.item-icon-left .icon,
+.item-icon-right .icon {
+    color: #FF5113;
 }
