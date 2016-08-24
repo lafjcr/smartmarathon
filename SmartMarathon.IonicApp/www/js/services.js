@@ -222,6 +222,17 @@ angular.module('app.services', [])
         { Value: "es", Text: "Espa\u00F1ol" }
     ]
 
+    var _getLanguage = function (language) {
+        var result = {};
+        for (var i = 0; i < _languages.length; i++) {
+            if (_languages[i].Value === language) {
+                result = _languages[i];
+                break;
+            }
+        }
+        return result;
+    }
+
     var _getStrings = function (language) {
         if (language === undefined || language === "")
             language = "en";
@@ -236,8 +247,9 @@ angular.module('app.services', [])
     }
 
     var serviceFactory = {};
-    serviceFactory.getStrings = _getStrings;
     serviceFactory.languages = _languages;
+    serviceFactory.getLanguage = _getLanguage;
+    serviceFactory.getStrings = _getStrings;
     return serviceFactory;
 }])
 

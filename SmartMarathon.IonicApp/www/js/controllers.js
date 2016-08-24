@@ -1,6 +1,6 @@
 angular.module('app.controllers', [])
 
-.controller('AppCtrl', function ($scope, $ionicModal, $timeout, $window, $localizationService) {
+.controller('AppCtrl', function ($scope, $ionicModal, $timeout, $window, $localizationService, $localStorage) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -9,14 +9,15 @@ angular.module('app.controllers', [])
     //$scope.$on('$ionicView.enter', function(e) {
     //});
 
-    $scope.isMetric = true;
+    $scope.isMetric = $localStorage.isMetric !== undefined ? $localStorage.isMetric : true;
 
     $scope.isMetricChanged = function (value) {
+        $localStorage.isMetric = value;
         $scope.$broadcast("isMetricChanged", { newValue: value });
     };    
 
     $scope.languages = $localizationService.languages;
-    $scope.language = $scope.languages[1];
+    $scope.language = $localStorage.language !== undefined ? $localizationService.getLanguage($localStorage.language) : $scope.languages[1];
     $scope.strings = {};
 
     $scope.isEnglish = function () {
@@ -24,7 +25,7 @@ angular.module('app.controllers', [])
     };
 
     $scope.setLanguage = function (language) {
-        $scope.language = language.Value;
+        $localStorage.language = $scope.language = language.Value;
         $scope.strings = $localizationService.getStrings($scope.language);
     };
 
