@@ -13,21 +13,21 @@
             <div class="row">
                 <label class="col-75 item item-input item-floating-label">
 	                <span class="input-label">{{$parent.strings.GSSI_Age}}</span>
-                    <input type="number" placeholder="{{$parent.strings.GSSI_Age}}" min="1" max="99" ng-model="model.Age" ng-change="calculate()">
+                    <input type="number" placeholder="{{$parent.strings.GSSI_Age}}" min="1" max="99" ng-model="model.Age" ng-change="calculate()" inputmode="numeric" pattern="[0-9]*">
             	</label>
                 <label class="col-25 input-label-desc">{{$parent.strings.GSSI_Years}}</label>
             </div>
             <div class="row">
                 <label class="col-75 item item-input item-floating-label">
                 	<span class="input-label">{{$parent.strings.GSSI_Height}}</span>
-                    <input type="number" min="50" max="220" placeholder="{{$parent.strings.GSSI_Height}}" class="input-label-number" ng-model="model.Height" ng-change="calculate()">
+                    <input type="number" min="50" max="220" placeholder="{{$parent.strings.GSSI_Height}}" class="input-label-number" ng-model="model.Height" ng-change="calculate()" inputmode="numeric" pattern="[0-9]*">
                 </label>
                 <label class="col-25 input-label-desc">{{$parent.strings.GSSI_Cms}}</label>
             </div>
             <div class="row">
                 <label class="col-75 item item-input item-floating-label">
                 	<span class="input-label">{{$parent.strings.GSSI_Weight}}</span>
-                    <input type="number" min="50" max="500" placeholder="{{$parent.strings.GSSI_Weight}}" class="input-label-number" ng-model="model.Weight" ng-change="calculate()">
+                    <input type="number" min="50" max="500" placeholder="{{$parent.strings.GSSI_Weight}}" class="input-label-number" ng-model="model.Weight" ng-change="calculate()" inputmode="numeric" pattern="[0-9]*">
                 </label>
                 <label class="col-25 input-label-desc" ng-show="data.IsMetric">{{$parent.strings.GSSI_Kgs}}</label>
                 <label class="col-25 input-label-desc" ng-hide="data.IsMetric">{{$parent.strings.GSSI_Pounds}}</label>
@@ -35,7 +35,7 @@
             <div class="row">
                 <label class="col-75 item item-input item-floating-label">
                 	<span class="input-label">{{$parent.strings.GSSI_TimeSpent}}</span>
-                    <input type="number" min="1" max="600" placeholder="{{$parent.strings.GSSI_TimeSpent}}" class="input-label-number" ng-model="model.TimeSpent" ng-change="calculate()">
+                    <input type="number" min="1" max="600" placeholder="{{$parent.strings.GSSI_TimeSpent}}" class="input-label-number" ng-model="model.TimeSpent" ng-change="calculate()" inputmode="numeric" pattern="[0-9]*">
                 </label>
                 <label class="col-25 input-label-desc">{{$parent.strings.GSSI_Minutes}}</label>
             </div>
