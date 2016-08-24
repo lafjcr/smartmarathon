@@ -41,9 +41,12 @@
             </div>
             <div class="row">
                 <label class="col-75 item item-input item-floating-label">
-                	<span class="input-label">{{$parent.strings.GSSI_AvgPaceRun}}</span>
-                    <input type="number" min="2.5" max="20" step="0.1" placeholder="{{$parent.strings.GSSI_AvgPaceRun}}" class="input-label-number" ng-model="model.AvgPace" ng-change="calculate()">
-                </label>
+                    <span class="input-label">{{$parent.strings.GSSI_AvgPaceRun}}</span>
+                    <input type="text" class="hidden" placeholder="0:00" ng-model="model.AvgPaceValue">
+                    <label class="input-fake input-label-number" ion-datetime-picker time ng-model="model.AvgPaceValue" ng-change="avgPaceValueChanged(model.AvgPaceValue)" style="padding-right: 20px;">
+                        {{model.AvgPaceValue| date: "H:mm"}}
+                    </label>
+                </label>                
                 <label class="col-25 input-label-desc" ng-show="data.IsMetric">{{$parent.strings.GSSI_MinKm}}</label>
                 <label class="col-25 input-label-desc" ng-hide="data.IsMetric">{{$parent.strings.GSSI_MinMile}}</label>
             </div>

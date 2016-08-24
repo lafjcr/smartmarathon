@@ -316,7 +316,8 @@ angular.module('app.controllers', [])
         ActiveLevel: null,
         ActiveLevelSelected: null,
         TimeSpent: 0,
-        AvgPace: 0        
+        AvgPace: 0,
+        AvgPaceValue: new Date(0, 0)
     }
 
     $scope.isValid = function() {
@@ -355,6 +356,11 @@ angular.module('app.controllers', [])
     $scope.$on("isMetricChanged", function (event, options) {
         $scope.data.IsMetric = options.newValue;
     });
+
+    $scope.avgPaceValueChanged = function (value) {
+        $scope.model.AvgPace = value.getHours() + (value.getMinutes() / 60);
+        $scope.calculate();
+    }
 
     $scope.calculate = function () {
         if ($scope.isValid()) {
