@@ -7,9 +7,9 @@
     color: #FF5113;
 }
 
-.color-orange:active {
-    color: #00421f;
-}
+    .color-orange:active {
+        color: #00421f;
+    }
 
 .hidden {
     display: none !important;
@@ -87,7 +87,7 @@ input[type="number"] {
 
 input[type="number"] {
     height: 36px;
-    font-size: 28px;
+    font-size: 24px;
 }
 
 .padding > .list .item.item-input input[type="number"] {
@@ -200,3 +200,24 @@ input[type="number"] {
 .item-icon-right .icon {
     color: #FF5113;
 }
+
+.units-selection {
+    padding: 0 16px;
+}
+
+    .units-selection .row {
+        padding: 0;
+    }
+
+    .units-selection span {
+        font-size: 14px;
+    }
+
+    .units-selection .metric-description {
+        margin-top: 17px;
+        text-align: right;
+    }
+
+    .units-selection .menu-subtitle {
+        font-size: 16px;
+    }

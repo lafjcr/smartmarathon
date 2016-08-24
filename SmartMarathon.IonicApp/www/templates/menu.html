@@ -1,5 +1,5 @@
-<ion-side-menus enable-menu-with-back-views="false" >
-    <ion-side-menu-content >
+<ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content>
         <ion-nav-bar class="bar-stable">
             <ion-nav-back-button>
             </ion-nav-back-button>
@@ -43,7 +43,15 @@
                     <img src="img/flags/cr.png" ng-hide="isEnglish()" />
                     <select ng-model="language" ng-options="y.Text for (x, y) in languages" ng-change="setLanguage(language)"></select>
                 </label>
-                <ion-toggle toggle-class="toggle-balanced" class="color-orange" ng-model="isMetric" ng-change="isMetricChanged(isMetric)">{{strings.Menu_Metric_Title}}</ion-toggle>                
+                <div class="units-selection">
+                    <div class="row">
+                        <label class="color-orange menu-subtitle">{{strings.Menu_Metric_Title}}</label>
+                    </div>
+                    <div class="row">
+                        <ion-toggle toggle-class="toggle-balanced" class="col-67 color-orange" ng-model="isMetric" ng-change="isMetricChanged(isMetric)">{{strings.Menu_Imperial}}</ion-toggle>
+                        <label class="col-33 metric-description">{{strings.Menu_Metric}}</label>
+                    </div>
+                </div>
             </ion-list>
             <div style="margin: 0px; text-align: center;">
                 <img src="img/gssi.png" width="100%" height="auto" style="display: block;margin-left: auto;margin-right: auto;margin-top: 8%;">
