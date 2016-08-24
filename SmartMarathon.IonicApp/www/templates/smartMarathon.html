@@ -11,7 +11,7 @@
                 </label>
             </label>
 
-            <label class="item item-input item-floating-label">
+            <label class="item item-input item-floating-label" ng-show="data.IsMetric">
                 <span class="input-label">{{$parent.strings.SM_GoalPace}}</span>
                 <input type="text" class="hidden" placeholder="0:00" ng-model="model.PaceByKmValue">
                 <label class="input-fake" ion-datetime-picker time ng-model="model.PaceByKmValue" ng-change="goalPaceChanged(model.PaceByKmValue)">
