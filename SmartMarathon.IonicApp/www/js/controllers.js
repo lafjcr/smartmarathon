@@ -186,7 +186,11 @@ angular.module('app.controllers', [])
             setSelectedDistance();
             //setEvent();
             $scope.loadEvents();
-        });       
+        }, function (err) {          //second function "error"
+            var msg = $scope.$parent.strings.App_ConectionError;
+            alert(msg + "\nError " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
+            console.log("Error " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
+        });
     }
 
     init();
@@ -242,6 +246,10 @@ angular.module('app.controllers', [])
             //$scope.model.GoalTimeValue.setSeconds(data.GoalTime.Seconds);
             $scope.model.GoalTimeValue = new Date(0, 0, 0, data.GoalTime.Hours, data.GoalTime.Minutes, data.GoalTime.Seconds, 0);
             calculateSplits();
+        }, function (err) {          //second function "error"
+            var msg = $scope.$parent.strings.App_ConectionError;
+            alert(msg + "\nError " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
+            console.log("Error " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
         });
     }
 
@@ -251,7 +259,9 @@ angular.module('app.controllers', [])
             var data = response.data;
             $scope.model.Splits = data.Splits;
         }, function (err) {          //second function "error"
-            console.log(err);
+            var msg = $scope.$parent.strings.App_ConectionError;
+            alert(msg + "\nError " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
+            console.log("Error " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
         });
     }
 
@@ -371,7 +381,9 @@ angular.module('app.controllers', [])
             $nutritionCalculatorService.calculate($scope.model).then(function (response) {
                 $scope.results = response.data;
             }, function (err) {          //second function "error"
-                console.log(err);
+                var msg = $scope.$parent.strings.App_ConectionError;
+                alert(msg + "\nError " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
+                console.log("Error " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
             });
         }
     }
