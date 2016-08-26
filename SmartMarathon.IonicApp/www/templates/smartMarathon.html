@@ -39,12 +39,12 @@
 
             <label class="item item-input item-floating-label" ng-show="isCustomDistance()">
                 <span class="input-label">{{$parent.strings.SM_YourDistance}}</span>
-                <input type="number" placeholder="{{$parent.strings.SM_YourDistance}}" min="1" max="999" ng-model="model.RealDistance" ng-change="refresh()">
+                <input type="number" placeholder="{{$parent.strings.SM_YourDistance}}" min="1" max="999" ng-model="model.RealDistance" ng-change="refresh()" ng-focus="checkRealDistanceZeroValue()" ng-model-options="{updateOn: 'default blur', debounce: {default: 1000, blur: 0} }">
             </label>
 
             <label class="item item-select" ng-hide="isCustomDistance()">
                 <span class="input-label">{{$parent.strings.SM_Event}}</span>
-                <select ng-model="model.Event" ng-options="y.Text for (x, y) in data.Events" ng-change="loadSplits()"></select>
+                <select ng-model="model.Event" ng-options="y.Text for (x, y) in data.Events" ng-change="loadSplits()"></select>                
             </label>
         </div>
         <div class="kilometer-list">

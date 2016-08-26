@@ -185,6 +185,12 @@ angular.module('app.controllers', [])
         return result;
     }
 
+    $scope.checkRealDistanceZeroValue = function () {
+        if ($scope.model.RealDistance === 0) {
+            $scope.model.RealDistance = '';
+        }
+    }
+
     var init = function () {
         $scope.$parent.loading = true;
         $smartMarathonCalculatorService.init().then(function (response) {
@@ -351,7 +357,8 @@ angular.module('app.controllers', [])
 
     $scope.isValid = function() {
         if (($scope.model.GenderSelected !== null && $scope.model.GenderSelected !== undefined)
-            && ($scope.model.ActiveLevelSelected !== null && $scope.model.ActiveLevelSelected !== undefined))
+            && ($scope.model.ActiveLevelSelected !== null && $scope.model.ActiveLevelSelected !== undefined)
+            && ($scope.model.Age !== 0 && $scope.model.Height !== 0 && $scope.model.Weight !== 0 && $scope.model.TimeSpent !== 0 && $scope.model.AvgPace != 0))
             return true;
         return false;
     }
@@ -409,6 +416,29 @@ angular.module('app.controllers', [])
         }
     }
 
+    $scope.checkAgeZeroValue = function () {
+        if ($scope.model.Age === 0) {
+            $scope.model.Age = '';
+        }
+    }
+
+    $scope.checkHeightZeroValue = function () {
+        if ($scope.model.Height === 0) {
+            $scope.model.Height = '';
+        }
+    }
+
+    $scope.checkWeightZeroValue = function () {
+        if ($scope.model.Weight === 0) {
+            $scope.model.Weight = '';
+        }
+    }
+
+    $scope.checkTimeSpentZeroValue = function () {
+        if ($scope.model.TimeSpent === 0) {
+            $scope.model.TimeSpent = '';
+        }
+    }
 
     var init = function () {
     }
