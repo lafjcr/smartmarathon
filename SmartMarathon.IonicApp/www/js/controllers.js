@@ -9,6 +9,8 @@ angular.module('app.controllers', [])
     //$scope.$on('$ionicView.enter', function(e) {
     //});
 
+    $scope.loading = false;
+
     $scope.isMetric = $localStorage.isMetric !== undefined ? $localStorage.isMetric : true;
 
     $scope.isMetricChanged = function (value) {
@@ -103,11 +105,18 @@ angular.module('app.controllers', [])
     }
 
     $scope.loadEvents = function () {
+        $scope.$parent.loading = true;
         $smartMarathonCalculatorService.loadEvents($scope.model.SelectedDistance.Value).then(function (response) {
             $scope.data.Events = response.data;
             setEvent();
             calculateSplits();
             $scope.loadSplits();
+            $scope.$parent.loading = false;
+        }, function (err) {          //second function "error"
+            var msg = $scope.$parent.strings.App_ConectionError;
+            alert(msg + "\nError " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
+            console.log("Error " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
+            $scope.$parent.loading = false;
         });
     }
 
@@ -177,6 +186,7 @@ angular.module('app.controllers', [])
     }
 
     var init = function () {
+        $scope.$parent.loading = true;
         $smartMarathonCalculatorService.init().then(function (response) {
             var data = response.data;
             $scope.data.Distances = data.Distances;
@@ -186,10 +196,12 @@ angular.module('app.controllers', [])
             setSelectedDistance();
             //setEvent();
             $scope.loadEvents();
+            $scope.$parent.loading = false;
         }, function (err) {          //second function "error"
             var msg = $scope.$parent.strings.App_ConectionError;
             alert(msg + "\nError " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
             console.log("Error " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
+            $scope.$parent.loading = false;
         });
     }
 
@@ -226,6 +238,7 @@ angular.module('app.controllers', [])
         else {
             model = createGoalTimeModel();
         }
+        $scope.$parent.loading = true;
         $smartMarathonCalculatorService.calculateGoalTimeAndAvgPaces(model).then(function (response) {
             var data = response.data;
             $scope.model.PaceByKm.Minutes = data.PaceByKm.Minutes;
@@ -246,22 +259,27 @@ angular.module('app.controllers', [])
             //$scope.model.GoalTimeValue.setSeconds(data.GoalTime.Seconds);
             $scope.model.GoalTimeValue = new Date(0, 0, 0, data.GoalTime.Hours, data.GoalTime.Minutes, data.GoalTime.Seconds, 0);
             calculateSplits();
+            $scope.$parent.loading = false;
         }, function (err) {          //second function "error"
             var msg = $scope.$parent.strings.App_ConectionError;
             alert(msg + "\nError " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
             console.log("Error " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
+            $scope.$parent.loading = false;
         });
     }
 
     function calculateSplits() {
-	    $scope.model.InKms = $scope.data.IsMetric;
+        $scope.model.InKms = $scope.data.IsMetric;
+        $scope.$parent.loading = true;
         $smartMarathonCalculatorService.calculateSplits($scope.model).then(function (response) {
             var data = response.data;
             $scope.model.Splits = data.Splits;
+            $scope.$parent.loading = false;
         }, function (err) {          //second function "error"
             var msg = $scope.$parent.strings.App_ConectionError;
             alert(msg + "\nError " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
             console.log("Error " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
+            $scope.$parent.loading = false;
         });
     }
 
@@ -378,12 +396,15 @@ angular.module('app.controllers', [])
             $scope.model.IsMetric = $scope.data.IsMetric;
             $scope.model.Gender = $scope.model.GenderSelected.Value;
             $scope.model.ActiveLevel = $scope.model.ActiveLevelSelected.Value;
+            $scope.$parent.loading = true;
             $nutritionCalculatorService.calculate($scope.model).then(function (response) {
                 $scope.results = response.data;
+                $scope.$parent.loading = false;
             }, function (err) {          //second function "error"
                 var msg = $scope.$parent.strings.App_ConectionError;
                 alert(msg + "\nError " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
                 console.log("Error " + err.status + ": " + err.statusText + "\nUrl: " + err.config.url);
+                $scope.$parent.loading = false;
             });
         }
     }

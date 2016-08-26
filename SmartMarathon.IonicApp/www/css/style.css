@@ -221,3 +221,19 @@ input[type="number"] {
     .units-selection .menu-subtitle {
         font-size: 16px;
     }
+
+.loader-box {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    opacity: 0.6;
+}
+
+.loader {
+    position: absolute;
+    left: 45%;
+    top: 50%;
+    margin-left: -32px; /* -1 * image width / 2 */
+    margin-top: -32px;  /* -1 * image height / 2 */
+    display: block;     
+}

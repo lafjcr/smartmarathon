@@ -1,5 +1,8 @@
 <ion-view title="{{$parent.strings.GSSI_Title}}" class="bgcolor-green">
-    <ion-content padding="true" class="has-header">
+    <div class="loader-box" ng-show="$parent.loading">
+        <img class="loader" src="img/logo.gif" />
+    </div>
+    <ion-content padding="true" class="has-header" ng-hide="$parent.loading">
         <form class="list nutrition-calculator">
             <ion-item class="item-divider color-orange">{{$parent.strings.GSSI_Parameters}}</ion-item>
 
