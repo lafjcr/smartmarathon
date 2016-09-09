@@ -114,11 +114,11 @@ namespace SmartMarathon.App.Models
                 //distanceItems = Code.SmartMarathon.Distances();
             }
             distanceItems = Code.SmartMarathon.Distances();
+            Distances = new SelectList(distanceItems, "Value", "Text");
             Marathons = new SelectList(marathons, "Value", "Text");
             if (create)
             {
                 InKms = true;
-                Distances = new SelectList(distanceItems, "Value", "Text");
                 RealDistance = Distance.ToKilometers();
                 Marathon = marathons.Find(item => item.Selected).Value;
                 Splits = Code.SplitsManager.Build(Distance);

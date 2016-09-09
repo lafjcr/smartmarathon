@@ -165,10 +165,23 @@ namespace SmartMarathon.App.Controllers
         }
 
         [HttpPost]
+        public ActionResult CalculateSplits(SmartMarathonData model)
+        {
+            SplitsManager.Calculate(model);
+            return Json(model);
+        }
+
+        [HttpPost]
         public JsonResult CalculateGoalTimeAndAvgPaces(GoalTimeAndAvgPacesModel model)
         {
             SplitsManager.CalculateGoalTimeAndAvgPaces(model);
             return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult Init()
+        {
+            var model = new SmartMarathonData(true, null, false);
+            return Json(model);
         }
 
         //public ActionResult About()

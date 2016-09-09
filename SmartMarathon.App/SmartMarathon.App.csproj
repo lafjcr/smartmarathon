@@ -245,7 +245,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <None Include="Properties\PublishProfiles\smartmarathon.pubxml" />
+    <None Include="Properties\PublishProfiles\smartmarathon - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\smartmarathontest - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\smartmarathontest - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\smartmarathontest.pubxml" />
