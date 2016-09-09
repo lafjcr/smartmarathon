@@ -1,5 +1,5 @@
 bin
-/SmartMarathon.App/obj
+obj
 *.user
 bower_components
 *.suo
