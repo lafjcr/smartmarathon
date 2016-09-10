@@ -1,0 +1,112 @@
+﻿body * {
+    font-size: 12px;
+}
+
+i[class*='print'],
+div[class*='print'],
+label[class*='print'],
+p[class*='print'] {
+    display: block;
+}
+
+.col.col-40.altimetry {
+    padding-top: 8px;
+}
+
+body i {
+    font-size: 26px;
+}
+
+.kilometer-list {
+    font-size: 13px;
+}
+
+select,
+input {
+    display: none !important;
+}
+
+.input-floating-label-print {
+    height: 36px;
+    font-size: 24px;
+    float: right;
+    padding-right: 36px;
+    margin-top: -15px;
+}
+
+.select-label-print {
+    float: right;
+    font-size: 14px;
+    margin-right: 18px;
+    margin-top: -5px;
+}
+
+.banner {
+    text-align: center;
+    display: block;
+}
+
+.description-text-print {
+    color: #b2b2b2;
+    margin-left: 5%;
+    display: block;
+}
+
+.description-text {
+    display: none;
+}
+
+.data-inputs {
+    width: 60%;
+    margin: 20px auto;
+}
+
+.wrapper-nutrition-calculator {
+    width: 78%;
+    margin: 15px auto 0 auto;
+}
+
+    .wrapper-nutrition-calculator .item.item-select {
+        padding: 5px 16px;
+    }
+
+    .wrapper-nutrition-calculator .select-label-print {
+        font-size: 14px;
+        margin-left: 76%;
+        float: left;
+        margin-top: -16px;
+    }
+
+.nutrition-calculator .input-label-desc {
+    margin-top: 27px;
+}
+
+.nutrition-calculator .input-fake {
+    margin-top: -11px;
+}
+
+.item-select:after {
+    content: none;
+}
+
+.item-select select {
+    margin-top: 10px;
+}
+
+.item.range {
+    display: none;
+}
+
+label.altimetry,
+i.altimetry {
+    display: inline;
+}
+
+.kilometer-list {
+    -webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
+    -webkit-column-gap: 20px; /* Chrome, Safari, Opera */
+    -moz-column-gap: 20px; /* Firefox */
+    column-gap: 20px;
+}

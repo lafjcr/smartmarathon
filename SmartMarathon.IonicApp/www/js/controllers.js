@@ -45,7 +45,7 @@ angular.module('app.controllers', [])
     init();
 })
 
-.controller('smartMarathonCalculatorCtrl', function ($scope, $smartMarathonCalculatorService) {
+.controller('smartMarathonCalculatorCtrl', function ($scope, $smartMarathonCalculatorService, $printerService) {
     $scope.model = {
         InKms: $scope.$parent.isMetric,
         GoalTimeValue: new Date(0, 0),
@@ -189,6 +189,11 @@ angular.module('app.controllers', [])
         if ($scope.model.RealDistance === 0) {
             $scope.model.RealDistance = '';
         }
+    }
+
+    $scope.print = function () {
+        var printElement = document.getElementById("smartMarathonCalculatorView");
+        $printerService.print(printElement);
     }
 
     var init = function () {
@@ -341,7 +346,7 @@ angular.module('app.controllers', [])
     }
 })
 
-.controller('nutritionCalculatorCtrl', function ($scope, $nutritionCalculatorService) {
+.controller('nutritionCalculatorCtrl', function ($scope, $nutritionCalculatorService, $printerService) {
     $scope.model = {
         Gender: null,
         GenderSelected: null,
@@ -438,6 +443,11 @@ angular.module('app.controllers', [])
         if ($scope.model.TimeSpent === 0) {
             $scope.model.TimeSpent = '';
         }
+    }
+
+    $scope.print = function () {
+        var printElement = document.getElementById("gssiCalculatorView");
+        $printerService.print(printElement);
     }
 
     var init = function () {

@@ -15,6 +15,13 @@
     display: none !important;
 }
 
+i[class*='print'],
+label[class*='print'],
+div[class*='print'],
+p[class*='print'] {
+    display: none;
+}
+
 .bgcolor-green {
     background: #00421f;
     background: -moz-linear-gradient(top, #00421f 20%, #00582a 60%, #b2b2b2 90%, #ffffff 100%);
@@ -54,6 +61,10 @@ p.description-text {
 
 .input-label {
     font-size: 16px;
+}
+
+.wrapper-nutrition-calculator .item-select select {
+    margin-right: 1px;
 }
 
 .item-select {
@@ -234,6 +245,6 @@ input[type="number"] {
     left: 45%;
     top: 50%;
     margin-left: -32px; /* -1 * image width / 2 */
-    margin-top: -32px;  /* -1 * image height / 2 */
-    display: block;     
+    margin-top: -32px; /* -1 * image height / 2 */
+    display: block;
 }

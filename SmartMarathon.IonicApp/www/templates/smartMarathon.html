@@ -2,9 +2,16 @@
     <div class="loader-box" ng-show="$parent.loading">
         <img class="loader" src="img/logo.gif" />
     </div>
-    <ion-content padding="true" class="has-header" ng-hide="$parent.loading">
+    <ion-nav-buttons side="right">
+        <button class="button icon ion-printer" ng-click="print()"></button>
+    </ion-nav-buttons>
+    <!--<link href="css/print.css" rel="stylesheet">-->
+    <ion-content padding="true" class="has-header" ng-hide="$parent.loading" id="smartMarathonCalculatorView">
+        <div class="banner print">
+            <img src="img/print-banner.png" style="width: 90%">
+        </div>
         <p class="description-text">{{$parent.strings.SM_Instructions}}</p>
-        <div class="list" style="color: #00582A;">
+        <div class="list data-inputs" style="color: #00582A;">
 
             <label class="item item-input item-floating-label">
                 <span class="input-label">{{$parent.strings.SM_GoalTime}}</span>
@@ -34,17 +41,20 @@
 
             <label class="item item-select">
                 <span class="input-label">{{$parent.strings.SM_Distance}}</span>
+                <label class="select-label-print">{{model.SelectedDistance.Text}}</label>
                 <select ng-model="model.SelectedDistance" ng-options="y.Text for (x, y) in data.Distances" ng-change="loadEvents()"></select>
             </label>
 
             <label class="item item-input item-floating-label" ng-show="isCustomDistance()">
                 <span class="input-label">{{$parent.strings.SM_YourDistance}}</span>
+                <label class="input-floating-label-print">{{model.RealDistance}}</label>
                 <input type="number" placeholder="{{$parent.strings.SM_YourDistance}}" min="1" max="999" ng-model="model.RealDistance" ng-change="refresh()" ng-focus="checkRealDistanceZeroValue()" ng-model-options="{updateOn: 'default blur', debounce: {default: 1000, blur: 0} }">
             </label>
 
             <label class="item item-select" ng-hide="isCustomDistance()">
                 <span class="input-label">{{$parent.strings.SM_Event}}</span>
-                <select ng-model="model.Event" ng-options="y.Text for (x, y) in data.Events" ng-change="loadSplits()"></select>                
+                <label class="select-label-print">{{model.Event.Text}}</label>
+                <select ng-model="model.Event" ng-options="y.Text for (x, y) in data.Events" ng-change="loadSplits()"></select>
             </label>
         </div>
         <div class="kilometer-list">
@@ -65,9 +75,14 @@
             </div>
             <div class="row kilometer-body" ng-repeat="split in model.Splits.Kilometers" ng-show="data.IsMetric">
                 <div class="col col-20">
-                    <label>{{split.Split}}</label>
+                    <label>
+                        {{split.Split}}
+                    </label>
                 </div>
-                <div class="col col-40">
+                <div class="col col-40 altimetry">
+                    <i class="ion-arrow-graph-down-right altimetry print" ng-if="split.Category == -1"></i>
+                    <i class="ion-minus altimetry print" ng-if="split.Category == 0"></i>
+                    <i class="ion-arrow-graph-up-right altimetry print" ng-if="split.Category == 1"></i>
                     <div class="item range">
                         <i class="ion-arrow-graph-down-right"></i>
                         <input type="range" ng-model="split.Category" value="{{split.Category}}" min="-1" max="1" ng-change="refresh()">
@@ -83,9 +98,14 @@
             </div>
             <div class="row kilometer-body" ng-repeat="split in model.Splits.Miles" ng-hide="data.IsMetric">
                 <div class="col col-20">
-                    <label>{{split.Split}}</label>
+                    <label>
+                        {{split.Split}}
+                    </label>
                 </div>
-                <div class="col col-40">
+                <div class="col col-40 altimetry">
+                    <i class="ion-arrow-graph-down-right altimetry print" ng-if="split.Category == -1"></i>
+                    <i class="ion-minus altimetry print" ng-if="split.Category == 0"></i>
+                    <i class="ion-arrow-graph-up-right altimetry print" ng-if="split.Category == 1"></i>
                     <div class="item range">
                         <i class="ion-arrow-graph-down-right"></i>
                         <input type="range" ng-model="split.Category" value="{{split.Category}}" min="-1" max="1" ng-change="refresh()">

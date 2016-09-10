@@ -259,6 +259,41 @@ angular.module('app.services', [])
     return serviceFactory;
 }])
 
+.factory('$printerService', ['$cordovaPrinter', function ($cordovaPrinter) {
+    function buildPrintView(id, contentElement) {
+        var printView = document.createElement('div');
+        printView.setAttribute("id", id);
+
+        printView.innerHTML = "<link href=\"lib/ionic/css/ionic.css\" rel=\"stylesheet\">\n";
+        printView.innerHTML += "<link href=\"css/style.css\" rel=\"stylesheet\">\n";
+        printView.innerHTML += "<link href=\"css/print.css\" rel=\"stylesheet\" media=\"print\">\n";
+        printView.innerHTML += contentElement.innerHTML;
+        return printView;
+    }
+
+    var _print = function (contentElement) {
+        try {
+            //window.print();
+            if ($cordovaPrinter.isAvailable()) {
+                //var printHtml = document.getElementById("contentView");
+                //var printUrl = window.location.href;
+                var printHtml = contentElement;
+                var printView = buildPrintView("printView", contentElement);
+                $cordovaPrinter.print(printView);
+            } else {
+                alert("Printing is not available on device");
+            }
+        }
+        catch (ex) {
+            alert('Print not supported on this device');
+        }
+    }
+
+    var serviceFactory = {};
+    serviceFactory.print = _print;
+    return serviceFactory;
+}])
+
 .service('BlankService', [function () {
 
 }]);

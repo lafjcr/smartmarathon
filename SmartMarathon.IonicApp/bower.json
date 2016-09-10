@@ -4,5 +4,8 @@
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.2.4",
     "ng-storage": "^0.4.2"
+  },
+  "dependencies": {
+    "ngCordova": "~0.1.27-alpha"
   }
 }
