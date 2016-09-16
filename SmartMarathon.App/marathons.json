@@ -171,6 +171,15 @@
     "WebSite": "http://www.deportivascandelaria.com/"
   },
   {
+    "Distance": "K10",
+    "ID": 2,
+    "Name": "Tamarindo Beach Marathon 10K",
+    "Miles": "1,1,1,-1,-1, -1,0",
+    "Kms": "0,1,1,1,0, 1,-1,-1,-1,0",
+    "Country": "CR",
+    "WebSite": "http://www.tamarindobeachmarathon.com/"
+  },
+  {
     "Distance": "K5",
     "ID": 0,
     "Name": "Standard Flat 5K",
