@@ -110,3 +110,25 @@ i.altimetry {
     -moz-column-gap: 20px; /* Firefox */
     column-gap: 20px;
 }
+
+.grids-parent {
+  width: 100%;
+}
+
+.grids-left {
+  float: left;
+  width: 50%;
+}
+
+.grids-right {
+  float: left;
+  width: 50%;
+}
+
+.row.grids-left-row:nth-child(odd) {
+    display: none;
+}
+
+.row.grids-right-row:nth-child(even) {
+    display: none;
+}
